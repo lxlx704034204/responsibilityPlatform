@@ -11,6 +11,7 @@
 
     <modules>
         <module>orbit-service</module>
+        <module>orbit-web</module>
     </modules>
 
     <dependencyManagement>

@@ -11,10 +11,4 @@ public abstract class Field {
 
   FieldData data;
 
-
-  /**
-   * 将一个Filed转换成其他类型的Field
-   */
-  Field convertTo<Class<F extends  Field>>();
-
 }
