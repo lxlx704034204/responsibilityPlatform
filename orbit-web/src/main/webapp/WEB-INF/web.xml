@@ -5,19 +5,48 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>Struts Blank Convention</display-name>
 
+	<error-page>
+  		<error-code>404</error-code>
+  		<location>/views/shared/404.jsp</location>
+  	</error-page>
+  	<error-page>
+  		<error-code>500</error-code>
+  		<location>/views/shared/500.jsp</location>
+  	</error-page>
+  	
     <listener>
         <listener-class>com.orbit.InitListener</listener-class>
     </listener>
 
     <filter>
-        <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  		<filter-name>struts-prepare</filter-name>
+ 		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>struts-execute</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsExecuteFilter</filter-class>
+    </filter>
+	<filter>
+	    <filter-name>sitemesh</filter-name>
+	    <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
 
     <filter-mapping>
-        <filter-name>struts2</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>struts-prepare</filter-name>
+        <url-pattern>*.do</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>sitemesh</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>struts-execute</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

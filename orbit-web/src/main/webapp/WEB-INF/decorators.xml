@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/decorators">
+    <!-- Any urls that are excluded will never be decorated by Sitemesh -->
+    <excludes>
+        <pattern>/style/*</pattern>
+        <pattern>/scripts/*</pattern>
+        <pattern>/ajax/*</pattern>
+        <pattern>/json/*</pattern>
+        <pattern>/bower_components/*</pattern>
+    </excludes>
+
+<!-- 	<decorator name="system-layout" page="system_layout.jsp"> -->
+<!--         <pattern>/system*</pattern> -->
+<!--     </decorator> -->
+    <decorator name="site-layout" page="site_layout.jsp">
+        <pattern>/*.do</pattern>
+        <pattern>/index.html</pattern>
+        
+    </decorator>
+
+</decorators>
