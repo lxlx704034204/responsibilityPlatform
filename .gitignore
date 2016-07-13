@@ -6,3 +6,7 @@ target
 **/bower_components
 json
 bootstrap-table-examples-master
+.classpath
+.project
+.settings
+
