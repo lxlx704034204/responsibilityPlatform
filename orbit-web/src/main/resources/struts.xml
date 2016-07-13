@@ -1,10 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-	"http://struts.apache.org/dtds/struts-2.5.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-
-  <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
-  <constant name="struts.devMode" value="true"/>
-
+	<!-- 修改 action 的后缀名 -->
+	<constant name="struts.action.extension" value="do," />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.enable.SlashesInActionNames" value="false"></constant>
+	
+	<package name="orbit-default" namespace="/" extends="struts-default">
+	
+		<interceptors>
+			<interceptor name="authentication" class="com.orbit.interceptors.AuthenticationInterceptor"/>
+			<interceptor-stack name="app-default-stack">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">ERROR</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="admin">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="app-default-stack"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="error">/views/shared/error.jsp</result>
+			<result name="login" type="redirectAction">
+				<param name="namespace">/user</param>
+				<param name="actionName">login</param>
+				<param name="returnUrl">${returnurl}</param>
+			</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Throwable"></exception-mapping>
+		</global-exception-mappings>
+		
+	</package>
+	
+	<package name="ilanever-json-default" namespace="/" extends="json-default">
+	
+		<interceptors>
+			<interceptor name="authentication" class="com.orbit.interceptors.AuthenticationInterceptor"/>
+			<interceptor-stack name="app-default-stack">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">ERROR</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="admin">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="app-default-stack"></default-interceptor-ref>
+		
+		<global-results>
+			<result name="error">/views/shared/error.jsp</result>
+			<result name="login" type="redirectAction">
+				<param name="namespace">/user</param>
+				<param name="actionName">login</param>
+			</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Throwable"></exception-mapping>
+		</global-exception-mappings>
+		
+	</package>
+	
+<!-- 	<include file="struts-config/struts-tag.xml"></include> -->
 </struts>
