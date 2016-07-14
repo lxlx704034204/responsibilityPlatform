@@ -43,7 +43,7 @@
 		
 	</package>
 	
-	<package name="ilanever-json-default" namespace="/" extends="json-default">
+	<package name="orbit-json-default" namespace="/" extends="json-default">
 	
 		<interceptors>
 			<interceptor name="authentication" class="com.orbit.interceptors.AuthenticationInterceptor"/>
@@ -75,5 +75,5 @@
 		
 	</package>
 	
-<!-- 	<include file="struts-config/struts-tag.xml"></include> -->
+	<include file="struts-config/struts-home.xml"></include>
 </struts>

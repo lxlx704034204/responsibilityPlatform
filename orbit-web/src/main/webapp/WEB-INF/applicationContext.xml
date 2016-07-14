@@ -47,12 +47,12 @@
 
 
 <!-- 	Actions --> 
-<!-- 	<bean id="homeAction" class="com.ilanever.izone.actions.HomeAction"> -->
+	<bean id="homeActions" class="com.orbit.actions.HomeActions">
 <!-- 		<property name="topicService" ref="topicService" /> -->
 <!-- 		<property name="tagService" ref="tagService" /> -->
 <!-- 		<property name="articleService" ref="articleService" /> -->
 <!-- 		<property name="noteService" ref="noteService" /> -->
-<!-- 	</bean> -->
+	</bean>
 <!-- 	<bean id="userAction" class="com.ilanever.izone.actions.UserAction"> -->
 <!-- 		<property name="userService" ref="userService" /> -->
 <!-- 	</bean> -->
