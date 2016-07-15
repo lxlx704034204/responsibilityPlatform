@@ -45,7 +45,7 @@
             <li><a href="#">帮助</a></li>
           </ul>
           <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" placeholder="关键字">
           </form>
         </div>
       </div>
@@ -54,24 +54,39 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul>
+		<div class="main-nav-container">
+		<ul id="main-mav-tabs" class="nav nav-tabs" role="tablist">
+			<li role="presentation"><a href="#history" id="history-tab" role="tab" data-toggle="tab" aria-controls="history" aria-expanded="true">历史</a></li>
+			<li class="active" role="presentation"><a href="#today" id="today-tab" role="tab" data-toggle="tab" aria-controls="today" aria-expanded="true">本日</a></li>
+			<li role="presentation"><a href="#future" id="future-tab" role="tab" data-toggle="tab" aria-controls="future" aria-expanded="true">未来</a></li>
+		</ul>
+		<div id="main-mav-contents">
+			<div role="tabpanel" class="tab-pane fade" id="history" aria-labelledby="history-tab">历史...</div>
+			<div role="tabpanel" class="tab-pane fade active" id="today" aria-labelledby="today-tab">
+        			<ul class="nav nav-sidebar">
+				    <li class="active"><a href="#">三级门限报警分析 <span class="sr-only">(current)</span></a></li>
+				    <li><a href="#">二代平台报警分析</a></li>
+				    <li><a href="#">测控事件</a></li>
+				    <li><a href="#">备忘录</a></li>
+				    <li><a href="#">重点遥测参数趋势图</a></li>
+				  </ul>
+				<ul class="nav nav-sidebar">
+				    <li><a href="">Nav item</a></li>
+				    <li><a href="">Nav item again</a></li>
+				    <li><a href="">One more nav</a></li>
+				    <li><a href="">Another nav item</a></li>
+				    <li><a href="">More navigation</a></li>
+				  </ul>
+				  <ul class="nav nav-sidebar">
+				    <li><a href="">Nav item again</a></li>
+				    <li><a href="">One more nav</a></li>
+				    <li><a href="">Another nav item</a></li>
+				  </ul>
+      			</div>
+			<div role="tabpanel" class="tab-pane fade" id="future" aria-labelledby="future-tab">未来...</div>
+		</div>
+          	</div>
+          
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
@@ -231,5 +246,11 @@
         </div>
       </div>
     </div>
+	<script>
+		$('#main-mav-tabs a').click(function (e) {
+		  e.preventDefault()
+		  $(this).tab('show')
+		})
+	</script>
 </body>
 </html>
