@@ -62,26 +62,40 @@
 		</ul>
 		<div id="main-mav-contents">
 			<div role="tabpanel" class="tab-pane fade" id="history" aria-labelledby="history-tab">历史...</div>
-			<div role="tabpanel" class="tab-pane fade active" id="today" aria-labelledby="today-tab">
-        			<ul class="nav nav-sidebar">
-				    <li class="active"><a href="#">三级门限报警分析 <span class="sr-only">(current)</span></a></li>
-				    <li><a href="#">二代平台报警分析</a></li>
-				    <li><a href="#">测控事件</a></li>
-				    <li><a href="#">备忘录</a></li>
-				    <li><a href="#">重点遥测参数趋势图</a></li>
-				  </ul>
-				<ul class="nav nav-sidebar">
-				    <li><a href="">Nav item</a></li>
+			<div role="tabpanel" class="tab-pane fade active in" id="today" aria-labelledby="today-tab">
+				<dl>
+					<dt>ABC</dt>				
+					<dd>
+					<ul class="nav nav-sidebar">
+					    <li class="active"><a href="#">三级门限报警分析 <span class="sr-only">(current)</span></a></li>
+					    <li><a href="#">二代平台报警分析</a></li>
+					    <li><a href="#">测控事件</a></li>
+					    <li><a href="#">备忘录</a></li>
+					    <li><a href="#">重点遥测参数趋势图</a></li>
+					  </ul>
+					</dd>
+					<dt>DEF</dt>
+					<dd>
+						<ul class="nav nav-sidebar">
+						    <li><a href="">Nav item</a></li>
+						    <li><a href="">Nav item again</a></li>
+						    <li><a href="">One more nav</a></li>
+						    <li><a href="">Another nav item</a></li>
+						    <li><a href="">More navigation</a></li>
+						  </ul>
+					</dd>
+					<dt>XYZ</dt>
+					<dd>
+						<ul class="nav nav-sidebar">
 				    <li><a href="">Nav item again</a></li>
 				    <li><a href="">One more nav</a></li>
 				    <li><a href="">Another nav item</a></li>
-				    <li><a href="">More navigation</a></li>
 				  </ul>
-				  <ul class="nav nav-sidebar">
-				    <li><a href="">Nav item again</a></li>
-				    <li><a href="">One more nav</a></li>
-				    <li><a href="">Another nav item</a></li>
-				  </ul>
+					</dd>
+				</dl>
+        			
+				
+				  
       			</div>
 			<div role="tabpanel" class="tab-pane fade" id="future" aria-labelledby="future-tab">未来...</div>
 		</div>
