@@ -10,7 +10,7 @@
 <body>
           <h2 class="page-header">在轨管理工作全阶段任务管理</h2>
 		  
-		  <h3>一、发射及保障工作 <button id="btn_setnewtask" class="btn btn-default btn-xs pull-right" data-target="#modal_setnewtask" data-toggle="modal">设置新任务</button></h3>
+		  <h3>一、发射及保障工作 <button id="btn_setnewtask" class="btn btn-default pull-right" data-target="#modal_setnewtask" data-toggle="modal">设置新任务</button></h3>
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
@@ -50,7 +50,7 @@
             </table>
           </div>
 		  
-		  <h3>二、交付前工作 <button class="btn btn-default btn-xs pull-right">设置新任务</button></h3>
+		  <h3>二、交付前工作 <button class="btn btn-default pull-right">设置新任务</button></h3>
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
@@ -120,7 +120,7 @@
             </table>
           </div>
 		  
-		  <h3>三、交付后工作 <button class="btn btn-default btn-xs pull-right">设置新任务</button></h3>
+		  <h3>三、交付后工作 <button class="btn btn-default pull-right">设置新任务</button></h3>
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
@@ -189,7 +189,7 @@
               </tbody>
             </table>
           </div>
-		  <h3>四、寿命终结工作 <button class="btn btn-default btn-xs pull-right">设置新任务</button></h3>
+		  <h3>四、寿命终结工作 <button class="btn btn-default pull-right">设置新任务</button></h3>
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
