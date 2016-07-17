@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,7 +8,7 @@
 <title>在轨管理工作全阶段任务管理</title>
 </head>
 <body>
-          <h2 class="page-header">在轨管理工作全阶段任务管理-GRAPH</h2>
+          <h2 class="page-header">在轨管理工作全阶段任务管理</h2>
 		  
 		  <h3>一、发射及保障工作 <button id="btn_setnewtask" class="btn btn-default btn-xs pull-right" data-target="#modal_setnewtask" data-toggle="modal">设置新任务</button></h3>
           <div class="table-responsive">
@@ -260,7 +261,7 @@
           </div>
 		  <div class="row">
 			<div class="col-sm-12">
-				<a href="<s:url namespace="/taskdist" action="indexlist"></s:url>" class="btn btn-primary">全部任务节点信息</a>
+				<a href="<s:url namespace='/taskdist' action='indexlist'></s:url>" class="btn btn-primary text-center">全部任务节点信息</a>
 			</div>
 			</div>
 			
@@ -272,20 +273,25 @@
 					<h4 class="modal-title" id="myModalLabel">任务建立与分配</h4>
 				  </div>
 				  <div class="modal-body">
-					<div class="container-fluid">
-					<div class="row">
-						<div class="col-sm-2">任务名称：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-						<div class="col-sm-2">确认人：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2">责任人：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-						<div class="col-sm-2">截止时间：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-					</div>
-					</div>
+
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">任务名称：</label>
+	<input type="text" class="form-control" id="exampleInputText1" placeholder="任务名称">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">确认人：</label>
+    <input type="text" class="form-control" id="exampleInputText2" placeholder="确认人">
+  </div>
+<div class="form-group">
+    <label for="exampleInputEmail1">责任人：</label>
+	<input type="text" class="form-control" id="exampleInputText3" placeholder="责任人">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">截止时间：</label>
+    <input type="text" class="form-control" id="exampleInputText4" placeholder="截止时间">
+  </div>
+</form>
 				  </div>
 				  <div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

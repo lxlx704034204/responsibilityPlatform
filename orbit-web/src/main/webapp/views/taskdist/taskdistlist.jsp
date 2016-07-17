@@ -266,20 +266,24 @@
 					<h4 class="modal-title" id="myModalLabel">任务建立与分配</h4>
 				  </div>
 				  <div class="modal-body">
-					<div class="container-fluid">
-					<div class="row">
-						<div class="col-sm-2">任务名称：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-						<div class="col-sm-2">确认人：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2">责任人：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-						<div class="col-sm-2">截止时间：</div>
-						<div class="col-sm-2"><input type="input" /></div>
-					</div>
-					</div>
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">任务名称：</label>
+	<input type="text" class="form-control" id="exampleInputText1" placeholder="任务名称">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">确认人：</label>
+    <input type="text" class="form-control" id="exampleInputText2" placeholder="确认人">
+  </div>
+<div class="form-group">
+    <label for="exampleInputEmail1">责任人：</label>
+	<input type="text" class="form-control" id="exampleInputText3" placeholder="责任人">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">截止时间：</label>
+    <input type="text" class="form-control" id="exampleInputText4" placeholder="截止时间">
+  </div>
+</form>
 				  </div>
 				  <div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

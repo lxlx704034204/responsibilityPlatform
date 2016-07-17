@@ -9,20 +9,21 @@
 <body>
           <h2 class="page-header">重点遥测参数趋势图</h2>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              卫星型号：<select><option>型号1</option></select>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              开始时间：<input type="text" />
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              结束时间：<input type="text" />
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <button type="button" class="btn btn-primary">查询</button>
-            </div>
-          </div>
+<form class="form-inline">
+  <div class="form-group">
+    <label for="exampleInputName2">卫星型号：</label>
+    <select><option>型号1</option></select>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail2">开始时间：</label>
+    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="开始时间">
+  </div>
+<div class="form-group">
+    <label for="exampleInputEmail2">结束时间：</label>
+    <input type="text" class="form-control" id="exampleInputEmail3" placeholder="结束时间">
+  </div>
+  <button type="submit" class="btn btn-default">查询</button>
+</form>
 
           
 		
