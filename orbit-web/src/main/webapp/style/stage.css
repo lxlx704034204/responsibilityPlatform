@@ -6,7 +6,7 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 80px;
+  padding-top: 90px;
 }
 
 
@@ -38,7 +38,7 @@ body {
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
-    top: 92px;
+    top: 102px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -121,7 +121,7 @@ body {
 .navbar a:hover{color:#279ddd;}
 
 .currinfo{
-	min-height:40px;background-color:#fff;border-bottom:1px solid #ccc;font-size:13px;
+	min-height:50px;background-color:#fff;border-bottom:1px solid #ccc;font-size:13px;padding-top:5px;padding-left:20px;
 }
 .currinfo a {font-size:13px;}
 .currinfo .currinfo-list{padding:0;margin:0;}

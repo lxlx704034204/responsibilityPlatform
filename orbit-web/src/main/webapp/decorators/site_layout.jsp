@@ -49,15 +49,31 @@
         </div>
       </div>
 	  <div class="currinfo">
-		<ul class="currinfo-list">
-			<li>欢迎 <a href="#">张三</a>！</li>
-			<li>已选型号：<select><option>xxxx-xxxx</option></select> <a href="#" class="btn btn-default btn-xs" role="button">型号选择</a></li>
-			<li><a href="<s:url namespace="/taskdist" action="indexgraph"></s:url>" class="btn btn-primary btn-xs" role="button">任务分发</a></li>
-			<li>目前未处理报警信息数：</li>
-			<li>今日测控事件：</li>
-			<li>今日备忘：</li>
-		</ul>
 		
+<form class="form-inline">
+  <div class="form-group">
+	欢迎：
+    <label for="exampleInputEmail2">张三</label>！
+  </div>
+<div class="form-group">
+    已选型号：
+    <select><option>xxxx-xxxx</option></select>
+  </div>
+  <button type="submit" class="btn btn-default">型号选择</button>
+<a href="<s:url namespace="/taskdist" action="indexgraph"></s:url>" class="btn btn-primary" role="button">任务分发</a>
+	<div class="form-group">
+		目前未处理报警信息数：
+		<label>XX</label>
+	</div>
+<div class="form-group">
+		今日测控事件：
+		<label>XX</label>
+	</div>
+<div class="form-group">
+		今日备忘：
+		<label>XX</label>
+	</div>
+</form>
 	  </div>
     </nav>
 
