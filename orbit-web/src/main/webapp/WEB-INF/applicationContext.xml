@@ -48,10 +48,16 @@
 
 <!-- 	Actions --> 
 	<bean id="homeActions" class="com.orbit.actions.HomeActions">
-<!-- 		<property name="topicService" ref="topicService" /> -->
-<!-- 		<property name="tagService" ref="tagService" /> -->
-<!-- 		<property name="articleService" ref="articleService" /> -->
-<!-- 		<property name="noteService" ref="noteService" /> -->
+	</bean>
+	<bean id="levelThreeLimitActions" class="com.orbit.actions.Level3rdLimitActions">
+	</bean>
+	<bean id="yaoceParamsActions" class="com.orbit.actions.YaoceParamsActions">
+	</bean>
+	<bean id="taskDistActions" class="com.orbit.actions.TaskDistActions">
+	</bean>
+	<bean id="cekongEventsActions" class="com.orbit.actions.CekongEventsActions">
+	</bean>
+	<bean id="tipsActions" class="com.orbit.actions.TipsActions">
 	</bean>
 <!-- 	<bean id="userAction" class="com.ilanever.izone.actions.UserAction"> -->
 <!-- 		<property name="userService" ref="userService" /> -->

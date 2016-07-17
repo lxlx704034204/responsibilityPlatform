@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="orbit-regular-yaoceparams" namespace="/regular/yaoceparams" extends="orbit-default">
+    	<action name="index" class="yaoceParamsActions" method="pageIndex">
+			<result>/views/regular/yaoceparams.jsp</result>
+		</action>
+    </package>
+    
+<!--     <package name="orbit-system-home" namespace="/system" extends="orbit-default"> -->
+<!--     	<action name="index" class="homeAction" method="systemIndex"> -->
+<!--     		<result name="success">/areas/system/home/index.jsp</result> -->
+<!--     		<interceptor-ref name="admin"></interceptor-ref> -->
+<!--     	</action> -->
+<!--     	<action name="default" class="homeAction" method="systemDefault"> -->
+<!--     		<result name="success">/areas/system/home/default.jsp</result> -->
+<!--     		<interceptor-ref name="admin"></interceptor-ref> -->
+<!--     	</action> -->
+<!--     </package> -->
+</struts>

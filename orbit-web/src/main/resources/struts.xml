@@ -76,4 +76,9 @@
 	</package>
 	
 	<include file="struts-config/struts-home.xml"></include>
+	<include file="struts-config/struts-levelthreelimit.xml"></include>
+	<include file="struts-config/struts-yaoceparams.xml"></include>
+	<include file="struts-config/struts-taskdist.xml"></include>
+	<include file="struts-config/struts-cekongevents.xml"></include>
+	<include file="struts-config/struts-tips.xml"></include>
 </struts>
