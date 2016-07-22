@@ -9,6 +9,8 @@ yum install -y perl perl-devel net-tools vim perl-Data-Dumper
 
 groupadd mysql
 useradd -g mysql -s /bin/false mysql
+systemctl stop firewalld
+systemctl disable firewalld
 
 sync_dir=/home/vagrant/sync
 rpm -ivh ${sync_dir}/MySQL-Cluster-server-gpl-7.4.11-1.el7.x86_64.rpm
