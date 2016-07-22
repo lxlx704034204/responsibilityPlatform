@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.provider "virtualbox" do |vb|
+	vb.customize ["modifyvm", :id, "--cpuexecutioncap", "20"]
+	vb.customize ["modifyvm", :id, "--memory", "2048"]
+	vb.customize ["modifyvm", :id, "--ioapic", "on"]
+  end
+
+  config.vm.define "manager" do |node1|
+	node1.vm.box_check_update = false
+  	node1.vm.hostname="manager"
+        node1.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+        node1.vm.provision "shell",
+                run: "always",
+                inline: "ip addr add  192.168.101.202/16  dev eth1"
+        node1.vm.provision "shell",path: "bootstrap.sh"
+  end
+
+  config.vm.define "sql" do |zepplin|
+	zepplin.vm.box_check_update = false
+  	zepplin.vm.hostname="sql"
+ 	zepplin.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+	zepplin.vm.provision "shell",
+    		run: "always",
+ 		inline: "ip addr add 192.168.101.203/16 dev eth1"
+	zepplin.vm.provision "shell",path: "bootstrap.sh"
+  end
+   config.vm.define "data1" do |node2|
+	node2.vm.box_check_update = false
+  	node2.vm.hostname="data1"
+ 	node2.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+	node2.vm.provision "shell",
+    		run: "always",
+ 		inline: "ip addr add 192.168.101.204/16 dev eth1" 
+	node2.vm.provision "shell",path: "bootstrap.sh"
+  end
+  config.vm.define "data2" do |node3|
+        node3.vm.box_check_update = false
+  	node3.vm.hostname="data2"
+ 	node3.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+        node3.vm.provision "shell",
+    		run: "always",
+ 		inline: "ip addr add 192.168.101.205/16 dev eth1"
+        node3.vm.provision "shell",path: "bootstrap.sh"
+  end
+  
+#  config.vm.define "node4" do |node3|
+#        node3.vm.box_check_update = false
+#  	node3.vm.hostname="node4"
+# 	node3.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+#
+#        node3.vm.provision "shell",
+#    		run: "always",
+# 		inline: "ifconfig eth1 192.168.101.205 netmask 255.255.0.0 up"
+#        node3.vm.provision "shell",path: "bootstrap.sh"
+#  end
+end
