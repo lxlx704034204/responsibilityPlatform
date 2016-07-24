@@ -137,3 +137,14 @@ body{font-family:'Microsoft Yahei';}
 
 .work-result{font-size:13px;line-height:30px;}
 
+.flowgraphtable{width:100%;}
+.flowgraphtable .stage{border-bottom:1px solid #eee;}
+.flowgraphtable .flowtitlearea{width:240px;background-image:url('images/vline.png');background-repeat:repeat-y;background-position:center;}
+.flowgraphtable .topstage{vertical-align: top;}
+.flowgraphtable .bottomstage{vertical-align: bottom;}
+.flowgraphtable .blankholder{width:100%;height:30px;}
+.flowgraphtable .flowtitlearea .startcycle{height:30px;width:30px;margin:0 auto; background-color:#fff;border:5px solid #ccc;-webkit-border-radius: 15px;-moz-border-radius: 15px;border-radius:15px;}
+.flowgraphtable .flowtitlearea .stopcycle{height:30px;width:30px;margin:0 auto; background-color:#fff;background-color: #ccc;-webkit-border-radius: 15px;-moz-border-radius: 15px;border-radius:15px;}
+.flowgraphtable .flowtitlearea .flowtitlecontainer{width:180px;height:80px; margin:0 auto; border:1px solid #ddd;-webkit-border-radius: 30px;-moz-border-radius: 30px;border-radius:30px;background-color:#fff;padding:10px 0;}
+.flowgraphtable .flowtitlearea .flowtitlecontainer .title{width:100%;text-align:center; font-weight:bolder;height:30px;}
+.flowgraphtable .flowtitlearea .flowtitlecontainer .daterange{width:100%;text-align:center;height:30px;}
