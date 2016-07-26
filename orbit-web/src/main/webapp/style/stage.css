@@ -148,3 +148,5 @@ body{font-family:'Microsoft Yahei';}
 .flowgraphtable .flowtitlearea .flowtitlecontainer{width:180px;height:80px; margin:0 auto; border:1px solid #ddd;-webkit-border-radius: 30px;-moz-border-radius: 30px;border-radius:30px;background-color:#fff;padding:10px 0;}
 .flowgraphtable .flowtitlearea .flowtitlecontainer .title{width:100%;text-align:center; font-weight:bolder;height:30px;}
 .flowgraphtable .flowtitlearea .flowtitlecontainer .daterange{width:100%;text-align:center;height:30px;}
+
+.task-info{margin-top:10px;margin-bottom:10px;}
