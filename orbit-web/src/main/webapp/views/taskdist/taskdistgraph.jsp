@@ -20,7 +20,71 @@
                     </div>
                 </td>
                 <td>
-                    <div style="height:300px;">
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">发射保障策划</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                XXX星发射保障计划
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">修改</button>
+                            </div>
+                            <div class="col-lg-3">
+                                确认时间：XXXX
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">发射保障软硬件配置</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                XXX星发射保障软硬件配置
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">修改</button>
+                            </div>
+                            <div class="col-lg-3">
+                                确认时间：XXXX
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">发射保障软硬件配置</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                XXX星发射保障软硬件配置
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">修改</button>
+                            </div>
+                            <div class="col-lg-3">
+                                确认时间：XXXX
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -32,7 +96,74 @@
                     </div>
                 </td>
                 <td>
-                    <div style="height:300px;">
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -44,7 +175,74 @@
                     </div>
                 </td>
                 <td>
-                    <div style="height:300px;">
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -58,15 +256,85 @@
                     <div class="stopcycle"></div>
                 </td>
                 <td>
-                    <div style="height:300px;">
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid task-info">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#">在轨管理工作要点</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div>责任人：XXX</div>
+                                <div>截止时间：XXXX</div>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text"  style="width:200px;"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">提交</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="btn btn-default btn-sm">确认</button>
+                                <button type="button" class="btn btn-default btn-sm">返回</button>
+                            </div>
+                        </div>
                     </div>
                 </td>
             </tr>
         </table>
-        <div class="row">
-            <div class="col-sm-12">
-                <a href="<s:url namespace='/taskdist' action='indexlist'></s:url>" class="btn btn-primary text-center">全部任务节点信息</a>
+        <div class="container-fluid" style="margin-top:30px;">
+            <div class="row">
+                <div class="col-sm-12 " style="text-align:center;">
+                    <a href="<s:url namespace='/taskdist' action='indexlist'></s:url>" class="btn btn-primary text-center" style="margin:0 auto;">全部任务节点信息</a>
+                </div>
             </div>
         </div>
+
     </body>
 </html>
