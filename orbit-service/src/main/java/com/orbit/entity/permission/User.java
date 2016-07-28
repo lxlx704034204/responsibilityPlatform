@@ -37,7 +37,9 @@ public class User extends BaseEntity implements UserDetails {
    */
   private String email;
 
-
+  /**
+   * 所负责的型号
+   */
   @OneToMany(mappedBy = "adminUser", fetch = FetchType.LAZY)
   private List<Satellite> satellites;
 
@@ -111,6 +113,10 @@ public class User extends BaseEntity implements UserDetails {
     this.email = email;
   }
 
+  /**
+   * 获取该责任者所负责的型号列表
+   * @return
+   */
   public List<Satellite> getSatellites() {
     return satellites;
   }
@@ -122,7 +128,7 @@ public class User extends BaseEntity implements UserDetails {
   @Override
   public String toString() {
     return String.format(
-            "Satellite[id=%d, loginName='%s',fullName=%s]",
+            "User[id=%d, loginName='%s',fullName=%s]",
             id, loginName, fullName);
   }
 }

@@ -1,4 +1,4 @@
-package com.orbit.permission;
+package com.orbit.repository;
 
 import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.permission.User;

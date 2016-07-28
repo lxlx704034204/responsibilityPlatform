@@ -12,11 +12,24 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Satellite extends BaseEntity {
 
+  /**
+   * 名称
+   */
   private String name;
 
+  /**
+   * 责任人
+   */
   @ManyToOne
   @JoinColumn(name = "ADMIN_ID", referencedColumnName = "ID")
   private User adminUser;
+
+  protected Satellite() {
+  }
+
+  public Satellite(String name) {
+    this.name = name;
+  }
 
   public String getName() {
     return name;
@@ -26,18 +39,18 @@ public class Satellite extends BaseEntity {
     this.name = name;
   }
 
-  @Override
-  public String toString() {
-    return String.format(
-            "Satellite[id=%d, name='%s',责任人=%s]",
-            id, name, adminUser);
-  }
-
   public User getAdminUser() {
     return adminUser;
   }
 
   public void setAdminUser(User adminUser) {
     this.adminUser = adminUser;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+            "Satellite[id=%d, name='%s',责任人=%s]",
+            id, name, adminUser);
   }
 }
