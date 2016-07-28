@@ -2,6 +2,8 @@ package com.orbit.repsitory;
 
 import com.orbit.entity.Satellite;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,5 +19,14 @@ public interface SatelliteRepository extends JpaRepository<Satellite, Long> {
    * @param loginName 负责人的登录用户名
    * @return 型号列表
    */
-  List<Satellite> findByAdminUserLoginName(String loginName);
+  List<Satellite> findAllByAdminUserLoginName(String loginName);
+
+
+  /**
+   * 分页查询"负责人"负责的型号列表
+   * @param loginName
+   * @param pageable
+   * @return
+   */
+  Page<Satellite> findByAdminUserLoginName(String loginName, Pageable pageable);
 }
