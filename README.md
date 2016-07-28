@@ -49,15 +49,15 @@ id=4          |@192.168.101.203  (mysql-5.6.29 ndb-7.4.11)
 2.  Mysql中文字符集支持,需要将/etc/my.conf文件全部替换成vagrant中共享目录中的文件
 
 # 如何重置mysql root密码?
-*   /etc/init.d/mysql stop
-*   mysqld_safe --user=mysql --skip-grant-tables --skip-networking &
-*   mysql -u root mysql
-*   mysql> UPDATE user SET Password=PASSWORD('newpassword') where USER='root';
-*   mysql> FLUSH PRIVILEGES;
-*   mysql> quit
-*    /etc/init.d/mysql restart
-*    mysql -uroot -p
-*   Enter password: <输入新设的密码newpassword>
+1.  /etc/init.d/mysql stop
+2.  mysqld_safe --user=mysql --skip-grant-tables --skip-networking &
+3.  mysql -u root mysql
+4.  mysql> UPDATE user SET Password=PASSWORD('newpassword') where USER='root';
+5.  mysql> FLUSH PRIVILEGES;
+6.  mysql> quit
+7.  /etc/init.d/mysql restart
+8.  mysql -uroot -p
+9.  Enter password: <输入新设的密码newpassword>
 
 
 
