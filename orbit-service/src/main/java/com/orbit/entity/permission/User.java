@@ -1,13 +1,18 @@
 package com.orbit.entity.permission;
 
 import com.orbit.entity.BaseEntity;
+import com.orbit.entity.Satellite;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 /**
  * 用户
@@ -18,11 +23,13 @@ public class User extends BaseEntity implements UserDetails {
   /**
    * 用户姓名
    */
+  @Column(name = "FULL_NAME")
   private String fullName;
 
   /**
    * 登录系统的账号
    */
+  @Column(name = "LOGIN_NAME", nullable = false)
   private String loginName;
 
   /**
@@ -30,6 +37,16 @@ public class User extends BaseEntity implements UserDetails {
    */
   private String email;
 
+
+  @OneToMany(mappedBy = "adminUser", fetch = FetchType.LAZY)
+  private List<Satellite> satellites;
+
+  protected User() {
+  }
+
+  public User(String loginName) {
+    this.loginName = loginName;
+  }
 
   //以下是UserDetails接口中规定的方法
   @Override
@@ -92,5 +109,20 @@ public class User extends BaseEntity implements UserDetails {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public List<Satellite> getSatellites() {
+    return satellites;
+  }
+
+  public void setSatellites(List<Satellite> satellites) {
+    this.satellites = satellites;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+            "Satellite[id=%d, loginName='%s',fullName=%s]",
+            id, loginName, fullName);
   }
 }
