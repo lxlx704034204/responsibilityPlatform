@@ -4,7 +4,7 @@ import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.Satellite;
 import com.orbit.entity.permission.User;
 import com.orbit.repsitory.SatelliteRepository;
-import com.orbit.repsitory.UserRepository;
+import com.orbit.repsitory.permission.UserRepository;
 
 import org.junit.Assert;
 import org.junit.Test;

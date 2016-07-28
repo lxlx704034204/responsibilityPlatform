@@ -1,4 +1,4 @@
-package com.orbit.repsitory;
+package com.orbit.repsitory.permission;
 
 import com.orbit.entity.permission.User;
 

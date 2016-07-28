@@ -128,7 +128,7 @@ public class ThresholdAlert extends BaseEntity {
   @Column(name = "START_TIME", nullable = false)
   private Date startTime;
 
-  @Column(name = "END_TIME", nullable = true)
+  @Column(name = "END_TIME")
   private Date endTime;
 
   @Column(nullable = false, length = 1000)
@@ -149,7 +149,7 @@ public class ThresholdAlert extends BaseEntity {
   @Override
   public String toString() {
     return String.format(
-            "ThresholdAlert[id=%d, 型号名称='%s',报警信息=%s]",
-            id, satellite == null ? "" : satellite.getName(), message == null ? "" : message);
+            "ThresholdAlert[id=%d, 型号名称='%s',报警信息=%s,开始时间=%s]",
+            id, satellite == null ? "" : satellite.getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
   }
 }

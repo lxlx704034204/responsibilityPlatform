@@ -1,16 +1,22 @@
 package com.orbit.entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 /**
  * 所有entity基类,封装基本信息
  */
 @MappedSuperclass
 public abstract class BaseEntity {
+  @Transient
+  protected static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   /**
    * 本系统的model id都是自动生成的序列值

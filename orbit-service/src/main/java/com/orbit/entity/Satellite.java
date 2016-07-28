@@ -48,6 +48,9 @@ public class Satellite extends BaseEntity {
     this.name = name;
   }
 
+  /**
+   * 获取型号的责任人
+   */
   public User getAdminUser() {
     return adminUser;
   }
