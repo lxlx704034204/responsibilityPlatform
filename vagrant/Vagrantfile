@@ -14,52 +14,54 @@ Vagrant.configure(2) do |config|
 	node1.vm.box_check_update = false
   	node1.vm.hostname="manager"
         node1.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
-
+        
         node1.vm.provision "shell",
                 run: "always",
-                inline: "ip addr add  192.168.101.202/16  dev eth1"
+                inline: "ifconfig eth1 192.168.101.202 netmask 255.255.0.0 up"
         node1.vm.provision "shell",path: "bootstrap.sh"
   end
 
-  config.vm.define "sql" do |zepplin|
-	zepplin.vm.box_check_update = false
-  	zepplin.vm.hostname="sql"
- 	zepplin.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+  config.vm.define "sql" do |sql|
+	sql.vm.box_check_update = false
+  	sql.vm.hostname="sql"
+ 	sql.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
 
-	zepplin.vm.provision "shell",
-    		run: "always",
- 		inline: "ip addr add 192.168.101.203/16 dev eth1"
-	zepplin.vm.provision "shell",path: "bootstrap.sh"
+        sql.vm.provision "shell",
+                run: "always",
+                inline: "ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up"
+	sql.vm.provision "shell",path: "bootstrap.sh"
   end
-   config.vm.define "data1" do |node2|
-	node2.vm.box_check_update = false
-  	node2.vm.hostname="data1"
- 	node2.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
 
-	node2.vm.provision "shell",
+   config.vm.define "data1" do |data1|
+	data1.vm.box_check_update = false
+  	data1.vm.hostname="data1"
+ 	data1.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+	data1.vm.provision "shell",
     		run: "always",
  		inline: "ip addr add 192.168.101.204/16 dev eth1" 
-	node2.vm.provision "shell",path: "bootstrap.sh"
+	data1.vm.provision "shell",path: "bootstrap.sh"
   end
-  config.vm.define "data2" do |node3|
-        node3.vm.box_check_update = false
-  	node3.vm.hostname="data2"
- 	node3.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
 
-        node3.vm.provision "shell",
+  config.vm.define "data2" do |data2|
+        data2.vm.box_check_update = false
+  	data2.vm.hostname="data2"
+ 	data2.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+        data2.vm.provision "shell",
     		run: "always",
  		inline: "ip addr add 192.168.101.205/16 dev eth1"
-        node3.vm.provision "shell",path: "bootstrap.sh"
+        data2.vm.provision "shell",path: "bootstrap.sh"
   end
   
-#  config.vm.define "node4" do |node3|
-#        node3.vm.box_check_update = false
-#  	node3.vm.hostname="node4"
-# 	node3.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+#  config.vm.define "data3" do |data3|
+#        data3.vm.box_check_update = false
+#  	data3.vm.hostname="node4"
+# 	data3.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
 #
-#        node3.vm.provision "shell",
+#        data3.vm.provision "shell",
 #    		run: "always",
-# 		inline: "ifconfig eth1 192.168.101.205 netmask 255.255.0.0 up"
-#        node3.vm.provision "shell",path: "bootstrap.sh"
+# 		inline: "ifconfig eth1 192.168.101.206 netmask 255.255.0.0 up"
+#        data3.vm.provision "shell",path: "bootstrap.sh"
 #  end
 end
