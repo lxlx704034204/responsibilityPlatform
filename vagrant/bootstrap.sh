@@ -19,14 +19,16 @@ host=`hostname`
 if [ "$host" == "sql" ]
     then
         rpm -ivh ${sync_dir}/MySQL-Cluster-client-gpl-7.4.11-1.el7.x86_64.rpm
-        cp ${sync_dir}/my.conf /etc/my.cnf
-elif [[ "$host" =~ "data*" ]]
+        cp ${sync_dir}/my.cnf /etc/my.cnf
+elif [[ $host =~ ^data ]]
     then
-        cp ${sync_dir}/my.conf /etc/my.cnf
+        cp ${sync_dir}/my.cnf /etc/my.cnf
+        mkdir -p /usr/local/mysql/data
+        chown -R mysql:mysql /var/lib/mysql
 elif [ "$host" == "manager" ]
     then
-        mkdir /var/lib/mysql-cluster
+        mkdir -p /var/lib/mysql-cluster
         cp ${sync_dir}/config.ini /var/lib/mysql-cluster/
 else
-    echo "should not be here"
+    echo "error: should not be here"
 fi

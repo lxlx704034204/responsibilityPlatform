@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
         
         node1.vm.provision "shell",
                 run: "always",
-                inline: "ifconfig eth1 192.168.101.202 netmask 255.255.0.0 up"
+                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.202 netmask 255.255.0.0 up"
         node1.vm.provision "shell",path: "bootstrap.sh"
   end
 
@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
 
         sql.vm.provision "shell",
                 run: "always",
-                inline: "ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up"
+                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up"
 	sql.vm.provision "shell",path: "bootstrap.sh"
   end
 
@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
 
         data2.vm.provision "shell",
     		run: "always",
- 		inline: "ip addr add 192.168.101.205/16 dev eth1"
+ 		inline: "yum install -y net-tools && ip addr add 192.168.101.205/16 dev eth1"
         data2.vm.provision "shell",path: "bootstrap.sh"
   end
   
