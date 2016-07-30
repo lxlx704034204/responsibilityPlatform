@@ -22,6 +22,7 @@
 	href="<s:url value="/bower_components/bootstrap/dist/css/bootstrap.min.css"></s:url>" />
 <script src="<s:url value="/bower_components/jquery/dist/jquery.min.js"></s:url>"></script>
 <script src="<s:url value="/bower_components/bootstrap/dist/js/bootstrap.min.js"></s:url>"></script>
+<script src="<s:url value="/scripts/jsless.js"></s:url>"></script>
 <link type="text/css" rel="stylesheet" href="<s:url value="/style/stage.css"></s:url>" />
 <decorator:head></decorator:head>
 </head>
@@ -49,7 +50,7 @@
         </div>
       </div>
 	  <div class="currinfo">
-		
+
 <form class="form-inline">
   <div class="form-group">
 	欢迎：
@@ -90,7 +91,7 @@
 			<div role="tabpanel" class="tab-pane fade" id="history" aria-labelledby="history-tab">历史...</div>
 			<div role="tabpanel" class="tab-pane fade active in" id="today" aria-labelledby="today-tab">
 				<dl>
-					<dt>日常工作</dt>				
+					<dt>日常工作</dt>
 					<dd>
 					<ul class="nav nav-sidebar">
 					    <li class="active"><a href="<s:url namespace="/regular/levelthree" action="index"></s:url>">三级门限报警分析 <span id="tip_level3limit" class="badge">--</span></a></li>
@@ -137,21 +138,21 @@
 				  </ul>
 					</dd>
 				</dl>
-        			
-				
-				  
+
+
+
       			</div>
 			<div role="tabpanel" class="tab-pane fade" id="future" aria-labelledby="future-tab">未来...</div>
 		</div>
           	</div>
-          
+
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <decorator:body></decorator:body>
         </div>
       </div>
     </div>
-	<script src="<s:url value="/scripts/jsless.js"></s:url>"></script>
+
 	<script>
 		$('#main-nav-tabs a').click(function (e) {
 			$("#main-nav-contents .tab-pane").hide();
@@ -169,14 +170,14 @@
 						var tips = rep.content;
 						$("#tip_level3limit").html(tips['level3limit']);
 					} else {
-						
+
 					}
 				}
 			});
 		};
 		$(function(){
 			updateTips();
-			window.setInterval(updateTips, 3000); 
+			window.setInterval(updateTips, 3000);
 		});
 	</script>
 </body>
