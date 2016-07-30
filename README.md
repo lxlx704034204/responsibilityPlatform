@@ -20,6 +20,9 @@
  sql node  | sudo /etc/init.d/mysql start
  data node | sudo ndbd
  
+## 注意:如果sql node通过init脚本启动不成功的话,可以执行如下命令启动:
+sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
+ 
 ## 各节点启动顺序
  1. ndb_mgmd
  2. data node
@@ -48,16 +51,13 @@ id=4          |@192.168.101.203  (mysql-5.6.29 ndb-7.4.11)
 1.  除了data node可以支持在线添加新节点,其他节点,无论是ndb_mgmd节点,还是sql节点,都不能在不重启集群的情况下添加新节点
 2.  Mysql中文字符集支持,需要将/etc/my.conf文件全部替换成vagrant中共享目录中的文件
 
-# 如何重置mysql root密码?
-1.  /etc/init.d/mysql stop
-2.  mysqld_safe --user=mysql --skip-grant-tables --skip-networking &
-3.  mysql -u root mysql
-4.  mysql> UPDATE user SET Password=PASSWORD('newpassword') where USER='root';
-5.  mysql> FLUSH PRIVILEGES;
-6.  mysql> quit
-7.  /etc/init.d/mysql restart
-8.  mysql -uroot -p
-9.  Enter password: <输入新设的密码newpassword>
+# [如何重置mysql root密码?](http://dev.mysql.com/doc/refman/5.7/en/resetting-permissions.html)
+1.  mysql -u root -p
+    初始密码位置在sql节点上的/root/.mysql_secret文件中
+2.  mysql> UPDATE user SET Password=PASSWORD('mysql') and HOST='%' where USER='root' and HOST='localhost';t
+3.  /etc/init.d/mysql restart
+4.  mysql -uroot -p
+5.  Enter password: <输入新设的密码newpassword>
 
 
 

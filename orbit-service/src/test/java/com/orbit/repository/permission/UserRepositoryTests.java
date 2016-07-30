@@ -22,10 +22,17 @@ public class UserRepositoryTests {
   }
 
   @Test
-  public void testCreate() {
+  public void testCreateAndDelete() {
     // save a couple of customers
-    repository.save(new User("张三"));
-    repository.save(new User("李四"));
-    repository.save(new User("王五"));
+    User user1 = new User("张三");
+    User user2 = new User("李四");
+    User user3 = new User("王五");
+    repository.save(user1);
+    repository.save(user2);
+    repository.save(user3);
+
+    repository.delete(user1);
+    repository.delete(user2);
+    repository.delete(user3);
   }
 }
