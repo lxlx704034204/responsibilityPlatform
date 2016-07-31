@@ -27,6 +27,14 @@
  
 ## 注意:如果sql node通过init脚本启动不成功的话,可以执行如下命令启动:
 sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
+根据[mysql官方推荐配置](https://dev.mysql.com/doc/refman/5.6/en/mysql-cluster-config-starting.html)
+如下参数最好也加入到 mysqld启动参数中:
+1. --ndb-use-exact-count=0
+2. --ndb-index-stat-enable=0
+3. --ndb-force-send=1
+4. --engine-condition-pushdown=1
+
+
  
 ## 各节点启动顺序
  1. ndb_mgmd
