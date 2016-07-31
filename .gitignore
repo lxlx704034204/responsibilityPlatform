@@ -10,3 +10,4 @@ bootstrap-table-examples-master
 .project
 .settings
 .vagrant
+vagrant/MySQL-*.rpm

@@ -5,12 +5,15 @@ import com.orbit.entity.ThresholdAlert;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Date;
 
 /**
- * 门限报警repository
+ * 三级门限报警repository
  */
 public interface ThresholdAlertRepository extends JpaRepository<ThresholdAlert, Long> {
 
@@ -24,5 +27,19 @@ public interface ThresholdAlertRepository extends JpaRepository<ThresholdAlert, 
    * @return 属于这些型号的三级报警列表
    */
   Page<ThresholdAlert> findBySatelliteNameInIgnoreCaseAndStartTimeBetween(Collection<String> satelliteNames, Date startTime, Date endTime, Pageable pageable);
+
+
+  /**
+   * 批量更新"事件类别"和"情况说明"
+   *
+   * @param severityLevel 严重程度
+   * @param message       情况说明
+   * @param ids           id列表
+   * @return 被更新的行数
+   */
+  @Modifying
+  @Transactional
+  @Query("update #{#entityName} a set a.severityLevel=?1 , a.message=?2  where a.id in (?3)")
+  Integer batchAddSituationComment(ThresholdAlert.SeverityLevel severityLevel, String message, Long... ids);
 
 }

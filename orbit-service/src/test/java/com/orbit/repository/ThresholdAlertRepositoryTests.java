@@ -31,7 +31,6 @@ public class ThresholdAlertRepositoryTests {
   @Autowired
   SatelliteRepository satelliteRepository;
 
-
   Satellite s1;
   ThresholdAlert alert1, alert2, alert3, alert4, alert5, alert6;
 
@@ -62,29 +61,28 @@ public class ThresholdAlertRepositoryTests {
 
   @After
   public void destroy() {
-    repository.delete(alert1);
-    repository.delete(alert2);
-    repository.delete(alert3);
-    repository.delete(alert4);
-    repository.delete(alert5);
-    repository.delete(alert6);
+    repository.delete(alert1.getId());
+    repository.delete(alert2.getId());
+    repository.delete(alert3.getId());
+    repository.delete(alert4.getId());
+    repository.delete(alert5.getId());
+    repository.delete(alert6.getId());
 
     satelliteRepository.delete(s1);
 
   }
 
   @Test
-  public void testfindBySatelliteNameIn() {
+  public void testFindBySatelliteNameInIgnoreCaseAndStartTimeBetween() {
     //这里可以作为前台UI调用的demo,分页查询如何向后台传递参数,页码从0开始
     PageRequest pageRequest = new PageRequest(0, 5, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
     Calendar yesterday = Calendar.getInstance();
     yesterday.add(Calendar.DAY_OF_MONTH, -1);
 
-    Calendar tommorow = Calendar.getInstance();
-    tommorow.add(Calendar.DAY_OF_MONTH, 1);
+    Calendar tomorrow = Calendar.getInstance();
+    tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-
-    Page<ThresholdAlert> pageResult = repository.findBySatelliteNameInIgnoreCaseAndStartTimeBetween(Arrays.asList("型号1", "型号2"), yesterday.getTime(), tommorow.getTime()
+    Page<ThresholdAlert> pageResult = repository.findBySatelliteNameInIgnoreCaseAndStartTimeBetween(Arrays.asList("型号1", "型号2"), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());
@@ -99,6 +97,14 @@ public class ThresholdAlertRepositoryTests {
             pageResult.getContent()) {
       System.out.println(alert);
     }
+  }
 
+  /**
+   * 测试添加批量分析
+   */
+  @Test
+  public void testBatchAddSituationComment() {
+    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.MAJOR, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
+    Assert.assertEquals(5, affectedSize);
   }
 }

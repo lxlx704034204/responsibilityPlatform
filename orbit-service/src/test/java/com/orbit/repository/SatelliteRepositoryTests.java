@@ -63,7 +63,7 @@ public class SatelliteRepositoryTests {
     s4 = repository.save(s4);
 
     Page<Satellite> satellitesAdmins = repository.findByAdminUserLoginName("张三", new PageRequest(0, 3));
-    Assert.assertTrue(satellitesAdmins.getTotalElements() >= 1);
+    Assert.assertTrue(satellitesAdmins.getTotalElements() == 4);
 
     repository.delete(s1);
     repository.delete(s2);

@@ -20,6 +20,11 @@
  sql node  | sudo /etc/init.d/mysql start
  data node | sudo ndbd
  
+## 各节点关闭
+ 节点类型   | 关闭方法
+:----------|:------------------------------------------------------------------------------------------------------
+ ndb_mgmd  | sudo ndb_mgm –e shutdown
+ 
 ## 注意:如果sql node通过init脚本启动不成功的话,可以执行如下命令启动:
 sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
  
@@ -27,7 +32,9 @@ sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbclu
  1. ndb_mgmd
  2. data node
  3. sql node
- 
+ 注意:启动各节点之前,需要将该节点上的mysql服务停掉,/etc/init.d/mysql stop
+  
+  
 启动完成之后,可以在ndb_mgmd节点上,通过ndb_mgmd进入到cluster的管理客户端,输入 show 命令查看集群当前的状态
 
 # Cluster Configuration
@@ -58,6 +65,13 @@ id=4          |@192.168.101.203  (mysql-5.6.29 ndb-7.4.11)
 3.  /etc/init.d/mysql restart
 4.  mysql -uroot -p
 5.  Enter password: <输入新设的密码newpassword>
+
+# centos7 关闭防火墙
+sudo systemctl stop firewalld.service
+sudo systemctl disable firewalld.service
+
+sudo systemctl enable iptables
+sudo systemctl disable iptables
 
 
 

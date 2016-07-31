@@ -114,7 +114,7 @@ public class ThresholdAlert extends BaseEntity {
   /**
    * 报警严重等级
    */
-  enum SeverityLevel {
+  public enum SeverityLevel {
     MINOR,
     MAJOR,
     SERVE,
@@ -150,6 +150,6 @@ public class ThresholdAlert extends BaseEntity {
   public String toString() {
     return String.format(
             "ThresholdAlert[id=%d, 型号名称='%s',报警信息=%s,开始时间=%s]",
-            id, satellite == null ? "" : satellite.getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+            getId(), satellite == null ? "" : satellite.getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
   }
 }

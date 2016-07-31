@@ -5,6 +5,7 @@ import com.orbit.entity.permission.User;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -18,9 +19,16 @@ import javax.persistence.OneToMany;
 public class Satellite extends BaseEntity {
 
   /**
-   * 名称 TODO:型号代号?
+   * 名称
    */
+  @Column(unique = true, length = 100)
   private String name;
+
+  /**
+   * 代号
+   */
+  @Column(unique = true, length = 100)
+  private String code;
 
   /**
    * 责任人
@@ -63,7 +71,7 @@ public class Satellite extends BaseEntity {
   public String toString() {
     return String.format(
             "Satellite[id=%d, name='%s',责任人=%s]",
-            id, name, adminUser);
+            getId(), name, adminUser);
   }
 
   /**
@@ -75,5 +83,23 @@ public class Satellite extends BaseEntity {
 
   public void setAlerts(List<ThresholdAlert> alerts) {
     this.alerts = alerts;
+  }
+
+  /**
+   * 代号
+   *
+   * @return 型号代号
+   */
+  public String getCode() {
+    return code;
+  }
+
+  /**
+   * 型号代号
+   *
+   * @param code 代号
+   */
+  public void setCode(String code) {
+    this.code = code;
   }
 }

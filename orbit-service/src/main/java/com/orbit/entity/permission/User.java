@@ -129,6 +129,6 @@ public class User extends BaseEntity implements UserDetails {
   public String toString() {
     return String.format(
             "User[id=%d, loginName='%s',fullName=%s]",
-            id, loginName, fullName);
+            getId(), loginName, fullName);
   }
 }
