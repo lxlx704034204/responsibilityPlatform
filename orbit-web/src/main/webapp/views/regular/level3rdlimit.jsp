@@ -30,7 +30,7 @@
             <button type="submit" class="btn btn-default">查询</button>
         </form>
 
-        <div class="table-responsive">
+        <div class="table-responsive" style="margin-top:10px;">
             <table id="list-table"></table>
         </div>
 
@@ -70,13 +70,22 @@
         <script>
 
         var bindlist = function(){
+
+            var params = {
+                searcher:{keyword: ''},
+                pager:{pageIndex: 0}
+            };
+
 			jsless.ajax({
 				url: "<s:url namespace='/json/regular/levelthree' action='getListByPager'></s:url>",
-				data: {},
+				data: params,
 				success: function(rep){
 					if (rep.statusCode == 200) {
 						var ctn = rep.content;
-                        buildtable(5, 10);
+                        var records = ctn.records;
+                        var pageInfo = ctn.pageInfo;
+
+                        buildtable(pageInfo.pageCount, pageInfo.pageSize, records);
 					} else {
 
 					}
@@ -84,7 +93,7 @@
 			});
 		};
 
-        var buildtable = function(pageCount, pageSize){
+        var buildtable = function(pageCount, pageSize, listdata){
             $('#list-table').bootstrapTable({
                 locale:'zh-CN',
                 pagination: true,
@@ -119,17 +128,7 @@
                     field: 'conformdt',
                     title: '确认时间'
                 }],
-                data: [
-                //     {
-                //     id: 1,
-                //     name: 'Item 1',
-                //     price: '$1'
-                // }, {
-                //     id: 2,
-                //     name: 'Item 2',
-                //     price: '$2'
-                // }
-            ]
+                data: listdata
             });
         };
 

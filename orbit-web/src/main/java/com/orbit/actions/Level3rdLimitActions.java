@@ -6,29 +6,31 @@ import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.orbit.configs.SystemConfig;
+
 public class Level3rdLimitActions extends ActionBase {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static Log log = LogFactory.getLog(Level3rdLimitActions.class);
-	
+
 	public String pageIndex(){
 		return SUCCESS;
 	}
-	
+
 	public void jsonGetListByPager(){
 		JsonResult jsonResult = null;
 		try {
 			JSONObject json = this.getRequestJsonObject();
-			//JSONObject searcherJson = json.getJSONObject("searcher");
-			//JSONObject pagerJson = json.getJSONObject("pager");
+			JSONObject searcherJson = json.getJSONObject("searcher");
+			JSONObject pagerJson = json.getJSONObject("pager");
 
-			//String searchKey = searcherJson.getString("keyword");
-			//Integer pageIndex = pagerJson.getInt("pageIndex");
-			
+			String searchKey = searcherJson.getString("keyword");
+			Integer pageIndex = pagerJson.getInt("pageIndex");
+			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 
 			//
 			JSONArray list = new JSONArray();
@@ -47,8 +49,19 @@ public class Level3rdLimitActions extends ActionBase {
 				list.add(item);
 			}
 
-			jsonResult = new JsonResultSuccess(list);
+			Integer recordCount = 23;
+			PageInfo pageInfo = new PageInfo();
+			pageInfo.setPageIndex(pageIndex);
+			pageInfo.setPageSize(pageSize);
+			pageInfo.setRecordCount(recordCount);
+
+			JSONObject listingData = new JSONObject();
+			listingData.put("records", list);
+			listingData.put("pageInfo", pageInfo);
+
+			jsonResult = new JsonResultSuccess(listingData);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			log.error(e.getMessage(), e);
 			jsonResult = new JsonResultError(e.getMessage());
 		} finally {

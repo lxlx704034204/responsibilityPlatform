@@ -44,7 +44,7 @@ public class SystemConfig {
 	}
 
 	public static Integer getSystemCommonListPageSize(){
-		return Integer.valueOf(getProperty("system.common.list.pageSize"));
+		return Integer.valueOf(getProperty("stage.common.list.pageSize"));
 	}
 
 	public static String getSharedfilesDir(){
