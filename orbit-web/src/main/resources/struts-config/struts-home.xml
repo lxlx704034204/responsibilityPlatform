@@ -10,10 +10,13 @@
 <!-- 			<result type="redirectAction">index</result> -->
 <!-- 		</action> -->
     	<action name="index" class="homeActions" method="pageIndex">
-			<result>/views/home/index.jsp</result>
+			<!--<result>/views/home/index.jsp</result>-->
+			<result type="redirectAction">
+				regular/levelthree/index
+			</result>
 		</action>
     </package>
-    
+
 <!--     <package name="orbit-system-home" namespace="/system" extends="orbit-default"> -->
 <!--     	<action name="index" class="homeAction" method="systemIndex"> -->
 <!--     		<result name="success">/areas/system/home/index.jsp</result> -->
