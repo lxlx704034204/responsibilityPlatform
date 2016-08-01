@@ -135,7 +135,7 @@
                         <dd>
                             <ul class="nav nav-sidebar">
                                 <li class="active">
-                                    <a href="<s:url namespace=" /regular/levelthree" action=" index"></s:url>">三级门限报警分析
+                                    <a href="<s:url namespace="/regular/levelthree" action="index"></s:url>">三级门限报警分析
                                     <span id="tip_level3limit" class="badge">--</span>
                                 </a>
                             </li>
@@ -144,7 +144,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<s:url namespace=" /regular/cekongevents" action=" index"></s:url>">测控事件<span class="badge">120/200</span>
+                                <a href="<s:url namespace="/regular/cekongevents" action="index"></s:url>">测控事件<span class="badge">120/200</span>
                             </a>
                         </li>
                         <li>
@@ -152,7 +152,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<s:url namespace=" /regular/yaoceparams" action=" index"></s:url>">重点遥测参数趋势图<span class="badge">120/200</span>
+                            <a href="<s:url namespace="/regular/yaoceparams" action="index"></s:url>">重点遥测参数趋势图<span class="badge">120/200</span>
                         </a>
                     </li>
                 </ul>

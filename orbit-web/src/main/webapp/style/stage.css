@@ -152,7 +152,8 @@ body{font-family:'Microsoft Yahei';}
 .task-info{margin-top:10px;margin-bottom:10px;}
 
 .mode-selector{display:inline;}
-.mode-selector .dropdown-menuitem{height: 30px;padding-left:10px;line-height: 30px;}
+.mode-selector .dropdown-menuitem{padding-left:10px;}
+.mode-selector .dropdown-menuitem label{width:100px;height:30px;line-height: 30px;}
 
 
 .nav-tabs{}
