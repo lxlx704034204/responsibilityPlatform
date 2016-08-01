@@ -17,9 +17,27 @@
         <form class="form-inline">
             <div class="form-group">
                 <label for="exampleInputName2">卫星型号：</label>
-                <select>
-                    <option>型号1</option>
-                </select>
+                <div class="dropdown mode-selector">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        型号1,型号2
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li>
+                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号1</label></div>
+                        </li>
+                        <li>
+                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号2</label></div>
+                        </li>
+                        <li>
+                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号3</label></div>
+                        </li>
+                        <li>
+                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号4</label></div>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警开始时间：</label>
@@ -66,42 +84,45 @@
         </div>
 
         <script src="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.js"></s:url>"></script>
-        <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
-        <script>
+    <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
+<script>
 
-        var bindlist = function(){
+    var bindlist = function () {
 
-            var params = {
-                searcher:{keyword: ''},
-                pager:{pageIndex: 0}
-            };
+        var params = {
+            searcher: {
+                keyword: ''
+            },
+            pager: {
+                pageIndex: 0
+            }
+        };
 
-			jsless.ajax({
-				url: "<s:url namespace='/json/regular/levelthree' action='getListByPager'></s:url>",
-				data: params,
-				success: function(rep){
-					if (rep.statusCode == 200) {
-						var ctn = rep.content;
-                        var records = ctn.records;
-                        var pageInfo = ctn.pageInfo;
+        jsless.ajax({
+            url: "<s:url namespace='/json/regular/levelthree' action='getListByPager'></s:url>",
+            data: params,
+            success: function (rep) {
+                if (rep.statusCode == 200) {
+                    var ctn = rep.content;
+                    var records = ctn.records;
+                    var pageInfo = ctn.pageInfo;
 
-                        buildtable(pageInfo.pageCount, pageInfo.pageSize, pageInfo.recordCount, records);
-					} else {
+                    buildtable(pageInfo.pageCount, pageInfo.pageSize, pageInfo.recordCount, records);
+                } else {}
+            }
+        });
+    };
 
-					}
-				}
-			});
-		};
-
-        var buildtable = function(pageCount, pageSize, recordCount, listdata){
-            $('#list-table').bootstrapTable({
-                locale:'zh-CN',
-                pagination: true,
-                pageNumber: pageCount,
-                pageSize: pageSize,
-                sidePagination: 'server',
-                totalRows: recordCount,
-                columns: [{
+    var buildtable = function (pageCount, pageSize, recordCount, listdata) {
+        $('#list-table').bootstrapTable({
+            locale: 'zh-CN',
+            pagination: true,
+            pageNumber: pageCount,
+            pageSize: pageSize,
+            sidePagination: 'server',
+            totalRows: recordCount,
+            columns: [
+                {
                     field: 'id',
                     checkbox: true,
                     title: 'Item ID'
@@ -129,14 +150,18 @@
                 }, {
                     field: 'conformdt',
                     title: '确认时间'
-                }],
-                data: listdata
-            });
-        };
-
-        $(function(){
-            bindlist();
+                }
+            ],
+            data: listdata
         });
-        </script>
-    </body>
+    };
+
+    $(function () {
+        bindlist();
+        $(".dropdown-menuitem").click(function(e){
+            e.stopPropagation();
+        });
+    });
+</script>
+</body>
 </html>

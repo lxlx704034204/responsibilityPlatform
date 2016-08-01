@@ -14,8 +14,8 @@
 <!--     </decorator> -->
     <decorator name="site-layout" page="site_layout.jsp">
         <pattern>/*.do</pattern>
-        <pattern>/index.html</pattern>
-        
+        <pattern>/index.jsp</pattern>
+
     </decorator>
 
 </decorators>

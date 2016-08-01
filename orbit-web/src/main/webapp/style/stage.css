@@ -150,3 +150,10 @@ body{font-family:'Microsoft Yahei';}
 .flowgraphtable .flowtitlearea .flowtitlecontainer .daterange{width:100%;text-align:center;height:30px;}
 
 .task-info{margin-top:10px;margin-bottom:10px;}
+
+.mode-selector{display:inline;}
+.mode-selector .dropdown-menuitem{height: 30px;padding-left:10px;line-height: 30px;}
+
+
+.nav-tabs{}
+.nav-tabs .active a:focus{background-color:#08c;}

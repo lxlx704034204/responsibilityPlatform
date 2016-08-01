@@ -8,7 +8,7 @@
 	<listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
+
 	<error-page>
   		<error-code>404</error-code>
   		<location>/views/shared/404.jsp</location>
@@ -17,7 +17,7 @@
   		<error-code>500</error-code>
   		<location>/views/shared/500.jsp</location>
   	</error-page>
-  	
+
     <listener>
         <listener-class>com.orbit.InitListener</listener-class>
     </listener>
@@ -48,9 +48,9 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
-    
+
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
