@@ -85,7 +85,7 @@
                         var records = ctn.records;
                         var pageInfo = ctn.pageInfo;
 
-                        buildtable(pageInfo.pageCount, pageInfo.pageSize, records);
+                        buildtable(pageInfo.pageCount, pageInfo.pageSize, pageInfo.recordCount, records);
 					} else {
 
 					}
@@ -93,12 +93,14 @@
 			});
 		};
 
-        var buildtable = function(pageCount, pageSize, listdata){
+        var buildtable = function(pageCount, pageSize, recordCount, listdata){
             $('#list-table').bootstrapTable({
                 locale:'zh-CN',
                 pagination: true,
                 pageNumber: pageCount,
                 pageSize: pageSize,
+                sidePagination: 'server',
+                totalRows: recordCount,
                 columns: [{
                     field: 'id',
                     checkbox: true,
