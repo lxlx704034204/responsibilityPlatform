@@ -95,7 +95,7 @@
                 </div>
             </div>
             <%-- <button type="submit" class="btn btn-default">型号选择</button> --%>
-            <a href="<s:url namespace=" /taskdist" action=" indexgraph"></s:url>" class="btn btn-primary" role="button">任务分发</a>
+            <a href="<s:url namespace="/taskdist" action="indexgraph"></s:url>" class="btn btn-primary" role="button">任务分发</a>
         <div class="form-group">
             目前未处理报警信息数：
             <label>XX</label>
