@@ -9,7 +9,13 @@
 			<result>/views/regular/cekongevents.jsp</result>
 		</action>
     </package>
-    
+
+    <package name="orbit-json-regular-levelthree" namespace="/json/regular/cekongevents" extends="json-default">
+        <action name="getListByPager" class="cekongEventsActions" method="jsonGetListByPager">
+            <result type="json"></result>
+        </action>
+    </package>
+
 <!--     <package name="orbit-system-home" namespace="/system" extends="orbit-default"> -->
 <!--     	<action name="index" class="homeAction" method="systemIndex"> -->
 <!--     		<result name="success">/areas/system/home/index.jsp</result> -->

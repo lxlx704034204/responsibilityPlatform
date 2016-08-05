@@ -9,6 +9,12 @@
 			<result>/views/regular/yaoceparams.jsp</result>
 		</action>
     </package>
+
+    <package name="orbit-json-regular-yaoceparams" namespace="/json/regular/yaoceparams" extends="json-default">
+        <action name="getListByPager" class="yaoceParamsActions" method="jsonGetListByPager">
+            <result type="json"></result>
+        </action>
+    </package>
     
 <!--     <package name="orbit-system-home" namespace="/system" extends="orbit-default"> -->
 <!--     	<action name="index" class="homeAction" method="systemIndex"> -->
