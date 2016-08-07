@@ -46,7 +46,7 @@
 <!-- 	</bean> -->
 
 
-<!-- 	Actions --> 
+<!-- 	Actions -->
 	<bean id="homeActions" class="com.orbit.actions.HomeActions">
 	</bean>
 	<bean id="levelThreeLimitActions" class="com.orbit.actions.Level3rdLimitActions">
@@ -58,6 +58,8 @@
 	<bean id="cekongEventsActions" class="com.orbit.actions.CekongEventsActions">
 	</bean>
 	<bean id="tipsActions" class="com.orbit.actions.TipsActions">
+	</bean>
+	<bean id="modelsActions" class="com.orbit.actions.ModelsActions">
 	</bean>
 <!-- 	<bean id="userAction" class="com.ilanever.izone.actions.UserAction"> -->
 <!-- 		<property name="userService" ref="userService" /> -->

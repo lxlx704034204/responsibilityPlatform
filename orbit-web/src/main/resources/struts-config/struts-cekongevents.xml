@@ -10,7 +10,7 @@
 		</action>
     </package>
 
-    <package name="orbit-json-regular-levelthree" namespace="/json/regular/cekongevents" extends="json-default">
+    <package name="orbit-json-regular-cekongevents" namespace="/json/regular/cekongevents" extends="json-default">
         <action name="getListByPager" class="cekongEventsActions" method="jsonGetListByPager">
             <result type="json"></result>
         </action>

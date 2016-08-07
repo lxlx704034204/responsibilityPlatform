@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="exampleInputEmail2">报警结束时间：</label>
                 <input type="text" class="form-control" id="exampleInputEmail3" placeholder="报警结束时间" style="width:200px;"/></div>
-            <button type="submit" class="btn btn-default">查询</button>
+            <button id="btn-search" type="submit" class="btn btn-default">查询</button>
         </form>
 
         <div class="table-responsive" style="margin-top:10px;">
@@ -87,11 +87,12 @@
     <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
 <script>
 
-    var bindlist = function () {
+    var doSearch = function () {
 
         var params = {
             searcher: {
-                keyword: ''
+                keyword: '',
+                models: []
             },
             pager: {
                 pageIndex: 0
@@ -157,9 +158,12 @@
     };
 
     $(function () {
-        bindlist();
+        doSearch();
         $(".dropdown-menuitem").click(function(e){
             e.stopPropagation();
+        });
+        $("#btn-search").click(function(e){
+            doSearch();
         });
     });
 </script>

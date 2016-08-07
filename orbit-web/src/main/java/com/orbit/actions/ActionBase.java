@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -26,22 +27,22 @@ import com.opensymphony.xwork2.ActionSupport;
 /**
  * the base class of action
  * */
-public class ActionBase extends ActionSupport {	
-	
+public class ActionBase extends ActionSupport {
+
 	protected final String HTTP_METHOD_GET = "GET";
 	protected final String HTTP_METHOD_POST = "POST";
-	
+
 	public ActionBase(){
 //		this.getRequest().setAttribute("returnurl", this.getRequest().getRequestURL());
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 8647185033056627255L;
-	
+
 	private static Log log = LogFactory.getLog(ActionBase.class);
-	
+
 	/**
 	 * get the request post data
 	 * */
@@ -61,19 +62,23 @@ public class ActionBase extends ActionSupport {
 		log.debug("Request Post Text: \n" + strBuilder.toString());
 		return strBuilder.toString();
 	}
-	
+
 	protected JSONObject getRequestJsonObject(){
 		return JSONObject.fromObject(this.getRequestPostText());
 	}
-	
+
 	protected JSONArray getRequestJsonArray(){
 		return JSONArray.fromObject(this.getRequestPostText());
 	}
-	
+
 	protected HttpServletRequest getRequest(){
 		return ServletActionContext.getRequest();
 	}
-	
+
+	protected HttpSession getSession(){
+		return this.getRequest().getSession();
+	}
+
 	/**
 	 * send the text to client
 	 * */
@@ -90,7 +95,7 @@ public class ActionBase extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void sendToClient(JsonResult jsonResult,JsonConfig config){
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
@@ -104,7 +109,7 @@ public class ActionBase extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 获取Request中参数名为pageindex的值
 	 * */
@@ -116,34 +121,34 @@ public class ActionBase extends ActionSupport {
 		}
 		return pageIndex;
 	}
-	
+
 	/**
 	 * 获取Request中参数名为searchkey的参数值
 	 * */
 	protected String getSearchKey(){
-		String searchKey = this.getRequest().getParameter("keyword");		
+		String searchKey = this.getRequest().getParameter("keyword");
 		return StrUtils.isNullOrEmpty(searchKey) ? null : searchKey;
 	}
-	
+
 	/**
 	 * 设置已验证的用户
 	 * */
 	public void setAuthenticatedUser(User user){
 		this.getRequest().getSession().setAttribute(AppContext.USER_KEY, user);
 	}
-	
+
 	/**
 	 * 获取已验证的用户
 	 * */
 	protected User getAuthenticatedUser(){
 		User user = null;
-		Object obj = this.getRequest() == null ? null : this.getRequest().getSession().getAttribute(AppContext.USER_KEY);
+		Object obj = this.getRequest() == null ? null : this.getSession().getAttribute(AppContext.USER_KEY);
 		if(obj != null && obj instanceof User){
 			user = (User)obj;
 		}
 		return user;
 	}
-	
+
 	/**
 	 * 给Request对象设置Error属性
 	 * */

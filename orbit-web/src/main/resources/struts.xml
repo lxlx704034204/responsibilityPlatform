@@ -9,9 +9,9 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.enable.SlashesInActionNames" value="false"></constant>
-	
+
 	<package name="orbit-default" namespace="/" extends="struts-default">
-	
+
 		<interceptors>
 			<interceptor name="authentication" class="com.orbit.interceptors.AuthenticationInterceptor"/>
 			<interceptor-stack name="app-default-stack">
@@ -25,9 +25,9 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		
+
 		<default-interceptor-ref name="app-default-stack"></default-interceptor-ref>
-		
+
 		<global-results>
 			<result name="error">/views/shared/error.jsp</result>
 			<result name="login" type="redirectAction">
@@ -36,15 +36,15 @@
 				<param name="returnUrl">${returnurl}</param>
 			</result>
 		</global-results>
-		
+
 		<global-exception-mappings>
 			<exception-mapping result="error" exception="java.lang.Throwable"></exception-mapping>
 		</global-exception-mappings>
-		
+
 	</package>
-	
+
 	<package name="orbit-json-default" namespace="/" extends="json-default">
-	
+
 		<interceptors>
 			<interceptor name="authentication" class="com.orbit.interceptors.AuthenticationInterceptor"/>
 			<interceptor-stack name="app-default-stack">
@@ -58,9 +58,9 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		
+
 		<default-interceptor-ref name="app-default-stack"></default-interceptor-ref>
-		
+
 		<global-results>
 			<result name="error">/views/shared/error.jsp</result>
 			<result name="login" type="redirectAction">
@@ -68,17 +68,18 @@
 				<param name="actionName">login</param>
 			</result>
 		</global-results>
-		
+
 		<global-exception-mappings>
 			<exception-mapping result="error" exception="java.lang.Throwable"></exception-mapping>
 		</global-exception-mappings>
-		
+
 	</package>
-	
+
 	<include file="struts-config/struts-home.xml"></include>
 	<include file="struts-config/struts-levelthreelimit.xml"></include>
 	<include file="struts-config/struts-yaoceparams.xml"></include>
 	<include file="struts-config/struts-taskdist.xml"></include>
 	<include file="struts-config/struts-cekongevents.xml"></include>
 	<include file="struts-config/struts-tips.xml"></include>
+    <include file="struts-config/struts-models.xml"></include>
 </struts>

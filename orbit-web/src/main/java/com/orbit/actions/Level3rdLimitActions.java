@@ -29,6 +29,11 @@ public class Level3rdLimitActions extends ActionBase {
 			JSONObject pagerJson = json.getJSONObject("pager");
 
 			String searchKey = searcherJson.getString("keyword");
+			String models = searcherJson.getString("models");
+			// JSONObject alerttime = searcherJson.getJSONObject("alerttime");
+			// String alertstarttime = alerttime.getString("start");
+			// String alertendtime = alerttime.getString("end");
+
 			Integer pageIndex = pagerJson.getInt("pageIndex");
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 
