@@ -4,6 +4,8 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_check_update = false
   config.vm.boot_timeout=3000
+  config.ssh.pty=false
+  config.ssh.insert_key=false
 
   config.vm.provider "virtualbox" do |vb|
 	vb.customize ["modifyvm", :id, "--cpuexecutioncap", "20"]
@@ -16,21 +18,7 @@ Vagrant.configure(2) do |config|
   	node1.vm.hostname="manager"
         node1.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
         
-        node1.vm.provision "shell",
-                run: "always",
-                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.202 netmask 255.255.0.0 up"
         node1.vm.provision "shell",path: "bootstrap.sh"
-  end
-
-  config.vm.define "sql" do |sql|
-	sql.vm.box_check_update = false
-  	sql.vm.hostname="sql"
- 	sql.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
-
-        sql.vm.provision "shell",
-                run: "always",
-                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up"
-	sql.vm.provision "shell",path: "bootstrap.sh"
   end
 
    config.vm.define "data1" do |data1|
@@ -40,7 +28,7 @@ Vagrant.configure(2) do |config|
 
 	data1.vm.provision "shell",
     		run: "always",
- 		inline: "ip addr add 192.168.101.204/16 dev eth1" 
+ 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.204 netmask 255.255.0.0 up" 
 	data1.vm.provision "shell",path: "bootstrap.sh"
   end
 
@@ -51,7 +39,7 @@ Vagrant.configure(2) do |config|
 
         data2.vm.provision "shell",
     		run: "always",
- 		inline: "yum install -y net-tools && ip addr add 192.168.101.205/16 dev eth1"
+ 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.205 netmask 255.255.0.0 up"
         data2.vm.provision "shell",path: "bootstrap.sh"
   end
   
@@ -65,4 +53,16 @@ Vagrant.configure(2) do |config|
 # 		inline: "ifconfig eth1 192.168.101.206 netmask 255.255.0.0 up"
 #        data3.vm.provision "shell",path: "bootstrap.sh"
 #  end
+
+  config.vm.define "sql" do |sql|
+	sql.vm.box_check_update = false
+  	sql.vm.hostname="sql"
+ 	sql.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
+
+        sql.vm.provision "shell",
+                run: "always",
+                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up"
+	sql.vm.provision "shell",path: "bootstrap.sh"
+  end
+
 end
