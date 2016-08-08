@@ -17,7 +17,7 @@
  节点类型   | 启动方法
 :----------|:------------------------------------------------------------------------------------------------------
  ndb_mgmd  | sudo ndb_mgmd -f /var/lib/mysql-cluster/config.ini
- sql node  | sudo /etc/init.d/mysql start
+ sql node  | sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
  data node | sudo ndbd
  
 ## 各节点关闭
@@ -33,7 +33,6 @@ sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbclu
 2. --ndb-index-stat-enable=0
 3. --ndb-force-send=1
 4. --engine-condition-pushdown=1
-
 
  
 ## 各节点启动顺序
@@ -67,12 +66,8 @@ id=4          |@192.168.101.203  (mysql-5.6.29 ndb-7.4.11)
 2.  Mysql中文字符集支持,需要将/etc/my.conf文件全部替换成vagrant中共享目录中的文件
 
 # [如何重置mysql root密码?](http://dev.mysql.com/doc/refman/5.7/en/resetting-permissions.html)
-1.  mysql -u root -p
+1.  mysqladmin -uroot -p$初始密码 password mysql
     初始密码位置在sql节点上的/root/.mysql_secret文件中
-2.  mysql> UPDATE user SET Password=PASSWORD('mysql') and HOST='%' where USER='root' and HOST='localhost';t
-3.  /etc/init.d/mysql restart
-4.  mysql -uroot -p
-5.  Enter password: <输入新设的密码newpassword>
 
 # centos7 关闭防火墙
 sudo systemctl stop firewalld.service
