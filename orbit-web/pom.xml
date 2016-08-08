@@ -16,7 +16,7 @@
 
     <properties>
         <struts2.version>2.3.4</struts2.version>
-        <spring.version>3.2.14.RELEASE</spring.version>
+        <spring.version>4.2.7.RELEASE</spring.version>
         <log4j2.version>2.5</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

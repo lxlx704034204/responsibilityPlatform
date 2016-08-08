@@ -31,10 +31,19 @@ if [ "$host" == "sql" ]
         /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
 
         set -x
+        
+        ps -ef|grep mysql|grep -v grep
+        while [ $? -ne 0 ]
+        do
+            echo "waiting for mysql to start..."
+            sleep 1s
+            ps -ef|grep mysql|grep -v grep
+        done
+
 
         #重置root密码，并创建orbit库
         # 获取mysql安装过程中随机生成的root账户密码
-        pass=`awk -F\): '{gsub(/^[ \t]+/, "", $2); gsub(/[ \t]+$/, "", $2); print $2}'  /root/.mysql_secret`
+        pass=`awk -F"):" '{gsub(/^[ \t]+/, "", $2); gsub(/[ \t]+$/, "", $2); print $2}'  /root/.mysql_secret`
         mysqladmin -uroot -p$pass password mysql
 
         set +x
