@@ -28,7 +28,6 @@ public interface ThresholdAlertRepository extends JpaRepository<ThresholdAlert, 
    */
   Page<ThresholdAlert> findBySatelliteNameInIgnoreCaseAndStartTimeBetween(Collection<String> satelliteNames, Date startTime, Date endTime, Pageable pageable);
 
-
   /**
    * 批量更新"事件类别"和"情况说明"
    *
@@ -39,7 +38,19 @@ public interface ThresholdAlertRepository extends JpaRepository<ThresholdAlert, 
    */
   @Modifying
   @Transactional
-  @Query("update #{#entityName} a set a.severityLevel=?1 , a.message=?2  where a.id in (?3)")
+  @Query("update #{#entityName} a set a.severityLevel=?1 , a.message=?2 where a.id in (?3)")
   Integer batchAddSituationComment(ThresholdAlert.SeverityLevel severityLevel, String message, Long... ids);
 
+
+  /**
+   * 批量确认
+   *
+   * @param confirmUserId 确认人id
+   * @param confirmTime   确认时间
+   * @param ids           id列表
+   */
+  @Modifying
+  @Transactional
+  @Query("update #{#entityName} a set  a.confirmUser.id=?1, a.confirmTime=?2  where a.id in (?3)")
+  Integer batchConfirm(Long confirmUserId, Date confirmTime, Long... ids);
 }

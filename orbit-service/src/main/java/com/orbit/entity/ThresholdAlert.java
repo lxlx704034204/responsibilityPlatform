@@ -11,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 三级门限报警
@@ -31,7 +33,7 @@ public class ThresholdAlert extends BaseEntity {
     this.severityLevel = SeverityLevel.MINOR;
     Date now = new Date();
     this.startTime = now;
-    this.affirmedTime = now;
+    this.confirmTime = now;
   }
 
   /**
@@ -90,25 +92,25 @@ public class ThresholdAlert extends BaseEntity {
   }
 
   /**
-   * 确认人
+   * 确认人id
    */
-  public User getAffirmedBy() {
-    return affirmedBy;
+  public User getConfirmUser() {
+    return confirmUser;
   }
 
-  public void setAffirmedBy(User affirmedBy) {
-    this.affirmedBy = affirmedBy;
+  public void setConfirmUser(User confirmUser) {
+    this.confirmUser = confirmUser;
   }
 
   /**
    * 确认时间
    */
-  public Date getAffirmedTime() {
-    return affirmedTime;
+  public Date getConfirmTime() {
+    return confirmTime;
   }
 
-  public void setAffirmedTime(Date affirmedTime) {
-    this.affirmedTime = affirmedTime;
+  public void setConfirmTime(Date confirmTime) {
+    this.confirmTime = confirmTime;
   }
 
   /**
@@ -138,13 +140,13 @@ public class ThresholdAlert extends BaseEntity {
   @Column(name = "SEVERITY_LEVEL", nullable = false)
   private SeverityLevel severityLevel;
 
-  @OneToOne
-  @JoinColumn(name = "AFFIRM_USER_ID")
-  private User affirmedBy;
+  @ManyToOne
+  @JoinColumn(name = "CONFIRM_USER_ID", referencedColumnName = "ID")
+  private User confirmUser;
 
-  @Column(name = "AFFIRMED_TIME", nullable = false)
-  private Date affirmedTime;
-
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "CONFIRM_TIME", nullable = false)
+  private Date confirmTime;
 
   @Override
   public String toString() {
