@@ -1,4 +1,4 @@
-package com.orbit.repsitory;
+package com.orbit.repository;
 
 import com.orbit.entity.Satellite;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public interface SatelliteRepository extends JpaRepository<Satellite, Long> {
 
   /**
-   * 根据"负责人"查询该负责人负责的型号列表
+   * 根据"负责人"查询该负责人所有负责的型号列表
    *
    * @param loginName 负责人的登录用户名
    * @return 型号列表

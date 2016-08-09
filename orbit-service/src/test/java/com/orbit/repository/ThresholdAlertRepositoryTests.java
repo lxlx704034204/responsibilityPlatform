@@ -4,9 +4,7 @@ import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.Satellite;
 import com.orbit.entity.ThresholdAlert;
 import com.orbit.entity.permission.User;
-import com.orbit.repsitory.SatelliteRepository;
-import com.orbit.repsitory.ThresholdAlertRepository;
-import com.orbit.repsitory.permission.UserRepository;
+import com.orbit.repository.permission.UserRepository;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -37,7 +35,7 @@ public class ThresholdAlertRepositoryTests {
   @Autowired
   UserRepository userRepository;
 
-  Satellite s1;
+  Satellite s1, s2;
   ThresholdAlert alert1, alert2, alert3, alert4, alert5, alert6;
   User confirmUser;
 
@@ -45,6 +43,9 @@ public class ThresholdAlertRepositoryTests {
   public void setUp() {
     s1 = new Satellite("型号1");
     satelliteRepository.save(s1);
+
+    s2 = new Satellite("型号2");
+    satelliteRepository.save(s2);
 
     confirmUser = new User("责任人1");
     userRepository.save(confirmUser);
@@ -91,6 +92,7 @@ public class ThresholdAlertRepositoryTests {
     repository.delete(alert6.getId());
 
     satelliteRepository.delete(s1);
+    satelliteRepository.delete(s2);
 
     userRepository.delete(confirmUser);
 
@@ -106,7 +108,7 @@ public class ThresholdAlertRepositoryTests {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<ThresholdAlert> pageResult = repository.findBySatelliteNameInIgnoreCaseAndStartTimeBetween(Arrays.asList("型号1", "型号2"), yesterday.getTime(), tomorrow.getTime()
+    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdAndStartTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());

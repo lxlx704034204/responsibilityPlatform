@@ -2,7 +2,6 @@ package com.orbit.repository.permission;
 
 import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.permission.User;
-import com.orbit.repsitory.permission.UserRepository;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

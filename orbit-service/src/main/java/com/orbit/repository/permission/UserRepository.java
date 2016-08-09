@@ -1,4 +1,4 @@
-package com.orbit.repsitory.permission;
+package com.orbit.repository.permission;
 
 import com.orbit.entity.permission.User;
 
