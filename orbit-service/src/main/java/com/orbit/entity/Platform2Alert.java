@@ -10,43 +10,33 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * 三级门限报警
+ * 2代平台
  */
 @Entity
-@Table(name="Threshold_Alert")
-public class ThresholdAlert extends BaseEntity {
+@Table(name="Platform2_Alert")
+public class Platform2Alert extends BaseEntity {
 
-  protected ThresholdAlert() {
-  }
-
-  public ThresholdAlert(Satellite satellite) {
-    this.satellite = satellite;
-  }
-
-  public ThresholdAlert(Satellite satellite, String message) {
-    this.satellite = satellite;
-    this.message = message;
-    this.severityLevel = SeverityLevel.MINOR;
-    Date now = new Date();
-    this.startTime = now;
-    this.confirmTime = now;
+  protected Platform2Alert() {
   }
 
   /**
-   * 相关型号
+   * 构造函数
+   *
+   * @param name    型号代号
+   * @param message 报警信息
    */
-  public Satellite getSatellite() {
-    return satellite;
-  }
-
-  public void setSatellite(Satellite satellite) {
-    this.satellite = satellite;
+  public Platform2Alert(String name, String message) {
+    this.name = name;
+    this.message = message;
+    this.severityLevel = ThresholdAlert.SeverityLevel.MINOR;
+    Date now = new Date();
+    this.startTime = now;
+    this.confirmTime = now;
   }
 
   /**
@@ -85,11 +75,11 @@ public class ThresholdAlert extends BaseEntity {
   /**
    * TODO: 事件类别(严重程度)?
    */
-  public SeverityLevel getSeverityLevel() {
+  public ThresholdAlert.SeverityLevel getSeverityLevel() {
     return severityLevel;
   }
 
-  public void setSeverityLevel(SeverityLevel severityLevel) {
+  public void setSeverityLevel(ThresholdAlert.SeverityLevel severityLevel) {
     this.severityLevel = severityLevel;
   }
 
@@ -115,19 +105,8 @@ public class ThresholdAlert extends BaseEntity {
     this.confirmTime = confirmTime;
   }
 
-  /**
-   * 报警严重等级
-   */
-  public enum SeverityLevel {
-    MINOR,
-    MAJOR,
-    SERVE,
-    FATAL
-  }
-
-  @ManyToOne
-  @JoinColumn(name = "SATELLITE_ID", referencedColumnName = "ID")
-  private Satellite satellite;
+  @Column(nullable = false, length = 100)
+  private String name;
 
   @Column(name = "START_TIME", nullable = false)
   private Date startTime;
@@ -140,7 +119,7 @@ public class ThresholdAlert extends BaseEntity {
 
   @Enumerated(EnumType.ORDINAL)
   @Column(name = "SEVERITY_LEVEL", nullable = false)
-  private SeverityLevel severityLevel;
+  private ThresholdAlert.SeverityLevel severityLevel;
 
   @ManyToOne
   @JoinColumn(name = "CONFIRM_USER_ID", referencedColumnName = "ID")
@@ -153,7 +132,18 @@ public class ThresholdAlert extends BaseEntity {
   @Override
   public String toString() {
     return String.format(
-            "ThresholdAlert[id=%d, 型号名称='%s',报警信息=%s,开始时间=%s]",
-            getId(), satellite == null ? "" : satellite.getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+            "Platform2Alert[id=%d, 型号代号='%s',报警信息=%s,开始时间=%s]",
+            getId(), getName() == null ? "" : getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+  }
+
+  /**
+   * 型号代号
+   */
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }
