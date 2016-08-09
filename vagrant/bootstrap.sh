@@ -32,12 +32,10 @@ if [ "$host" == "sql" ]
 
         set -x
         
-        ps -ef|grep mysql|grep -v grep
-        while [ $? -ne 0 ]
+        while [ ! -S /var/lib/mysql/mysql.sock ]
         do
             echo "waiting for mysql to start..."
             sleep 1s
-            ps -ef|grep mysql|grep -v grep
         done
 
 
