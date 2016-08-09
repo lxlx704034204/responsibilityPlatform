@@ -43,7 +43,7 @@ if [ "$host" == "sql" ]
         # 获取mysql安装过程中随机生成的root账户密码
         pass=`awk -F"):" '{gsub(/^[ \t]+/, "", $2); gsub(/[ \t]+$/, "", $2); print $2}'  /root/.mysql_secret`
         mysqladmin -uroot -p$pass password mysql
-        mysql -uroot -pmysql -e "create database orbit"
+        mysql -uroot -pmysql -e "update mysql.user set host='%' where user='root' and host='localhost';flush privileges;create database orbit;"
         set +x
 elif [[ $host =~ ^data ]]
     then
