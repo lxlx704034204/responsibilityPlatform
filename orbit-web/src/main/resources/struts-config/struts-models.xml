@@ -4,8 +4,8 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-    <package name="orbit-json-modelss" namespace="/json/models" extends="json-default">
-    	<action name="getAllModels" class="modelsActions" method="jsonGetAllModels">
+    <package name="orbit-json-models" namespace="/json/models" extends="json-default">
+    	<action name="getAdminModels" class="modelsActions" method="jsonGetAllModels">
 			<result type="json"></result>
 		</action>
         <action name="updateSelectedModels" class="modelsActions" method="jsonUpdateSelectedModels">

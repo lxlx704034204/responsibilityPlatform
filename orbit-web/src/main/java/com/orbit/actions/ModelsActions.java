@@ -8,8 +8,22 @@ import org.apache.commons.logging.LogFactory;
 
 import com.orbit.configs.SystemConfig;
 import com.orbit.AppContext;
+import com.orbit.OrbitServiceApplication;
+import com.orbit.entity.Satellite;
+import com.orbit.entity.permission.User;
+import com.orbit.repository.SatelliteRepository;
+import com.orbit.repository.permission.UserRepository;
+import com.orbit.repository.ThresholdAlertRepository;
 
-public class ModelsActions extends ActionBase {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+
+@SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
+public class ModelsActions extends AppAction {
 
 	/**
 	 *
@@ -18,15 +32,29 @@ public class ModelsActions extends ActionBase {
 
 	private static Log log = LogFactory.getLog(ModelsActions.class);
 
-	public void jsonGetAllModels(){
+	@Autowired
+    SatelliteRepository slRepo;
+
+	@Autowired
+    UserRepository userRepo;
+
+	public void jsonGetAdminModels(){
 		JsonResult jsonResult = null;
 		try {
+			//String userName = this.getAuthenticatedUser().getName();
+			String userName = "张三";
+			List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
+			this.setAdminModels(satellitesAdmins);
+
             JSONArray list = new JSONArray();
-			for(int i =0; i < 5; i++){
-				JSONObject item = new JSONObject();
-				item.put("name", "型号" + i);
-                item.put("id", i);
-				list.add(item);
+			if(satellitesAdmins != null && satellitesAdmins.size() > 0){
+				for(Satellite sl : satellitesAdmins){
+					JSONObject item = new JSONObject();
+					item.put("id", sl.getId());
+					item.put("name", sl.getName());
+	                item.put("code", sl.getCode());
+					list.add(item);
+				}
 			}
 
 			jsonResult = new JsonResultSuccess(list);
@@ -43,8 +71,8 @@ public class ModelsActions extends ActionBase {
         JsonResult jsonResult = null;
 		try {
             JSONObject json = this.getRequestJsonObject();
-			String selectedModels = json.getString("selectedmodels");
-            this.getSession().setAttribute(AppContext.SELECTED_MODELS_KEY, selectedModels);
+			JSONArray selectedModelIds = json.getJSONArray("selectedmodels");
+            this.setSelectedModelIds(JSONArray.toList(selectedModelIds, Long.class));
 
 			jsonResult = new JsonResultSuccess();
 		} catch (Exception e) {
@@ -59,14 +87,8 @@ public class ModelsActions extends ActionBase {
     public void jsonGetSelectedModels(){
         JsonResult jsonResult = null;
 		try {
-            String selectedModels =  (String)this.getSession().getAttribute(AppContext.SELECTED_MODELS_KEY);
-			// selected models
-			JSONArray list = new JSONArray();
-
-            JSONObject model1 = new JSONObject();
-            model1.put("name", "型号1");
-
-			jsonResult = new JsonResultSuccess(list);
+            List<Long> modelIds = this.getSelectedModelIds();
+			jsonResult = new JsonResultSuccess(modelIds);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			log.error(e.getMessage(), e);

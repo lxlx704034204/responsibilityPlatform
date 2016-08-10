@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.orbit.configs.SystemConfig;
 
-public class YaoceParamsActions extends ActionBase {
+public class YaoceParamsActions extends AppAction {
 
 	/**
 	 *

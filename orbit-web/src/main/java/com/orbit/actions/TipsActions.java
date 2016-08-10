@@ -6,17 +6,17 @@ import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class TipsActions extends ActionBase {
+public class TipsActions extends AppAction {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private static int tip_level3limit = 90;
-	
+
 	private static Log log = LogFactory.getLog(TipsActions.class);
-	
+
 	public void jsonGetSummary(){
 		JsonResult jsonResult = null;
 		try {

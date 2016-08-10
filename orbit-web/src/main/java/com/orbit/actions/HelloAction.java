@@ -8,7 +8,7 @@ import org.apache.struts2.json.annotations.JSON;
  * <code>Set welcome message.</code>
  */
 
-public class HelloAction extends ActionSupport {
+public class HelloAction extends AppAction {
 
     @JSON
     public String execute() throws Exception {

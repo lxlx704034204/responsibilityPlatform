@@ -156,4 +156,6 @@ public class ActionBase extends ActionSupport {
 		ErrorMessage error = new ErrorMessage(e);
 		this.getRequest().setAttribute("error", error);
 	}
+
+
 }

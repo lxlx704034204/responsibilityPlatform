@@ -7,8 +7,27 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.orbit.configs.SystemConfig;
+import com.orbit.AppContext;
+import com.orbit.OrbitServiceApplication;
+import com.orbit.entity.Satellite;
+import com.orbit.entity.ThresholdAlert;
+import com.orbit.entity.permission.User;
+import com.orbit.repository.SatelliteRepository;
+import com.orbit.repository.permission.UserRepository;
+import com.orbit.repository.ThresholdAlertRepository;
+import com.orbit.utils.DateTimeUtils;
 
-public class Level3rdLimitActions extends ActionBase {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.Date;
+
+@SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
+public class Level3rdLimitActions extends AppAction {
 
 	/**
 	 *
@@ -16,6 +35,15 @@ public class Level3rdLimitActions extends ActionBase {
 	private static final long serialVersionUID = 1L;
 
 	private static Log log = LogFactory.getLog(Level3rdLimitActions.class);
+
+	@Autowired
+    SatelliteRepository slRepo;
+
+	@Autowired
+    UserRepository userRepo;
+
+	@Autowired
+    ThresholdAlertRepository thRepo;
 
 	public String pageIndex(){
 		return SUCCESS;
@@ -30,35 +58,40 @@ public class Level3rdLimitActions extends ActionBase {
 
 			String searchKey = searcherJson.getString("keyword");
 			String models = searcherJson.getString("models");
-			// JSONObject alerttime = searcherJson.getJSONObject("alerttime");
-			// String alertstarttime = alerttime.getString("start");
-			// String alertendtime = alerttime.getString("end");
+			JSONObject alerttime = searcherJson.getJSONObject("alerttime");
+			String alertstarttime = alerttime.getString("start");
+			String alertendtime = alerttime.getString("end");
 
 			Integer pageIndex = pagerJson.getInt("pageIndex");
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 
-			//
-			JSONArray list = new JSONArray();
-			for(int i =0; i < 10; i++){
-				JSONObject item = new JSONObject();
-				item.put("serialno", i + 1);
-				item.put("id", i + 1);
-				item.put("modecode", "XXX" + i);
-				item.put("alertstartdt", "2016-06-06 00:09:30");
-				item.put("alertenddt", "2016-06-06 00:09:50");
-				item.put("alertmsg", "Warn...");
-				item.put("eventtype", "类别" + (i + 1));
-				item.put("desc", "");
-				item.put("conformperson", "");
-				item.put("conformdt", "");
-				list.add(item);
-			}
+			List<Long> selectedModelIds =  this.getSelectedModelIds();
+			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+			Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
+			Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
+			Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
 
-			Integer recordCount = 23;
+			JSONArray list = new JSONArray();
+			for (ThresholdAlert alert :
+		            pageResult.getContent()) {
+				JSONObject item = new JSONObject();
+				item.put("serialno", 0);
+				item.put("id", alert.getId());
+				item.put("modecode", alert.getSatellite().getCode());
+				item.put("alertstartdt", DateTimeUtils.datetimeFormat.format(alert.getStartTime()));
+				item.put("alertenddt", DateTimeUtils.datetimeFormat.format(alert.getEndTime()));
+				item.put("alertmsg", alert.getMessage());
+				item.put("eventtype", alert.getSeverityLevel().name());
+				item.put("desc", "");
+				item.put("conformperson", alert.getConfirmUser().getFullName());
+				item.put("conformdt", DateTimeUtils.datetimeFormat.format(alert.getConfirmTime()));
+				list.add(item);
+		    }
+
 			PageInfo pageInfo = new PageInfo();
 			pageInfo.setPageIndex(pageIndex);
 			pageInfo.setPageSize(pageSize);
-			pageInfo.setRecordCount(recordCount);
+			pageInfo.setRecordCount(pageResult.getTotalElements());
 
 			JSONObject listingData = new JSONObject();
 			listingData.put("records", list);
