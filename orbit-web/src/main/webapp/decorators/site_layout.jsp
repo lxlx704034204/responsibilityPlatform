@@ -240,7 +240,20 @@ var updateTips = function () {
         }
     });
 };
+var buildModelSelector = function(){
+    jsless.ajax({
+        url: "<s:url namespace='/json/models' action='getAdminModels'></s:url>",
+        data: {},
+        success: function (rep) {
+            if (rep.statusCode == 200) {
+                var tips = rep.content;
+
+            } else {}
+        }
+    });
+};
 $(function () {
+    buildModelSelector();
     updateTips();
     window.setInterval(updateTips, 3000);
 });

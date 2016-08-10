@@ -49,7 +49,7 @@
 <!-- 	Actions -->
 	<bean id="homeActions" class="com.orbit.actions.HomeActions">
 	</bean>
-	<bean id="levelThreeLimitActions" class="com.orbit.actions.Level3rdLimitActions">
+	<bean id="levelThreeLimitActions" class="com.orbit.actions.LevelThreeLimitActions">
 	</bean>
 	<bean id="yaoceParamsActions" class="com.orbit.actions.YaoceParamsActions">
 	</bean>

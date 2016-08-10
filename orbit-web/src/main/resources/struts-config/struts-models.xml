@@ -5,7 +5,7 @@
 
 <struts>
     <package name="orbit-json-models" namespace="/json/models" extends="json-default">
-    	<action name="getAdminModels" class="modelsActions" method="jsonGetAllModels">
+    	<action name="getAdminModels" class="modelsActions" method="jsonGetAdminModels">
 			<result type="json"></result>
 		</action>
         <action name="updateSelectedModels" class="modelsActions" method="jsonUpdateSelectedModels">

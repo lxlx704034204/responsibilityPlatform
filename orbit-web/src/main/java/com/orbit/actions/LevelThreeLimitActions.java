@@ -27,14 +27,14 @@ import java.util.List;
 import java.util.Date;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
-public class Level3rdLimitActions extends AppAction {
+public class LevelThreeLimitActions extends AppAction {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Log log = LogFactory.getLog(Level3rdLimitActions.class);
+	private static Log log = LogFactory.getLog(LevelThreeLimitActions.class);
 
 	@Autowired
     SatelliteRepository slRepo;

@@ -19,6 +19,7 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <log4j2.version>2.5</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <tomcat7-maven-plugin-version>2.1</tomcat7-maven-plugin-version>
     </properties>
 
     <dependencies>
@@ -171,6 +172,11 @@
                         <descriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
                     </webAppConfig>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat7-maven-plugin-version}</version>
             </plugin>
         </plugins>
     </build>
