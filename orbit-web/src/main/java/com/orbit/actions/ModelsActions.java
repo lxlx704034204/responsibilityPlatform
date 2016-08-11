@@ -59,7 +59,6 @@ public class ModelsActions extends AppAction {
 
 			jsonResult = new JsonResultSuccess(list);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			log.error(e.getMessage(), e);
 			jsonResult = new JsonResultError(e.getMessage());
 		} finally {
