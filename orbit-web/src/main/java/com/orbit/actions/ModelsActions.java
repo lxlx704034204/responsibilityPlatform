@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class ModelsActions extends AppAction {
@@ -42,8 +43,23 @@ public class ModelsActions extends AppAction {
 		JsonResult jsonResult = null;
 		try {
 			//String userName = this.getAuthenticatedUser().getName();
-			String userName = "张三";
-			List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
+			//List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
+
+			// test
+			List<Satellite> satellitesAdmins = new ArrayList<Satellite>();
+			Satellite sl1 = new Satellite("型号1");
+			sl1.setCode("sl1");
+			sl1.setId(1l);
+			Satellite sl2 = new Satellite("型号2");
+			sl2.setCode("sl2");
+			sl2.setId(2l);
+			Satellite sl3 = new Satellite("型号3");
+			sl3.setCode("sl3");
+			sl3.setId(3l);
+			satellitesAdmins.add(sl1);
+			satellitesAdmins.add(sl2);
+			satellitesAdmins.add(sl3);
+
 			this.setAdminModels(satellitesAdmins);
 
             JSONArray list = new JSONArray();
@@ -52,7 +68,8 @@ public class ModelsActions extends AppAction {
 					JSONObject item = new JSONObject();
 					item.put("id", sl.getId());
 					item.put("name", sl.getName());
-	                item.put("code", sl.getCode());
+	        		item.put("code", sl.getCode());
+					item.put("selected", true);
 					list.add(item);
 				}
 			}

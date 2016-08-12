@@ -66,11 +66,11 @@
             <div class="form-group">
                 已选型号：
                 <div class="dropdown mode-selector">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        型号1,型号2
+                    <button class="btn btn-default dropdown-toggle" type="button" id="ddm_main_selectmodels" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="btn-text">型号1,型号2</span>
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <ul id="main_modelselector" class="dropdown-menu" aria-labelledby="ddm_main_selectmodels">
                         <li>
                             <div class="dropdown-menuitem">
                                 <label><input type="checkbox" value="型号1"/>型号1</label>
@@ -228,6 +228,10 @@ $('#main-nav-tabs a').click(function (e) {
     var targetid = a_href.substr(1, a_href.length - 1)
     $("#" + targetid).show();
 });
+
+/**
+ * update the tips of sidebar.
+ **/
 var updateTips = function () {
     jsless.ajax({
         url: "<s:url namespace='/json/tips' action='getSummary'></s:url>",
@@ -240,22 +244,83 @@ var updateTips = function () {
         }
     });
 };
+/**
+ * update the button of model selector
+ **/
+var updateBtnMainModelSelector = function(){
+    var selectedModelNames = [];
+    $("#main_modelselector").find("input:checkbox:checked").each(function(){
+        var modelName = $(this).attr("modelname");
+        selectedModelNames.push(modelName);
+    });
+    $("#ddm_main_selectmodels").find(".btn-text").text(selectedModelNames.join(','));
+};
+
+/**
+ *build the model selector(the pop window)
+ **/
 var buildModelSelector = function(){
     jsless.ajax({
         url: "<s:url namespace='/json/models' action='getAdminModels'></s:url>",
         data: {},
         success: function (rep) {
             if (rep.statusCode == 200) {
-                var tips = rep.content;
-
-            } else {}
+                var models = rep.content;
+                if(models){
+                    $("#main_modelselector").empty();
+                    for(var i = 0; i< models.length; i++){
+                        var model = models[i];
+                        var li = $("<li></li>");
+                        var div = $("<div></div>").addClass("dropdown-menuitem")
+                        var label = $("<label></label>")
+                        var checkbox = $("<input type='checkbox' class='modelcheckor' />")
+                            .val(model.id).attr("code", model.code).attr("modelname", model.name)
+                            .prop("checked", model.selected);
+                        var span = $("<span></span>").text(model.name);
+                        $("#main_modelselector").append(li.append(div.append(label.append(checkbox).append(span))));
+                    }
+                    updateBtnMainModelSelector();
+                }
+            } else {
+                // error
+            }
         }
     });
 };
+
+/**
+ * bind the change event to the checkbox in model selector.
+ **/
+var bindChangeEventToModelSelector = function(){
+    $("#main_modelselector").delegate(".modelcheckor", "change", function(){
+        var selectedModelIds = [];
+        $("#main_modelselector").find("input:checkbox:checked").each(function(){
+            var modelid = $(this).val();
+            selectedModelIds.push(parseInt(modelid));
+        });
+        var params = {selectedmodels: selectedModelIds};
+        jsless.ajax({
+            url: "<s:url namespace='/json/models' action='updateSelectedModels'></s:url>",
+            data: params,
+            success: function(rep){
+                if(rep.statusCode == 200){
+                    updateBtnMainModelSelector();
+                } else {
+                    // error:
+                }
+            }
+        });
+    });
+}
+
 $(function () {
     buildModelSelector();
+    bindChangeEventToModelSelector();
     updateTips();
     window.setInterval(updateTips, 3000);
+    $("#main_modelselector").delegate(".dropdown-menuitem", "click", function(e){
+        e.stopPropagation();
+    });
 });
 </script>
 </body>
