@@ -18,11 +18,11 @@
             <div class="form-group">
                 <label for="exampleInputName2">卫星型号：</label>
                 <div class="dropdown mode-selector">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="btn_child_modelselector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="ddm_child_selectmodels" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span class="btn-text">型号1,型号2</span>
                         <span class="caret"></span>
                     </button>
-                    <ul id="child_modelselector" class="dropdown-menu" aria-labelledby="btn_child_modelselector">
+                    <ul id="child_modelselector" class="dropdown-menu" aria-labelledby="ddm_child_selectmodels">
                         <li>
                             <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号1</label></div>
                         </li>
@@ -41,10 +41,10 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警开始时间：</label>
-                <input type="text" class="form-control" id="exampleInputEmail2" placeholder="报警开始时间" style="width:200px;"/></div>
+                <input type="text" class="form-control" id="txt_alertstarttime" placeholder="报警开始时间" style="width:200px;"/></div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警结束时间：</label>
-                <input type="text" class="form-control" id="exampleInputEmail3" placeholder="报警结束时间" style="width:200px;"/></div>
+                <input type="text" class="form-control" id="txt_alertendtime" placeholder="报警结束时间" style="width:200px;"/></div>
             <button id="btn-search" type="submit" class="btn btn-default">查询</button>
         </form>
 
@@ -88,10 +88,22 @@
 <script>
 
 /**
+ * update the button of model selector
+ **/
+var updateBtnChildModelSelector = function(){
+    var selectedModelNames = [];
+    $("#child_modelselector").find("input:checkbox:checked").each(function(){
+        var modelName = $(this).attr("modelname");
+        selectedModelNames.push(modelName);
+    });
+    $("#ddm_child_selectmodels").find(".btn-text").text(selectedModelNames.join(','));
+};
+
+/**
  *build the model selector(the pop window)
  **/
-var buildModelSelector = function(){
-    jsless.ajax({
+var buildChildModelSelector = function(){
+    return jsless.ajax({
         url: "<s:url namespace='/json/models' action='getAdminModels'></s:url>",
         data: {},
         success: function (rep) {
@@ -99,16 +111,18 @@ var buildModelSelector = function(){
                 var models = rep.content;
                 if(models){
                     $("#child_modelselector").empty();
-                    for(var model in models){
+                    for(var i = 0; i< models.length; i++){
+                        var model = models[i];
                         var li = $("<li></li>");
                         var div = $("<div></div>").addClass("dropdown-menuitem")
                         var label = $("<label></label>")
                         var checkbox = $("<input type='checkbox' class='modelcheckor' />")
-                            .val(model.id).attr("code", model.code).attr("modelname", model.name);
+                            .val(model.id).attr("code", model.code).attr("modelname", model.name)
+                            .prop("checked", model.selected);
                         var span = $("<span></span>").text(model.name);
                         $("#child_modelselector").append(li.append(div.append(label.append(checkbox).append(span))));
                     }
-                    updateBtnMainModelSelector();
+                    updateBtnChildModelSelector();
                 }
             } else {
                 // error
@@ -117,13 +131,46 @@ var buildModelSelector = function(){
     });
 };
 
+/**
+ * bind the change event to the checkbox in model selector.
+ **/
+var bindChangeEventToChildModelSelector = function(){
+    $("#child_modelselector").delegate(".modelcheckor", "change", function(){
+        var selectedModelIds = [];
+        $("#child_modelselector").find("input:checkbox:checked").each(function(){
+            var modelid = $(this).val();
+            selectedModelIds.push(parseInt(modelid));
+        });
+        var params = {selectedmodels: selectedModelIds};
+        return jsless.ajax({
+            url: "<s:url namespace='/json/models' action='updateSelectedModels'></s:url>",
+            data: params,
+            success: function(rep){
+                if(rep.statusCode == 200){
+                    updateBtnChildModelSelector();
+                } else {
+                    // error:
+                }
+            }
+        });
+    });
+}
+
 
 
 var doSearch = function () {
+    var selectedModelIds = [];
+    $("#child_modelselector").find("input:checkbox:checked").each(function(){
+        var modelid = $(this).val();
+        selectedModelIds.push(parseInt(modelid));
+    });
+
     var params = {
         searcher: {
             keyword: '',
-            models: []
+            models: selectedModelIds,
+            alertstarttime: $("#txt_alertstarttime").val(),
+            alertendtime: $("#txt_alertendtime").val()
         },
         pager: {
             pageIndex: 0
@@ -195,8 +242,13 @@ var bindBtnBatchConfromClick = function(){
 };
 
 $(function () {
-    doSearch();
-    
+
+    bindChangeEventToChildModelSelector();
+    $.when(buildChildModelSelector()).done(function(){
+        doSearch();
+    });
+
+
     $("#btn-search").click(function(e){
         doSearch();
     });

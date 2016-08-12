@@ -57,15 +57,14 @@ public class LevelThreeLimitActions extends AppAction {
 			JSONObject pagerJson = json.getJSONObject("pager");
 
 			String searchKey = searcherJson.getString("keyword");
-			String models = searcherJson.getString("models");
-			JSONObject alerttime = searcherJson.getJSONObject("alerttime");
-			String alertstarttime = alerttime.getString("start");
-			String alertendtime = alerttime.getString("end");
+			JSONArray models = searcherJson.getJSONArray("models");
+			String alertstarttime = searcherJson.getString("alertstarttime");
+			String alertendtime = searcherJson.getString("alertendtime");
 
 			Integer pageIndex = pagerJson.getInt("pageIndex");
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 
-			List<Long> selectedModelIds =  this.getSelectedModelIds();
+			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
 			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 			Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
 			Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
@@ -99,7 +98,6 @@ public class LevelThreeLimitActions extends AppAction {
 
 			jsonResult = new JsonResultSuccess(listingData);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			log.error(e.getMessage(), e);
 			jsonResult = new JsonResultError(e.getMessage());
 		} finally {
