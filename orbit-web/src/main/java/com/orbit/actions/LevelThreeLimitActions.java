@@ -61,10 +61,10 @@ public class LevelThreeLimitActions extends AppAction {
 			String alertstarttime = searcherJson.getString("alertstarttime");
 			String alertendtime = searcherJson.getString("alertendtime");
 
+			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
 			Integer pageIndex = pagerJson.getInt("pageIndex");
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 
-			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
 			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 			Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
 			Date endDate = DateTimeUtils.parseISODatetime(alertendtime);

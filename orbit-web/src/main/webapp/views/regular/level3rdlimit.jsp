@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="exampleInputEmail2">报警结束时间：</label>
                 <input type="text" class="form-control" id="txt_alertendtime" placeholder="报警结束时间" style="width:200px;"/></div>
-            <button id="btn-search" type="submit" class="btn btn-default">查询</button>
+            <a id="btn-search" type="submit" class="btn btn-default">查询</a>
         </form>
 
         <div class="table-responsive" style="margin-top:10px;">
@@ -187,7 +187,9 @@ var doSearch = function () {
                 var pageInfo = ctn.pageInfo;
 
                 buildtable(pageInfo.pageCount, pageInfo.pageSize, pageInfo.recordCount, records);
-            } else {}
+            } else {
+                // error
+            }
         }
     });
 };

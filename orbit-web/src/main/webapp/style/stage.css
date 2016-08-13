@@ -157,4 +157,4 @@ body{font-family:'Microsoft Yahei';}
 
 
 .nav-tabs{}
-.nav-tabs .active a:focus{background-color:#08c;}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{background-color:#08c;color:#fff;}
