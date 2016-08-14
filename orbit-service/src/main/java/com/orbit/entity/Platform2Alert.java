@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
  * 2代平台
  */
 @Entity
-@Table(name="Platform2_Alert")
+@Table(name="PLATFORM2_ALERT")
 public class Platform2Alert extends BaseEntity {
 
   protected Platform2Alert() {
