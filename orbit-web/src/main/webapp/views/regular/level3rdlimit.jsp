@@ -240,7 +240,7 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
             }
         ],
         data: listdata,
-        onPageChange:function(number, size){
+        onPageChange: function(number, size){
         	doSearch(number -1);
         }
     });
