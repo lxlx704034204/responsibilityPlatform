@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Converter;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -40,6 +43,13 @@ public class User extends BaseEntity implements UserDetails {
   private String email;
 
   /**
+   * 密码,使用PasswordConverter解决透明加解密问题
+   */
+  @Basic(fetch = FetchType.EAGER)
+  @Convert(converter = PasswordConverter.class)
+  private String password = "";
+
+  /**
    * 所负责的型号
    */
   @OneToMany(mappedBy = "adminUser", fetch = FetchType.LAZY)
@@ -60,12 +70,12 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public String getPassword() {
-    return null;
+    return password;
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return loginName;
   }
 
   @Override
@@ -126,13 +136,6 @@ public class User extends BaseEntity implements UserDetails {
     this.satellites = satellites;
   }
 
-  @Override
-  public String toString() {
-    return String.format(
-            "User[id=%d, loginName='%s',fullName=%s]",
-            getId(), loginName, fullName);
-  }
-
   /**
    * 添加负责的型号
    *
@@ -157,5 +160,16 @@ public class User extends BaseEntity implements UserDetails {
         s.setAdminUser(null);
       }
     }
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+            "User[loginName=%d, email='%s',fullName=%s]",
+            getId(), this.loginName, this.email == null ? "" : email, fullName == null ? "" : fullName);
   }
 }
