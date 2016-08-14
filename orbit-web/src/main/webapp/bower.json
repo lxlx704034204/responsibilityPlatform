@@ -18,6 +18,7 @@
   "dependencies": {
     "bootstrap": "^3.3.6",
     "bootstrap-table": "^1.11.0",
-	"knockout": "^3.4.0"
+	"knockout": "^3.4.0",
+	"smalot-bootstrap-datetimepicker":"^2.3.11"
   }
 }

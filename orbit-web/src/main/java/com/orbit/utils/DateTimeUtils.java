@@ -61,6 +61,32 @@ public class DateTimeUtils {
 		}
 		return d;
 	}
+	
+	public static String formatToISODate(Date date){
+		if(date == null){
+			return null;
+		}
+		String s = null;
+		try{
+			s = dateFormat.format(date);
+		} catch (Exception e){
+			log.error(e.getMessage(), e);
+		}
+		return s;
+	}
+	
+	public static String formatToISODatetime(Date date){
+		if(date == null){
+			return null;
+		}
+		String s = null;
+		try{
+			s = datetimeFormat.format(date);
+		} catch(Exception e){
+			log.error(e.getMessage(), e);
+		}
+		return s;
+	}
 
 	public static int getYear(Calendar calendar){
 		return calendar.get(Calendar.YEAR);

@@ -8,6 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>三级门限报警分析</title>
         <link type="text/css" rel="stylesheet" href="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.css"></s:url>" />
+        <link type="text/css" rel="stylesheet" href="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></s:url>" />
     </head>
     <body>
         <h2 class="page-header">三级门限报警分析
@@ -41,10 +42,10 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警开始时间：</label>
-                <input type="text" class="form-control" id="txt_alertstarttime" placeholder="报警开始时间" style="width:200px;"/></div>
+                <input type="text" class="form-control" id="txt_alertstarttime" placeholder="报警开始时间" style="width:200px;" data-date-format="yyyy-mm-dd hh:ii"/></div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警结束时间：</label>
-                <input type="text" class="form-control" id="txt_alertendtime" placeholder="报警结束时间" style="width:200px;"/></div>
+                <input type="text" class="form-control" id="txt_alertendtime" placeholder="报警结束时间" style="width:200px;" data-date-format="yyyy-mm-dd hh:ii"/></div>
             <a id="btn-search" type="submit" class="btn btn-default">查询</a>
         </form>
 
@@ -83,8 +84,10 @@
             </div>
         </div>
 
-        <script src="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.js"></s:url>"></script>
-    <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></s:url>"></script>
 <script>
 
 /**
@@ -158,7 +161,7 @@ var bindChangeEventToChildModelSelector = function(){
 
 
 
-var doSearch = function () {
+var doSearch = function (pageIndex) {
     var selectedModelIds = [];
     $("#child_modelselector").find("input:checkbox:checked").each(function(){
         var modelid = $(this).val();
@@ -173,7 +176,7 @@ var doSearch = function () {
             alertendtime: $("#txt_alertendtime").val()
         },
         pager: {
-            pageIndex: 0
+            pageIndex: pageIndex
         }
     };
 
@@ -195,7 +198,7 @@ var doSearch = function () {
 };
 
 var buildtable = function (pageCount, pageSize, recordCount, listdata) {
-    $('#list-table').bootstrapTable({
+	table = $('#list-table').bootstrapTable({
         locale: 'zh-CN',
         pagination: true,
         pageNumber: pageCount,
@@ -204,9 +207,8 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
         totalRows: recordCount,
         columns: [
             {
-                field: 'id',
-                checkbox: true,
-                title: 'Item ID'
+                //field: 'id',
+                checkbox: true
             }, {
                 field: 'modecode',
                 title: '型号代号'
@@ -233,27 +235,37 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
                 title: '确认时间'
             }
         ],
-        data: listdata
+        data: listdata,
+        onPageChange:function(number, size){
+        	doSearch(number -1);
+        }
     });
+    return table;
 };
 
 var bindBtnBatchConfromClick = function(){
     $("#btn_batchconform").click(function(){
-
+		selectedItems = table.bootstrapTable('getSelections');
+		var json_str = JSON.stringify(selectedItems);
+		alert(json_str);
     });
 };
 
 $(function () {
-
+	
     bindChangeEventToChildModelSelector();
     $.when(buildChildModelSelector()).done(function(){
-        doSearch();
+        doSearch(0);
     });
 
 
     $("#btn-search").click(function(e){
-        doSearch();
+        doSearch(0);
     });
+    
+    $("#txt_alertstarttime").datetimepicker();
+    $("#txt_alertendtime").datetimepicker();
+    bindBtnBatchConfromClick();
 });
 </script>
 </body>

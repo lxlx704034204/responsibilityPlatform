@@ -24,6 +24,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
@@ -62,35 +63,52 @@ public class LevelThreeLimitActions extends AppAction {
 			String alertendtime = searcherJson.getString("alertendtime");
 
 			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
-			Integer pageIndex = pagerJson.getInt("pageIndex");
-			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
-
-			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 			Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
 			Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
-			Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
-
+			
+			Integer pageIndex = pagerJson.getInt("pageIndex");
+			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
+			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+			
+//			Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+//			List<ThresholdAlert> alerts = pageResult.getContent();
+//			Long recordCount = pageResult.getTotalElements();
+			
+			Long recordCount = 88l;
+			List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
+			Satellite sl = new Satellite("型号1");
+			sl.setCode("sl1");
+			for(int i = (pageSize * pageIndex); i<(pageSize*(pageIndex+1)); i++){
+				System.out.println("i: " + i);
+				ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
+				alert.setId((long) i);
+				if(i > recordCount){
+					break;
+				}
+				alerts.add(alert);
+			}
+			
+			
 			JSONArray list = new JSONArray();
-			for (ThresholdAlert alert :
-		            pageResult.getContent()) {
+			for (ThresholdAlert alert : alerts) {
 				JSONObject item = new JSONObject();
 				item.put("serialno", 0);
 				item.put("id", alert.getId());
-				item.put("modecode", alert.getSatellite().getCode());
-				item.put("alertstartdt", DateTimeUtils.datetimeFormat.format(alert.getStartTime()));
-				item.put("alertenddt", DateTimeUtils.datetimeFormat.format(alert.getEndTime()));
+				item.put("modecode", alert.getSatellite() != null ? alert.getSatellite().getCode() : null);
+				item.put("alertstartdt", DateTimeUtils.formatToISODatetime(alert.getStartTime()));
+				item.put("alertenddt", DateTimeUtils.formatToISODatetime(alert.getEndTime()));
 				item.put("alertmsg", alert.getMessage());
 				item.put("eventtype", alert.getSeverityLevel().name());
 				item.put("desc", "");
-				item.put("conformperson", alert.getConfirmUser().getFullName());
-				item.put("conformdt", DateTimeUtils.datetimeFormat.format(alert.getConfirmTime()));
+				item.put("conformperson", alert.getConfirmUser() != null ?  alert.getConfirmUser().getFullName() : null);
+				item.put("conformdt", DateTimeUtils.formatToISODatetime(alert.getConfirmTime()));
 				list.add(item);
 		    }
 
 			PageInfo pageInfo = new PageInfo();
 			pageInfo.setPageIndex(pageIndex);
 			pageInfo.setPageSize(pageSize);
-			pageInfo.setRecordCount(pageResult.getTotalElements());
+			pageInfo.setRecordCount(recordCount);
 
 			JSONObject listingData = new JSONObject();
 			listingData.put("records", list);
