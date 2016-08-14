@@ -122,5 +122,35 @@ public class LevelThreeLimitActions extends AppAction {
 			this.sendToClient(jsonResult);
 		}
 	}
+	
+	public void jsonBatchUpdate(){
+		JsonResult jsonResult = null;
+		try {
+			JSONObject json = this.getRequestJsonObject();
+			JSONArray selectedIds_jsonarr = json.getJSONArray("selectedids");
+			String eventtype = json.getString("eventtype");
+			String eventdesc = json.getString("eventdesc");
+			List<Long> selectedIds =  JSONArray.toList(selectedIds_jsonarr, Long.class);
+			
+			ThresholdAlert.SeverityLevel level = Enum.valueOf(ThresholdAlert.SeverityLevel.class, eventtype);
+			Long[] arr = new Long[selectedIds.size()];
+			for(int i = 0; i < selectedIds.size(); i++){
+				arr[i] = selectedIds.get(i);
+			}
+			// 联调代码：start
+			//Integer count = thRepo.batchAddSituationComment(level, eventdesc, arr);
+			// 联调代码：end
+			
+			// 测试代码：start
+			Integer count = 1;
+			// 测试代码：end
+			jsonResult = new JsonResultSuccess(count);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			jsonResult = new JsonResultError(e.getMessage());
+		} finally {
+			this.sendToClient(jsonResult);
+		}
+	}
 
 }

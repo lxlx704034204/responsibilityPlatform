@@ -12,7 +12,11 @@
         <action name="getListByPager" class="levelThreeLimitActions" method="jsonGetListByPager">
             <result type="json"></result>
         </action>
+        <action name="batchUpdate" class="levelThreeLimitActions" method="jsonBatchUpdate">
+            <result type="json"></result>
+        </action>
     </package>
+    
 
     <!--     <package name="orbit-system-home" namespace="/system" extends="orbit-default"> -->
     <!--     	<action name="index" class="homeAction" method="systemIndex"> -->

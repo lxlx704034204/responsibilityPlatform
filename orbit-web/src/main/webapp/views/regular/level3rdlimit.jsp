@@ -66,19 +66,23 @@
                         <form>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">事件类别：</label>
-                                <select class="form-control">
-                                    <option>XXXX</option>
+                                <select class="form-control" id="slt_batch_eventtype">
+                                    <option value="MINOR">MINOR</option>
+                                    <option value="MAJOR">MAJOR</option>
+                                    <option value="SERVE">SERVE</option>
+                                    <option value="FATAL">FATAL</option>
+                                    
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">情况说明：</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="说明"/>
+                                <input type="text" class="form-control" id="txt_batch_eventdesc" placeholder="说明"/>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="btn_batchconform">保存</button>
+                        <button type="button" class="btn btn-primary" id="btn_batchupdate">保存</button>
                     </div>
                 </div>
             </div>
@@ -185,7 +189,7 @@ var doSearch = function (pageIndex) {
         data: params,
         success: function (rep) {
             if (rep.statusCode == 200) {
-                var ctn = rep.content;
+                var ctn = rep.content; 
                 var records = ctn.records;
                 var pageInfo = ctn.pageInfo;
 
@@ -243,16 +247,33 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
     return table;
 };
 
-var bindBtnBatchConfromClick = function(){
-    $("#btn_batchconform").click(function(){
-		selectedItems = table.bootstrapTable('getSelections');
-		var json_str = JSON.stringify(selectedItems);
-		alert(json_str);
+var bindBtnBatchUpdateClick = function(){
+    $("#btn_batchupdate").click(function(){
+		var selectedItems = table.bootstrapTable('getSelections');
+		var selectedIds = [];
+		for(var item in selectedItems){
+			selectedIds.push(item.id);
+		}
+		var eventtype = $("#slt_batch_eventtype").val();
+		var eventdesc = $("#txt_batch_eventdesc").val();
+		var params = {selectedids: selectedIds, eventtype: eventtype, eventdesc: eventdesc};
+		jsless.ajax({
+	        url: "<s:url namespace='/json/regular/levelthree' action='batchUpdate'></s:url>",
+	        data: params,
+	        success: function (rep) {
+	            if (rep.statusCode == 200) {
+	                var ctn = rep.content;
+	                $("#modal_batchset").modal('hide');
+	                doSearch(0);
+	            } else {
+	                // error
+	            }
+	        }
+	    });
     });
 };
 
 $(function () {
-	
     bindChangeEventToChildModelSelector();
     $.when(buildChildModelSelector()).done(function(){
         doSearch(0);
@@ -265,7 +286,7 @@ $(function () {
     
     $("#txt_alertstarttime").datetimepicker();
     $("#txt_alertendtime").datetimepicker();
-    bindBtnBatchConfromClick();
+    bindBtnBatchUpdateClick();
 });
 </script>
 </body>
