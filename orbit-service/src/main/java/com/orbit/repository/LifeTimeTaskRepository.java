@@ -20,6 +20,6 @@ public interface LifeTimeTaskRepository extends JpaRepository<LifeTimeTask, Long
    * @param satelliteId 型号id
    * @return 该型号全生命周期的任务列表, 并且按照"发射保障、交付前、交付后、寿命终结"的默认顺序排序
    */
-  List<LifeTimeTask> findAllBySatelliteIdOrderByStage(Long satelliteId);
+  List<LifeTimeTask> findAllBySatelliteIdOrderByStageAscDeadLineTimeAsc(Long satelliteId);
 
 }

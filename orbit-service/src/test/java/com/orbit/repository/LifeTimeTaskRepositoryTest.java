@@ -126,9 +126,33 @@ public class LifeTimeTaskRepositoryTest {
 
 
   @Test
-  public void findAllBySatelliteIdOrderByStage() throws Exception {
-    List<LifeTimeTask> tasks = repository.findAllBySatelliteIdOrderByStage(s1.getId());
+  public void testFindAllBySatelliteIdOrderByStageAscDeadLineTimeAsc() throws Exception {
+    List<LifeTimeTask> tasks = repository.findAllBySatelliteIdOrderByStageAscDeadLineTimeAsc(s1.getId());
     Assert.assertEquals(10, tasks.size());
+
+    int launchCount = 0;
+    int preCount = 0;
+    int postCount = 0;
+    int eofCount = 0;
+    for (LifeTimeTask task : tasks) {
+      if (task.getStage() == LifeTimeTask.Stage.Launch) {
+        launchCount++;
+      } else if (task.getStage() == LifeTimeTask.Stage.PreDeliver) {
+        preCount++;
+      } else if (task.getStage() == LifeTimeTask.Stage.PostDeliver) {
+        postCount++;
+      } else if (task.getStage() == LifeTimeTask.Stage.EndOfLife) {
+        eofCount++;
+      } else {
+        throw new Exception("不应该出现");
+      }
+    }
+
+    Assert.assertEquals(2, launchCount);
+    Assert.assertEquals(3, preCount);
+    Assert.assertEquals(3, postCount);
+    Assert.assertEquals(2, eofCount);
+
   }
 
 }
