@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  * 三级门限报警
  */
 @Entity
-@Table(name = "Threshold_Alert")
+@Table(name = "THRESHOLD_ALERT")
 public class ThresholdAlert extends BaseEntity {
 
   protected ThresholdAlert() {
