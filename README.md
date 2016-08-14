@@ -13,12 +13,13 @@
 2. [初始化配置](http://dev.mysql.com/doc/refman/5.7/en/mysql-cluster-install-configuration.html)
 3. [启动](http://dev.mysql.com/doc/refman/5.7/en/mysql-cluster-install-first-start.html)
 
-## 各节点启动方法
- 节点类型   | 启动方法
-:----------|:------------------------------------------------------------------------------------------------------
- ndb_mgmd  | sudo ndb_mgmd -f /var/lib/mysql-cluster/config.ini
- sql node  | sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
- data node | sudo ndbd
+## 各节点启动方法和启动顺序
+ 启动顺序 | 节点类型   | 启动方法
+:------- |:----------|:-----------------------------------------------------------------------------------------------------------------------------
+ 1)      | ndb_mgmd  | sudo ndb_mgmd -f /var/lib/mysql-cluster/config.ini
+ 2)      | data node | sudo ndbd
+ 3)      | sql node  | sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&
+
  
 ## 各节点关闭
  节点类型   | 关闭方法

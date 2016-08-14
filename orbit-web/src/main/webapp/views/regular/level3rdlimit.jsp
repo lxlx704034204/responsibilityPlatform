@@ -8,6 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>三级门限报警分析</title>
         <link type="text/css" rel="stylesheet" href="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.css"></s:url>" />
+        <link type="text/css" rel="stylesheet" href="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></s:url>" />
     </head>
     <body>
         <h2 class="page-header">三级门限报警分析
@@ -41,10 +42,10 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警开始时间：</label>
-                <input type="text" class="form-control" id="txt_alertstarttime" placeholder="报警开始时间" style="width:200px;"/></div>
+                <input type="text" class="form-control" id="txt_alertstarttime" placeholder="报警开始时间" style="width:200px;" data-date-format="yyyy-mm-dd hh:ii"/></div>
             <div class="form-group">
                 <label for="exampleInputEmail2">报警结束时间：</label>
-                <input type="text" class="form-control" id="txt_alertendtime" placeholder="报警结束时间" style="width:200px;"/></div>
+                <input type="text" class="form-control" id="txt_alertendtime" placeholder="报警结束时间" style="width:200px;" data-date-format="yyyy-mm-dd hh:ii"/></div>
             <a id="btn-search" type="submit" class="btn btn-default">查询</a>
         </form>
 
@@ -65,26 +66,32 @@
                         <form>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">事件类别：</label>
-                                <select class="form-control">
-                                    <option>XXXX</option>
+                                <select class="form-control" id="slt_batch_eventtype">
+                                    <option value="MINOR">MINOR</option>
+                                    <option value="MAJOR">MAJOR</option>
+                                    <option value="SERVE">SERVE</option>
+                                    <option value="FATAL">FATAL</option>
+                                    
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">情况说明：</label>
-                                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="说明"/>
+                                <input type="text" class="form-control" id="txt_batch_eventdesc" placeholder="说明"/>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="btn_batchconform">保存</button>
+                        <button type="button" class="btn btn-primary" id="btn_batchupdate">保存</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script src="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.js"></s:url>"></script>
-    <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/bootstrap-table/dist/bootstrap-table.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></s:url>"></script>
+<script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></s:url>"></script>
 <script>
 
 /**
@@ -158,7 +165,7 @@ var bindChangeEventToChildModelSelector = function(){
 
 
 
-var doSearch = function () {
+var doSearch = function (pageIndex) {
     var selectedModelIds = [];
     $("#child_modelselector").find("input:checkbox:checked").each(function(){
         var modelid = $(this).val();
@@ -173,7 +180,7 @@ var doSearch = function () {
             alertendtime: $("#txt_alertendtime").val()
         },
         pager: {
-            pageIndex: 0
+            pageIndex: pageIndex
         }
     };
 
@@ -182,7 +189,7 @@ var doSearch = function () {
         data: params,
         success: function (rep) {
             if (rep.statusCode == 200) {
-                var ctn = rep.content;
+                var ctn = rep.content; 
                 var records = ctn.records;
                 var pageInfo = ctn.pageInfo;
 
@@ -195,7 +202,7 @@ var doSearch = function () {
 };
 
 var buildtable = function (pageCount, pageSize, recordCount, listdata) {
-    $('#list-table').bootstrapTable({
+	table = $('#list-table').bootstrapTable({
         locale: 'zh-CN',
         pagination: true,
         pageNumber: pageCount,
@@ -204,9 +211,8 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
         totalRows: recordCount,
         columns: [
             {
-                field: 'id',
-                checkbox: true,
-                title: 'Item ID'
+                //field: 'id',
+                checkbox: true
             }, {
                 field: 'modecode',
                 title: '型号代号'
@@ -233,27 +239,54 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
                 title: '确认时间'
             }
         ],
-        data: listdata
+        data: listdata,
+        onPageChange: function(number, size){
+        	doSearch(number -1);
+        }
     });
+    return table;
 };
 
-var bindBtnBatchConfromClick = function(){
-    $("#btn_batchconform").click(function(){
-
+var bindBtnBatchUpdateClick = function(){
+    $("#btn_batchupdate").click(function(){
+		var selectedItems = table.bootstrapTable('getSelections');
+		var selectedIds = [];
+		for(var item in selectedItems){
+			selectedIds.push(item.id);
+		}
+		var eventtype = $("#slt_batch_eventtype").val();
+		var eventdesc = $("#txt_batch_eventdesc").val();
+		var params = {selectedids: selectedIds, eventtype: eventtype, eventdesc: eventdesc};
+		jsless.ajax({
+	        url: "<s:url namespace='/json/regular/levelthree' action='batchUpdate'></s:url>",
+	        data: params,
+	        success: function (rep) {
+	            if (rep.statusCode == 200) {
+	                var ctn = rep.content;
+	                $("#modal_batchset").modal('hide');
+	                doSearch(0);
+	            } else {
+	                // error
+	            }
+	        }
+	    });
     });
 };
 
 $(function () {
-
     bindChangeEventToChildModelSelector();
     $.when(buildChildModelSelector()).done(function(){
-        doSearch();
+        doSearch(0);
     });
 
 
     $("#btn-search").click(function(e){
-        doSearch();
+        doSearch(0);
     });
+    
+    $("#txt_alertstarttime").datetimepicker();
+    $("#txt_alertendtime").datetimepicker();
+    bindBtnBatchUpdateClick();
 });
 </script>
 </body>
