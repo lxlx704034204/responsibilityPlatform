@@ -3,6 +3,7 @@ package com.orbit.repository;
 import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.Platform2Alert;
 import com.orbit.entity.Satellite;
+import com.orbit.entity.TeleControl;
 import com.orbit.entity.ThresholdAlert;
 import com.orbit.entity.permission.User;
 import com.orbit.repository.permission.UserRepository;
@@ -23,52 +24,69 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 测控事件的repository测试
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
-public class Platform2AlertRepositoryTests {
+public class TeleControlRepositoryTests {
 
   @Autowired
-  Platform2Repository repository;
+  TeleControlRepository repository;
 
   @Autowired
   UserRepository userRepository;
 
-  Platform2Alert alert1, alert2, alert3, alert4, alert5, alert6;
+  @Autowired
+  SatelliteRepository satelliteRepository;
+
+  TeleControl alert1, alert2, alert3, alert4, alert5, alert6;
   User confirmUser;
+
+  Satellite s1, s2;
 
   @Before
   public void setUp() {
     confirmUser = new User("责任人1");
     userRepository.save(confirmUser);
 
-    String name1 = "代号1";
-    String name2 = "代号2";
-    alert1 = new Platform2Alert(name1, "测试异常现象描述1");
+    s1 = new Satellite("型号1");
+    s1.setAdminUser(confirmUser);
+    satelliteRepository.save(s1);
+
+    s2 = new Satellite("型号2");
+    s2.setAdminUser(confirmUser);
+    satelliteRepository.save(s2);
+
+    confirmUser.addSatellite(s1);
+    confirmUser.addSatellite(s2);
+
+    alert1 = new TeleControl(s1, "测试异常现象描述1");
     alert1.setConfirmUser(confirmUser);
     alert1.setConfirmTime(new Date());
     repository.save(alert1);
 
-    alert2 = new Platform2Alert(name1, "测试异常现象描述2");
+    alert2 = new TeleControl(s1, "测试异常现象描述2");
     alert2.setConfirmUser(confirmUser);
     alert2.setConfirmTime(new Date());
     repository.save(alert2);
 
-    alert3 = new Platform2Alert(name1, "测试异常现象描述3");
+    alert3 = new TeleControl(s1, "测试异常现象描述3");
     alert3.setConfirmUser(confirmUser);
     alert3.setConfirmTime(new Date());
     repository.save(alert3);
 
-    alert4 = new Platform2Alert(name1, "测试异常现象描述4");
+    alert4 = new TeleControl(s1, "测试异常现象描述4");
     alert4.setConfirmUser(confirmUser);
     alert4.setConfirmTime(new Date());
     repository.save(alert4);
 
-    alert5 = new Platform2Alert(name2, "测试异常现象描述5");
+    alert5 = new TeleControl(s2, "型号2_测试异常现象描述1");
     alert5.setConfirmUser(confirmUser);
     alert5.setConfirmTime(new Date());
     repository.save(alert5);
 
-    alert6 = new Platform2Alert(name2, "测试异常现象描述6");
+    alert6 = new TeleControl(s2, "型号2_测试异常现象描述2");
     alert6.setConfirmUser(confirmUser);
     alert6.setConfirmTime(new Date());
     repository.save(alert6);
@@ -86,11 +104,14 @@ public class Platform2AlertRepositoryTests {
 
     userRepository.delete(confirmUser);
 
+    satelliteRepository.delete(s1.getId());
+    satelliteRepository.delete(s2.getId());
+
   }
 
   @Test
-  public void testFindByStartTimeBetween() {
-    //这里可以作为前台UI调用的demo,分页查询如何向后台传递参数,页码从0开始
+  public void testFindBySatelliteIdAndStartTimeBetween() {
+    //这里可以作为前台UI调用的demo,分页查询如何向后台传递参数,页码从0开始,默认按照"报警开始"降序排序
     PageRequest pageRequest = new PageRequest(0, 5, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
     Calendar yesterday = Calendar.getInstance();
     yesterday.add(Calendar.DAY_OF_MONTH, -1);
@@ -98,7 +119,7 @@ public class Platform2AlertRepositoryTests {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<Platform2Alert> pageResult = repository.findByStartTimeBetween(yesterday.getTime(), tomorrow.getTime()
+    Page<TeleControl> pageResult = repository.findBySatelliteIdAndStartTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());
@@ -107,21 +128,12 @@ public class Platform2AlertRepositoryTests {
     System.out.println("getNumber()=" + pageResult.getNumber());
     System.out.println("getSize()当前页内记录数=" + pageResult.getSize());
 
-    System.out.println("2代平台报警信息如下:");
+    System.out.println("测控事件息如下:");
     //如下查看排序效果
-    for (Platform2Alert alert :
+    for (TeleControl alert :
             pageResult.getContent()) {
       System.out.println(alert);
     }
-  }
-
-  /**
-   * 测试添加批量分析
-   */
-  @Test
-  public void testBatchAddSituationComment() {
-    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.MAJOR, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
-    Assert.assertEquals(5, affectedSize);
   }
 
   /**
