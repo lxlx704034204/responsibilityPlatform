@@ -58,6 +58,9 @@ public class TeleControlRepositoryTests {
     s2.setAdminUser(confirmUser);
     satelliteRepository.save(s2);
 
+    confirmUser.addSatellite(s1);
+    confirmUser.addSatellite(s2);
+
     alert1 = new TeleControl(s1, "测试异常现象描述1");
     alert1.setConfirmUser(confirmUser);
     alert1.setConfirmTime(new Date());
@@ -92,9 +95,6 @@ public class TeleControlRepositoryTests {
 
   @After
   public void destroy() {
-    satelliteRepository.delete(s1.getId());
-    satelliteRepository.delete(s2.getId());
-
     repository.delete(alert1.getId());
     repository.delete(alert2.getId());
     repository.delete(alert3.getId());
@@ -103,6 +103,9 @@ public class TeleControlRepositoryTests {
     repository.delete(alert6.getId());
 
     userRepository.delete(confirmUser);
+
+    satelliteRepository.delete(s1.getId());
+    satelliteRepository.delete(s2.getId());
 
   }
 

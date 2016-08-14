@@ -6,6 +6,7 @@ import com.orbit.entity.Satellite;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 
 /**
  * 用户
@@ -115,7 +117,6 @@ public class User extends BaseEntity implements UserDetails {
 
   /**
    * 获取该责任者所负责的型号列表
-   * @return
    */
   public List<Satellite> getSatellites() {
     return satellites;
@@ -130,5 +131,31 @@ public class User extends BaseEntity implements UserDetails {
     return String.format(
             "User[id=%d, loginName='%s',fullName=%s]",
             getId(), loginName, fullName);
+  }
+
+  /**
+   * 添加负责的型号
+   *
+   * @param satellite 型号
+   */
+  public List<Satellite> addSatellite(Satellite satellite) {
+    if (this.satellites == null) {
+      this.satellites = new ArrayList<Satellite>(10);
+    }
+    this.satellites.add(satellite);
+
+    return this.satellites;
+  }
+
+  /**
+   * 删除user时,避免satellite的外键约束造成删除失败
+   */
+  @PreRemove
+  private void preRemove() {
+    if (satellites != null && satellites.size() > 0) {
+      for (Satellite s : satellites) {
+        s.setAdminUser(null);
+      }
+    }
   }
 }

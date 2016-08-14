@@ -124,7 +124,7 @@ public class TeleControl extends BaseEntity {
   }
 
   @Enumerated(EnumType.ORDINAL)
-  @Column(name = "EVENT_TYPE", nullable = false, columnDefinition = "SMALLINT")
+  @Column(name = "EVENT_TYPE", columnDefinition = "SMALLINT")
   private EventType eventType;
 
   @ManyToOne

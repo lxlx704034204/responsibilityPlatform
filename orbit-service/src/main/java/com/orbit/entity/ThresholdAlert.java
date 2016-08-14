@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  * 三级门限报警
  */
 @Entity
-@Table(name="Threshold_Alert")
+@Table(name = "Threshold_Alert")
 public class ThresholdAlert extends BaseEntity {
 
   protected ThresholdAlert() {
@@ -139,7 +139,7 @@ public class ThresholdAlert extends BaseEntity {
   private String message;
 
   @Enumerated(EnumType.ORDINAL)
-  @Column(name = "SEVERITY_LEVEL", nullable = false)
+  @Column(name = "SEVERITY_LEVEL", nullable = false, columnDefinition = "SMALLINT")
   private SeverityLevel severityLevel;
 
   @ManyToOne
