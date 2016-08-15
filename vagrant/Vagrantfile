@@ -18,6 +18,9 @@ Vagrant.configure(2) do |config|
   	node1.vm.hostname="manager"
         node1.vm.network "public_network", auto_config: false,bridge:"en0: Wi-Fi (AirPort)"
         
+	node1.vm.provision "shell",
+    		run: "always",
+ 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.202 netmask 255.255.0.0 up &&  ndb_mgmd -f /var/lib/mysql-cluster/config.ini" 
         node1.vm.provision "shell",path: "bootstrap.sh"
   end
 
@@ -28,7 +31,7 @@ Vagrant.configure(2) do |config|
 
 	data1.vm.provision "shell",
     		run: "always",
- 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.204 netmask 255.255.0.0 up" 
+ 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.204 netmask 255.255.0.0 up &&  ndbd" 
 	data1.vm.provision "shell",path: "bootstrap.sh"
   end
 
@@ -39,7 +42,7 @@ Vagrant.configure(2) do |config|
 
         data2.vm.provision "shell",
     		run: "always",
- 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.205 netmask 255.255.0.0 up"
+ 		inline: "yum install -y net-tools && ifconfig eth1 192.168.101.205 netmask 255.255.0.0 up &&  ndbd"
         data2.vm.provision "shell",path: "bootstrap.sh"
   end
   
@@ -61,7 +64,7 @@ Vagrant.configure(2) do |config|
 
         sql.vm.provision "shell",
                 run: "always",
-                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up"
+                inline: "yum install -y net-tools && ifconfig eth1 192.168.101.203 netmask 255.255.0.0 up &&  /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbcluster --ndb-connectstring=192.168.101.202:1186&"
 	sql.vm.provision "shell",path: "bootstrap.sh"
   end
 
