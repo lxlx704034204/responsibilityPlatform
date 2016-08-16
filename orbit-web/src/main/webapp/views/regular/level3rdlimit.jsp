@@ -50,7 +50,7 @@
         </form>
 
         <div class="table-responsive" style="margin-top:10px;">
-            <table id="list-table"></table>
+            <table id="list-table" class="table table-striped"></table>
         </div>
 
         <div class="modal fade" id="modal_batchset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -71,7 +71,7 @@
                                     <option value="MAJOR">MAJOR</option>
                                     <option value="SERVE">SERVE</option>
                                     <option value="FATAL">FATAL</option>
-                                    
+
                                 </select>
                             </div>
                             <div class="form-group">
@@ -92,6 +92,7 @@
 <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
 <script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></s:url>"></script>
 <script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></s:url>"></script>
+<script src="<s:url value="/scripts/datatable.js"></s:url>"></script>
 <script>
 
 /**
@@ -165,7 +166,7 @@ var bindChangeEventToChildModelSelector = function(){
 
 
 
-var doSearch = function (pageIndex) {
+var getPagerData = function (pageIndex, callback) {
     var selectedModelIds = [];
     $("#child_modelselector").find("input:checkbox:checked").each(function(){
         var modelid = $(this).val();
@@ -189,11 +190,10 @@ var doSearch = function (pageIndex) {
         data: params,
         success: function (rep) {
             if (rep.statusCode == 200) {
-                var ctn = rep.content; 
-                var records = ctn.records;
-                var pageInfo = ctn.pageInfo;
+                if(callback){
+                    callback(rep.content);
+                }
 
-                buildtable(pageInfo.pageCount, pageInfo.pageSize, pageInfo.recordCount, records);
             } else {
                 // error
             }
@@ -201,18 +201,37 @@ var doSearch = function (pageIndex) {
     });
 };
 
-var buildtable = function (pageCount, pageSize, recordCount, listdata) {
-	table = $('#list-table').bootstrapTable({
-        locale: 'zh-CN',
-        pagination: true,
-        pageNumber: pageCount,
-        pageSize: pageSize,
-        sidePagination: 'server',
-        totalRows: recordCount,
-        columns: [
-            {
-                //field: 'id',
-                checkbox: true
+var doSearch = function(pageIndex){
+    getPagerData(
+        pageIndex,
+        function(result){
+            var records = result.records;
+            var pageInfo = result.pageInfo;
+
+            buildtable(pageInfo.pageIndex, pageInfo.pageSize, pageInfo.recordCount, records);
+        }
+    );
+};
+
+var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
+
+	var table = new datatable({
+		tableSelector: "#list-table",
+		columns: [{
+            	columnFormatter: function(){
+            		var checkbox = $("<input type='checkbox' />").val("toggleall");
+            		checkbox.change(function(table){
+
+            		});
+                	return checkbox;
+            	},
+            	rowFormatter: function(row, rowdata){
+                	var checkbox = $("<input type='checkbox' />").val(rowdata.id);
+                	checkbox.change(function(){
+
+                	});
+                	return checkbox;
+                }
             }, {
                 field: 'modecode',
                 title: '型号代号'
@@ -239,11 +258,24 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
                 title: '确认时间'
             }
         ],
-        data: listdata,
-        onPageChange: function(number, size){
-        	doSearch(number -1);
+        rows: listdata,
+        recordCount: recordCount,
+        pageSize: pageSize,
+        pageIndex: pageIndex,
+        getPagerRows: function(pageIndex, pageSize){
+            getPagerData(
+                pageIndex,
+                function(result){
+                    var records = result.records;
+                    var pageInfo = result.pageInfo;
+                    table.reload(pageIndex, records);
+                }
+            );
         }
-    });
+	});
+
+	table.render();
+
     return table;
 };
 
@@ -283,7 +315,7 @@ $(function () {
     $("#btn-search").click(function(e){
         doSearch(0);
     });
-    
+
     $("#txt_alertstarttime").datetimepicker();
     $("#txt_alertendtime").datetimepicker();
     bindBtnBatchUpdateClick();

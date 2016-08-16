@@ -1,0 +1,161 @@
+/**
+ * AUTHOR: LIPEI
+ */
+
+
+
+(function (window, undefined) {
+	/*
+	 * detect dependencies.
+	 * */
+    (function () {
+        if ((typeof jQuery) == "undefined") {
+            alert("Failed to find the dependency object: jquery.");
+        }
+    })();
+    (function () {
+        if ((typeof JSON) == "undefined") {
+            alert("Failed to find the dependency object: JSON.");
+        }
+    })();
+    /*
+     * construct main object.
+     *
+     * column:{field: fieldname, title: headertitle, formatter:func}
+     *
+     * */
+    var datatable = (function () {
+        var datatable = function (args) {
+        	var options = {
+        		tableSelector: null,
+        		columns: [],
+        		rows: [],
+        		recordCount: 0,
+        		pageSize: 10,
+        		pageIndex: 0,
+                getPagerRows: function(pageIndex, pageSize){}
+        	};
+        	$.extend(options, args);
+        	var columnDefault = {
+        		field: null,
+        		title: null,
+        		columnFormatter: function(table){},
+        		rowFormatter: function(row, rowdata){}
+        	};
+
+
+        	// render theader.
+        	var render_theader = function(table, columns){
+        		var thead = $("<thead></thead>");
+        		if(columns && columns.length > 0){
+            		var tr = $("<tr></tr>");
+            		for(var colIndex = 0; colIndex < columns.length; colIndex++){
+            			var column = columns[colIndex];
+            			var th = $("<th></th>");
+            			if(column["columnFormatter"] != undefined){
+            				th.append(column["columnFormatter"]());
+            			}
+            			if(column['field'] != undefined){
+            				th.attr("field", column.field);
+            			}
+            			if(column['title'] != undefined){
+            				var title_span = $("<span></span>").text(column.title);
+            				th.append(title_span);
+            			}
+            			tr.append(th);
+            		}
+            		thead.append(tr);
+            	}
+        		table.append(thead);
+        	};
+
+
+
+        	// render tbody.
+        	var render_tbody = function(table, columns, rows){
+        		var tbody = $("<tbody></tbody>");
+        		if(rows && rows.length > 0){
+
+            		for(var rowIndex = 0; rowIndex < rows.length; rowIndex++){
+            			var rowdata = rows[rowIndex];
+            			var row = $("<tr></tr>");
+            			for(var colIndex = 0; colIndex < columns.length; colIndex++){
+            				var column = columns[colIndex];
+            				var td = $("<td></td>");
+            				if(column["rowFormatter"] != undefined){
+            					td.append(column["rowFormatter"](row, rowdata));
+            				} else {
+
+            					td.attr("field", column.field);
+            					td.append(rowdata[column.field]);
+            				}
+            				row.append(td);
+
+            			}
+            			tbody.append(row);
+            		}
+            	}
+        		table.append(tbody);
+        	};
+
+        	var render_pager = function(recordCount, pageSize, pageIndex){
+        		var group = $("<div class='btn-group pager-buttons' role='group'></div>");
+        		var pageCount = Math.ceil(recordCount / pageSize);
+        		for(var i = 0; i < pageCount; i++){
+        			var page_btn = $("<button type='button' class='btn pager-button'></button>").text(i + 1).val(i);
+
+        			if(i == pageIndex){
+        				page_btn.addClass("btn-primary").attr("disabled", "disabled");
+        			} else {
+        				page_btn.addClass("btn-default");
+        			}
+        			group.append(page_btn);
+        		}
+                group.delegate(".btn", "click", function(){
+                    var targetPageIndex = parseInt($(this).val());
+                    options.getPagerRows(targetPageIndex, pageSize);
+                });
+        		return group;
+        	};
+
+        	// render table.
+        	this.render = function(){
+        		var table = $(options.tableSelector);
+
+        		columns = options.columns;
+        		rows = options.rows;
+        		jsless.log(options);
+        		render_theader(table, columns);
+        		render_tbody(table, columns, rows);
+        		jsless.log(table);
+                var pager = render_pager(options.recordCount, options.pageSize, options.pageIndex);
+                table.after(pager);
+        		return table;
+        	};
+
+        	// reload data.
+        	this.reload = function(pageIndex, data){
+        		var table = $(options.tableSelector);
+        		columns = options.columns;
+        		if(table.find("tbody").size() > 0){
+        			table.find("tbody").empty();
+        		}
+                if(table.next().is('.pager-buttons')){
+                    table.next().remove();
+                }
+        		render_tbody(table, columns, data);
+                var pager = render_pager(options.recordCount, options.pageSize, pageIndex);
+                table.after(pager);
+        		return table;
+        	};
+
+        };
+
+        datatable.fn = datatable.prototype = {
+            constructor: datatable
+        };
+
+        return datatable;
+    })();
+    window.datatable = datatable;
+})(window);
