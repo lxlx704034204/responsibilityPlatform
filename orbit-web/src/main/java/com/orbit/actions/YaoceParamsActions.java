@@ -71,33 +71,32 @@ public class YaoceParamsActions extends AppAction {
 //			Long recordCount = pageResult.getTotalElements();
 			
 			Long recordCount = 88l;
-			List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
-			Satellite sl = new Satellite("型号1");
-			sl.setCode("sl1");
-			for(int i = (pageSize * pageIndex); i<(pageSize*(pageIndex+1)); i++){
-				System.out.println("i: " + i);
-				ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
-				alert.setId((long) i);
-				if(i > recordCount){
-					break;
-				}
-				alerts.add(alert);
-			}
+//			List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
+//			Satellite sl = new Satellite("型号1");
+//			sl.setCode("sl1");
+//			for(int i = (pageSize * pageIndex); i<(pageSize*(pageIndex+1)); i++){
+//				System.out.println("i: " + i);
+//				ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
+//				alert.setId((long) i);
+//				if(i > recordCount){
+//					break;
+//				}
+//				alerts.add(alert);
+//			}
 			
 			
 			JSONArray list = new JSONArray();
-			for (ThresholdAlert alert : alerts) {
+//			for (ThresholdAlert alert : alerts) {
+			for(int i = 0; i < 30; i++){
 				JSONObject item = new JSONObject();
 				item.put("serialno", 0);
-				item.put("id", alert.getId());
-				item.put("modecode", alert.getSatellite() != null ? alert.getSatellite().getCode() : null);
-				item.put("alertstartdt", DateTimeUtils.formatToISODatetime(alert.getStartTime()));
-				item.put("alertenddt", DateTimeUtils.formatToISODatetime(alert.getEndTime()));
-				item.put("alertmsg", alert.getMessage());
-				item.put("eventtype", alert.getSeverityLevel().name());
-				item.put("desc", "");
-				item.put("conformperson", alert.getConfirmUser() != null ?  alert.getConfirmUser().getFullName() : null);
-				item.put("conformdt", DateTimeUtils.formatToISODatetime(alert.getConfirmTime()));
+				item.put("id", i);
+				item.put("modecode", "xxx");
+				item.put("paramid", "param-" + i);
+				item.put("paramname", "xyz");
+				item.put("result", "");
+				item.put("exceptiondesc", "def");
+				item.put("trendpic", "");
 				list.add(item);
 		    }
 

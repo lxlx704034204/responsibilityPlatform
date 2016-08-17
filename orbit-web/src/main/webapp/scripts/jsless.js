@@ -688,6 +688,7 @@ jsless.extend({
     */
     getFrameDocument: function (targetWindow, iframeID) {
         var doc = targetWindow.document;
+        // document.getElementById('iframe_viewer').contentWindow.HighCharts
         return doc.getElementById(iframeID).contentDocument || doc.frames[iframeID].document;
     },
 

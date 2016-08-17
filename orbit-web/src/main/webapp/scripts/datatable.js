@@ -39,22 +39,27 @@
         	var columnDefault = {
         		field: null,
         		title: null,
-        		columnFormatter: function(table){},
-        		rowFormatter: function(row, rowdata){}
+        		headFormatter: function(table){},
+        		bodyFormatter: function(row, rowdata){}
         	};
+
+            // var ctrl = {
+            //     table: null,
+            //     pager: null
+            // };
 
             var currPageIndex = 0;
 
-        	// render theader.
-        	var render_theader = function(table, columns){
+        	// render thead.
+        	var render_thead = function(table, columns){
         		var thead = $("<thead></thead>");
         		if(columns && columns.length > 0){
             		var tr = $("<tr></tr>");
             		for(var colIndex = 0; colIndex < columns.length; colIndex++){
             			var column = columns[colIndex];
             			var th = $("<th></th>");
-            			if(column["columnFormatter"] != undefined){
-            				th.append(column["columnFormatter"](table));
+            			if(column["headFormatter"] != undefined){
+            				th.append(column["headFormatter"](table));
             			}
             			if(column['field'] != undefined){
             				th.attr("field", column.field);
@@ -83,8 +88,8 @@
             			for(var colIndex = 0; colIndex < columns.length; colIndex++){
             				var column = columns[colIndex];
             				var td = $("<td></td>");
-            				if(column["rowFormatter"] != undefined){
-            					td.append(column["rowFormatter"](row, rowdata));
+            				if(column["bodyFormatter"] != undefined){
+            					td.append(column["bodyFormatter"](row, rowdata));
             				} else {
 
             					td.attr("field", column.field);
@@ -127,10 +132,8 @@
 
         		columns = options.columns;
         		rows = options.rows;
-        		jsless.log(options);
-        		render_theader(table, columns);
+        		render_thead(table, columns);
         		render_tbody(table, columns, rows);
-        		jsless.log(table);
                 var pager = render_pager(options.recordCount, options.pageSize, options.pageIndex);
                 table.after(pager);
         		return table;

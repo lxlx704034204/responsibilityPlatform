@@ -220,7 +220,7 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
 	table = new datatable({
 		tableSelector: "#list-table",
 		columns: [{
-            	columnFormatter: function(table){
+            	headFormatter: function(table){
             		var checkbox = $("<input type='checkbox' />").val("toggleall");
             		checkbox.change(function(){
             			table.find("tbody tr").each(function(){
@@ -236,7 +236,7 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
             		});
                 	return checkbox;
             	},
-            	rowFormatter: function(row, rowdata){
+            	bodyFormatter: function(row, rowdata){
                 	var checkbox = $("<input type='checkbox' class='itemcheck' />").val(rowdata.id);
                 	checkbox.change(function(){
                 		if(checkbox.prop("checked")){
