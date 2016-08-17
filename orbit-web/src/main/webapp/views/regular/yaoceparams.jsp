@@ -301,6 +301,7 @@ var bindBtnSaveUploadTrendClick = function(){
     $("#btn_save_uploadtrend").click(function(){
 		var innerdoc = jsless.getFrameDocument(window, "iframe_viewer");
 		//http://blog.csdn.net/qq_26477105/article/details/45745767
+		// http://blog.csdn.net/liutengteng130/article/details/12151037
 		console.log(innerdoc);
     });
 };
