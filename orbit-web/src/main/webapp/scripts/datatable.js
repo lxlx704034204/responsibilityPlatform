@@ -43,6 +43,7 @@
         		rowFormatter: function(row, rowdata){}
         	};
 
+            var currPageIndex = 0;
 
         	// render theader.
         	var render_theader = function(table, columns){
@@ -53,7 +54,7 @@
             			var column = columns[colIndex];
             			var th = $("<th></th>");
             			if(column["columnFormatter"] != undefined){
-            				th.append(column["columnFormatter"]());
+            				th.append(column["columnFormatter"](table));
             			}
             			if(column['field'] != undefined){
             				th.attr("field", column.field);
@@ -115,12 +116,14 @@
                     var targetPageIndex = parseInt($(this).val());
                     options.getPagerRows(targetPageIndex, pageSize);
                 });
+                currPageIndex = pageIndex;
         		return group;
         	};
 
         	// render table.
         	this.render = function(){
         		var table = $(options.tableSelector);
+                table.empty();
 
         		columns = options.columns;
         		rows = options.rows;
@@ -148,6 +151,10 @@
                 table.after(pager);
         		return table;
         	};
+
+            this.getPageIndex = function(){
+                return currPageIndex;
+            };
 
         };
 

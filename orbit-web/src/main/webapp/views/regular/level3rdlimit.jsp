@@ -213,21 +213,37 @@ var doSearch = function(pageIndex){
     );
 };
 
+var table = null;
+
 var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
 
-	var table = new datatable({
+	table = new datatable({
 		tableSelector: "#list-table",
 		columns: [{
-            	columnFormatter: function(){
+            	columnFormatter: function(table){
             		var checkbox = $("<input type='checkbox' />").val("toggleall");
-            		checkbox.change(function(table){
+            		checkbox.change(function(){
+            			table.find("tbody tr").each(function(){
+            				var row = $(this);
+            				row.find(".itemcheck").prop("checked", checkbox.prop("checked"));
+            				if(checkbox.prop("checked")){
+            					row.addClass("warning");
+            				} else {
+            					row.removeClass("warning");
+            				}
+            			});
 
             		});
                 	return checkbox;
             	},
             	rowFormatter: function(row, rowdata){
-                	var checkbox = $("<input type='checkbox' />").val(rowdata.id);
+                	var checkbox = $("<input type='checkbox' class='itemcheck' />").val(rowdata.id);
                 	checkbox.change(function(){
+                		if(checkbox.prop("checked")){
+                			row.addClass("warning");
+                		} else {
+                			row.removeClass("warning");
+                		}
 
                 	});
                 	return checkbox;
@@ -281,11 +297,14 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
 
 var bindBtnBatchUpdateClick = function(){
     $("#btn_batchupdate").click(function(){
-		var selectedItems = table.bootstrapTable('getSelections');
 		var selectedIds = [];
-		for(var item in selectedItems){
-			selectedIds.push(item.id);
-		}
+		$("#list-table").find("tbody tr.warning").each(function(){
+			selectedIds.push(parseInt($(this).find(".itemcheck:first").val()));
+		});
+        if(selectedIds.length == 0){
+            alert("请选择要处理的项!");
+            return;
+        }
 		var eventtype = $("#slt_batch_eventtype").val();
 		var eventdesc = $("#txt_batch_eventdesc").val();
 		var params = {selectedids: selectedIds, eventtype: eventtype, eventdesc: eventdesc};
@@ -296,7 +315,14 @@ var bindBtnBatchUpdateClick = function(){
 	            if (rep.statusCode == 200) {
 	                var ctn = rep.content;
 	                $("#modal_batchset").modal('hide');
-	                doSearch(0);
+                    getPagerData(
+                        table.getPageIndex(),
+                        function(result){
+                            var records = result.records;
+                            var pageInfo = result.pageInfo;
+                            table.reload(table.getPageIndex(), records);
+                        }
+                    );
 	            } else {
 	                // error
 	            }
