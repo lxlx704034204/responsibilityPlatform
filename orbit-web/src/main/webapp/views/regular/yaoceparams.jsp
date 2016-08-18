@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>重点遥测参数趋势图</title>
+<link type="text/css" rel="stylesheet" href="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></s:url>" />
 </head>
 <body>
 <h2 class="page-header">重点遥测参数趋势图</h2>
@@ -172,8 +173,8 @@ var getPagerData = function (pageIndex, callback) {
         searcher: {
             keyword: '',
             models: selectedModelIds,
-            alertstarttime: $("#txt_alertstarttime").val(),
-            alertendtime: $("#txt_alertendtime").val()
+            alertstarttime: $("#txt_alertstarttime").val() + ":00",
+            alertendtime: $("#txt_alertendtime").val() + ":00"
         },
         pager: {
             pageIndex: pageIndex

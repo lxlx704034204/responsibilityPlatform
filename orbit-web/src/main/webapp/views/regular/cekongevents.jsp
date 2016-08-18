@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>测控事件</title>
+<link type="text/css" rel="stylesheet" href="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"></s:url>" />
 </head>
 <body>
           <h2 class="page-header">测控事件</h2>
@@ -43,8 +44,8 @@ var getPagerData = function (pageIndex, callback) {
         searcher: {
             keyword: '',
             models: selectedModelIds,
-            starttime: $("#txt_starttime").val(),
-            endtime: $("#txt_endtime").val()
+            starttime: $("#txt_starttime").val() + ":00",
+            endtime: $("#txt_endtime").val() + ":00"
         },
         pager: {
             pageIndex: pageIndex

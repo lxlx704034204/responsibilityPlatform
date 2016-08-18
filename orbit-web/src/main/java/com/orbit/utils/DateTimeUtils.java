@@ -47,7 +47,7 @@ public class DateTimeUtils {
 		try{
 			d = dateFormat.parse(datestr);
 		} catch(ParseException e){
-			log.warn(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return d;
 	}
@@ -57,7 +57,7 @@ public class DateTimeUtils {
 		try{
 			d = datetimeFormat.parse(datetimestr);
 		} catch(ParseException e){
-			log.warn(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return d;
 	}
@@ -70,7 +70,7 @@ public class DateTimeUtils {
 		try{
 			s = dateFormat.format(date);
 		} catch (Exception e){
-			log.warn(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return s;
 	}
@@ -83,7 +83,7 @@ public class DateTimeUtils {
 		try{
 			s = datetimeFormat.format(date);
 		} catch(Exception e){
-			log.warn(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 		return s;
 	}
