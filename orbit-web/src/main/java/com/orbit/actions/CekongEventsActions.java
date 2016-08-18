@@ -61,12 +61,12 @@ public class CekongEventsActions extends AppAction {
 
 			String searchKey = searcherJson.getString("keyword");
 			JSONArray models = searcherJson.getJSONArray("models");
-			String alertstarttime = searcherJson.getString("alertstarttime");
-			String alertendtime = searcherJson.getString("alertendtime");
+			String starttime = searcherJson.getString("starttime");
+			String endtime = searcherJson.getString("endtime");
 
 			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
-			Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
-			Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
+			Date startDate = DateTimeUtils.parseISODatetime(starttime);
+			Date endDate = DateTimeUtils.parseISODatetime(endtime);
 			
 			Integer pageIndex = pagerJson.getInt("pageIndex");
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
@@ -101,7 +101,7 @@ public class CekongEventsActions extends AppAction {
 				item.put("startdt", DateTimeUtils.formatToISODatetime(ctrl.getStartTime()));
 				item.put("enddt", DateTimeUtils.formatToISODatetime(ctrl.getEndTime()));
 				item.put("alertmsg", ctrl.getMessage());
-				item.put("eventtype", ctrl.getEventType().name());
+				item.put("eventtype", ctrl.getEventType() != null ? ctrl.getEventType().name() : null);
 				item.put("desc", "");
 				item.put("conformperson", ctrl.getConfirmUser() != null ?  ctrl.getConfirmUser().getFullName() : null);
 				item.put("conformdt", DateTimeUtils.formatToISODatetime(ctrl.getConfirmTime()));

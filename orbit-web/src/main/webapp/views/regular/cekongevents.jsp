@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +22,7 @@
   <a type="submit" class="btn btn-default" id="btn-search">查询</a>
 </form>
           <div class="table-responsive">
-            <table id="list-table">
+            <table id="list-table" class="table table-striped">
             </table>
           </div>
           
@@ -29,13 +30,21 @@
 <script src="<s:url value="/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></s:url>"></script>
 <script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></s:url>"></script>
 <script src="<s:url value="/bower_components/smalot-bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></s:url>"></script>
+<script src="<s:url value="/scripts/datatable.js"></s:url>"></script>
 <script>
-var doSearch = function (pageIndex) {
+var getPagerData = function (pageIndex, callback) {
+    var selectedModelIds = [];
+    $("#main_modelselector").find("input:checkbox:checked").each(function(){
+        var modelid = $(this).val();
+        selectedModelIds.push(parseInt(modelid));
+    });
+
     var params = {
         searcher: {
             keyword: '',
-            alertstarttime: $("#txt_starttime").val(),
-            alertendtime: $("#txt_endtime").val()
+            models: selectedModelIds,
+            starttime: $("#txt_starttime").val(),
+            endtime: $("#txt_endtime").val()
         },
         pager: {
             pageIndex: pageIndex
@@ -47,11 +56,10 @@ var doSearch = function (pageIndex) {
         data: params,
         success: function (rep) {
             if (rep.statusCode == 200) {
-                var ctn = rep.content; 
-                var records = ctn.records;
-                var pageInfo = ctn.pageInfo;
+                if(callback){
+                    callback(rep.content);
+                }
 
-                buildtable(pageInfo.pageCount, pageInfo.pageSize, pageInfo.recordCount, records);
             } else {
                 // error
             }
@@ -59,16 +67,54 @@ var doSearch = function (pageIndex) {
     });
 };
 
-var buildtable = function (pageCount, pageSize, recordCount, listdata) {
-	table = $('#list-table').bootstrapTable({
-        locale: 'zh-CN',
-        pagination: true,
-        pageNumber: pageCount,
-        pageSize: pageSize,
-        sidePagination: 'server',
-        totalRows: recordCount,
-        columns: [
-            {
+var doSearch = function(pageIndex){
+    getPagerData(
+        pageIndex,
+        function(result){
+            var records = result.records;
+            var pageInfo = result.pageInfo;
+
+            buildtable(pageInfo.pageIndex, pageInfo.pageSize, pageInfo.recordCount, records);
+        }
+    );
+};
+
+var table = null;
+
+var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
+
+	table = new datatable({
+		tableSelector: "#list-table",
+		columns: [{
+            	headFormatter: function(table){
+            		var checkbox = $("<input type='checkbox' />").val("toggleall");
+            		checkbox.change(function(){
+            			table.find("tbody tr").each(function(){
+            				var row = $(this);
+            				row.find(".itemcheck").prop("checked", checkbox.prop("checked"));
+            				if(checkbox.prop("checked")){
+            					row.addClass("warning");
+            				} else {
+            					row.removeClass("warning");
+            				}
+            			});
+
+            		});
+                	return checkbox;
+            	},
+            	bodyFormatter: function(row, rowdata){
+                	var checkbox = $("<input type='checkbox' class='itemcheck' />").val(rowdata.id);
+                	checkbox.change(function(){
+                		if(checkbox.prop("checked")){
+                			row.addClass("warning");
+                		} else {
+                			row.removeClass("warning");
+                		}
+
+                	});
+                	return checkbox;
+                }
+            },{
                 //field: 'id',
                 checkbox: true
             }, {
@@ -97,21 +143,34 @@ var buildtable = function (pageCount, pageSize, recordCount, listdata) {
                 title: '位保情况描述'
             }
         ],
-        data: listdata,
-        onPageChange: function(number, size){
-        	doSearch(number -1);
+        rows: listdata,
+        recordCount: recordCount,
+        pageSize: pageSize,
+        pageIndex: pageIndex,
+        getPagerRows: function(pageIndex, pageSize){
+            getPagerData(
+                pageIndex,
+                function(result){
+                    var records = result.records;
+                    var pageInfo = result.pageInfo;
+                    table.reload(pageIndex, records);
+                }
+            );
         }
-    });
+	});
+
+	table.render();
+
     return table;
 };
 
-
 $(function () {
     doSearch(0);
+
     $("#btn-search").click(function(e){
         doSearch(0);
     });
-    
+
     $("#txt_starttime").datetimepicker();
     $("#txt_endtime").datetimepicker();
 });

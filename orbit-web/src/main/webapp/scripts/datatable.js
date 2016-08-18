@@ -129,6 +129,9 @@
         	this.render = function(){
         		var table = $(options.tableSelector);
                 table.empty();
+                if(table.next().is('.pager-buttons')){
+                    table.next().remove();
+                }
 
         		columns = options.columns;
         		rows = options.rows;
