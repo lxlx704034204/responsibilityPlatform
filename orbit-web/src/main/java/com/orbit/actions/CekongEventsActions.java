@@ -45,8 +45,8 @@ public class CekongEventsActions extends AppAction {
 	@Autowired
     ThresholdAlertRepository thRepo;
 	
-	@Autowired
-	TeleControlRepository tcRepo;
+//	@Autowired
+//	TeleControlRepository tcRepo;
 
 	public String pageIndex(){
 		return SUCCESS;

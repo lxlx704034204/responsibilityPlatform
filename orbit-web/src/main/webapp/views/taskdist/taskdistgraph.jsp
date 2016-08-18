@@ -12,6 +12,7 @@
         <table class="flowgraphtable">
             <tr class="stage">
                 <td class="flowtitlearea topstage">
+                	<div class="whiteholder"></div>
                     <div class="startcycle"></div>
                     <div class="blankholder"></div>
                     <div class="flowtitlecontainer">
@@ -254,6 +255,7 @@
                     </div>
                     <div class="blankholder"></div>
                     <div class="stopcycle"></div>
+                    <div class="whiteholder"></div>
                 </td>
                 <td>
                     <div class="container-fluid task-info">
