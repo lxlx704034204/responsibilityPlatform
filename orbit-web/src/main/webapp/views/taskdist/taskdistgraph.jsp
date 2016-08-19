@@ -337,6 +337,70 @@
                 </div>
             </div>
         </div>
+<script type="text/javascript">
+var getModelTask = function(){
+	var params = {
+		modelid: 0	
+	};
+	return jsless.ajax({
+        url: "<s:url namespace='/json/taskdist' action='getModelTasks'></s:url>",
+        data: params,
+        success: function (rep) {
+            if (rep.statusCode == 200) {
+                var tasks = rep.content;
+                
+            } else {
+                // error
+            }
+        }
+    });
+};
 
+var createTaskInfoWrapper = function(taskdata){
+	var wrapper = $("<div class='container-fluid task-info'></div>");
+	
+	var taskNameRow = $("<div class='row'></div>");
+	var taskNameCol = $("<div class='col-lg-12'></div>");
+	var taskNameLink = $("<a href='#'></a>").text(taskdata.name);
+	taskNameRow.append(taskNameCol.append(taskNameLink));
+	
+	var taskInfoRow = $("<div class='row'>");
+	var responsibleUserCol = $("<div class='col-lg-3'>");
+	var responsibleUserName = $("<div></div>").html("责任人：" + taskdata.userResponsibleName);
+	var deadlineTime = $("<div></div>").html("截止时间：" + taskdata.deadlineTime); 
+	responsibleUserCol.append(responsibleUserName).append(deadlineTime);
+	taskInfoRow.append(responsibleUserCol);
+	
+	var attachmentsCol = $("<div class='col-lg-3'>");
+	if(taskdata.attachments.length > 0){
+		for(var i = 0; i < taskdata.attachments.length; i++){
+			var attachment = taskdata.attachments[i];
+			var attachmentWrapper = $("<div></div>");
+			var linkTitle = "由 " + attachment.uploadByUserName + " 于 " + attachment.uploadTime + " 上传";
+			var attachmentLink = $("<a></a>").text(attachment.fileName).attr("title", linkTitle);
+			attachmentWrapper.append(attachmentLink);
+			attachmentsCol.append(attachmentWrapper);
+		}
+	}
+	taskInfoRow.append(attachmentsCol);
+	
+	var changeBtnCol = $("<div class='col-lg-3'>");
+	var changeBtn = $("<button type='button' class='btn btn-default btn-sm'>修改</button>");
+	changeBtnCol.append(changeBtn);
+	
+	var confirmCol = $("<div class='col-lg-3'>");
+	if(taskdata.confirmUser && taskdata.confirmUser != ""){
+		
+	} else {
+		
+	}
+	
+	
+};
+
+$(function(){
+	getModelTask();
+});
+</script>
     </body>
 </html>

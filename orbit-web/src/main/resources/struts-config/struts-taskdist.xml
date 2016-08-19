@@ -13,14 +13,10 @@
 		</action>
     </package>
     
-<!--     <package name="orbit-system-home" namespace="/system" extends="orbit-default"> -->
-<!--     	<action name="index" class="homeAction" method="systemIndex"> -->
-<!--     		<result name="success">/areas/system/home/index.jsp</result> -->
-<!--     		<interceptor-ref name="admin"></interceptor-ref> -->
-<!--     	</action> -->
-<!--     	<action name="default" class="homeAction" method="systemDefault"> -->
-<!--     		<result name="success">/areas/system/home/default.jsp</result> -->
-<!--     		<interceptor-ref name="admin"></interceptor-ref> -->
-<!--     	</action> -->
-<!--     </package> -->
+    <package name="orbit-json-taskdist" namespace="/json/taskdist" extends="json-default">
+        <action name="getModelTasks" class="taskDistActions" method="jsonGetModelTasks">
+            <result type="json"></result>
+        </action>
+    </package>
+    
 </struts>

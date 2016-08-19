@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 
 import com.orbit.OrbitServiceApplication;
 import com.orbit.configs.SystemConfig;
+import com.orbit.entity.Attachment;
 import com.orbit.entity.LifeTimeTask;
 import com.orbit.entity.LifeTimeTask.Stage;
 import com.orbit.entity.Satellite;
@@ -56,7 +57,7 @@ public class TaskDistActions extends AppAction {
 		return SUCCESS;
 	}
 	
-	public void jsonGetListByPager(){
+	public void jsonGetModelTasks(){
 		JsonResult jsonResult = null;
 		try {
 			JSONObject json = this.getRequestJsonObject();
@@ -88,18 +89,33 @@ public class TaskDistActions extends AppAction {
 			
 			
 			JSONArray list = new JSONArray();
-			for (ThresholdAlert alert : alerts) {
+			for (LifeTimeTask task : tasks) {
 				JSONObject item = new JSONObject();
-				item.put("serialno", 0);
-				item.put("id", alert.getId());
-				item.put("modecode", alert.getSatellite() != null ? alert.getSatellite().getCode() : null);
-				item.put("alertstartdt", DateTimeUtils.formatToISODatetime(alert.getStartTime()));
-				item.put("alertenddt", DateTimeUtils.formatToISODatetime(alert.getEndTime()));
-				item.put("alertmsg", alert.getMessage());
-				item.put("eventtype", alert.getSeverityLevel().name());
-				item.put("desc", "");
-				item.put("conformperson", alert.getConfirmUser() != null ?  alert.getConfirmUser().getFullName() : null);
-				item.put("conformdt", DateTimeUtils.formatToISODatetime(alert.getConfirmTime()));
+				item.put("id", task.getId());
+				item.put("modecode", task.getSatellite() != null ? task.getSatellite().getCode() : null);
+				item.put("stage", task.getStage() != null ? task.getStage().name() : null);
+				item.put("name", task.getName());
+				item.put("userResponsibleName", task.getUserResponsible() != null ? task.getUserResponsible().getFullName() : null);
+				item.put("deadlineTime", task.getDeadLineTime() != null ? DateTimeUtils.formatToISODate(task.getDeadLineTime()) : null);
+				item.put("submitTime", task.getSubmitTime() != null ? DateTimeUtils.formatToISODate(task.getSubmitTime()) : null);
+				item.put("taskResult", task.getTaskResult());
+				item.put("detail", task.getDetail());
+				item.put("confirmUser", task.getConfirmUser() != null ? task.getConfirmUser().getFullName() : null);
+				item.put("confirmTime", task.getConfirmTime() != null ? DateTimeUtils.formatToISODate(task.getConfirmTime()) : null);
+				
+				JSONArray attachmentArr = new JSONArray();
+				List<Attachment> attachments = task.getAttachments();
+				if(attachments != null && attachments.size() > 0){
+					for(Attachment attachment : attachments){
+						JSONObject attachmentJSON = new JSONObject();
+						attachmentJSON.put("id", attachment.getId());
+						attachmentJSON.put("fileName", "");//TODO:
+						attachmentJSON.put("uploadByUserName", attachment.getUploadBy() != null ? attachment.getUploadBy().getFullName() : null);
+						attachmentJSON.put("uploadTime", attachment.getUploadTime() != null ? DateTimeUtils.formatToISODate(attachment.getUploadTime()) : null);
+						attachmentArr.add(attachmentJSON);
+					}
+				}
+				item.put("attachments", attachmentArr);
 				list.add(item);
 		    }
 
