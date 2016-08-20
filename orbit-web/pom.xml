@@ -26,20 +26,20 @@
 
     <dependencies>
         <!--以下2个是spring boot依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.springframework.boot</groupId> -->
+<!--             <artifactId>spring-boot-starter-test</artifactId> -->
+<!--             <scope>test</scope> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>org.springframework.boot</groupId> -->
+<!--             <artifactId>spring-boot-starter-web</artifactId> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>org.springframework.boot</groupId> -->
+<!--             <artifactId>spring-boot-starter-tomcat</artifactId> -->
+<!--             <scope>provided</scope> -->
+<!--         </dependency> -->
 
         <!--内部module依赖-->
         <dependency>
@@ -147,21 +147,21 @@
             <version>1.2.17</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.springframework</groupId> -->
+<!--             <artifactId>spring-context</artifactId> -->
+<!--             <version>${spring.version}</version> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>org.springframework</groupId> -->
+<!--             <artifactId>spring-core</artifactId> -->
+<!--             <version>${spring.version}</version> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>org.springframework</groupId> -->
+<!--             <artifactId>spring-beans</artifactId> -->
+<!--             <version>${spring.version}</version> -->
+<!--         </dependency> -->
 
     </dependencies>
 

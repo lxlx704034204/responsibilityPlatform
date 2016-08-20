@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<!-- 	Actions -->
+	<bean id="homeActions" class="com.orbit.actions.HomeActions">
+	</bean>
+	<bean id="levelThreeLimitActions" class="com.orbit.actions.LevelThreeLimitActions">
+	</bean>
+	<bean id="yaoceParamsActions" class="com.orbit.actions.YaoceParamsActions">
+	</bean>
+	<bean id="taskDistActions" class="com.orbit.actions.TaskDistActions">
+	</bean>
+	<bean id="cekongEventsActions" class="com.orbit.actions.CekongEventsActions">
+	</bean>
+	<bean id="tipsActions" class="com.orbit.actions.TipsActions">
+	</bean>
+	<bean id="modelsActions" class="com.orbit.actions.ModelsActions">
+	</bean>
+</beans>

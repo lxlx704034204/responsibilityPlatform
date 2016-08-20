@@ -5,9 +5,9 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>ORBIT</display-name>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+<!--     <listener> -->
+<!--         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
+<!--     </listener> -->
 
 	<error-page>
   		<error-code>404</error-code>
@@ -18,9 +18,9 @@
   		<location>/views/shared/500.jsp</location>
   	</error-page>
 
-    <listener>
-        <listener-class>com.orbit.InitListener</listener-class>
-    </listener>
+<!--     <listener> -->
+<!--         <listener-class>com.orbit.InitListener</listener-class> -->
+<!--     </listener> -->
 
     <filter>
   		<filter-name>struts-prepare</filter-name>
@@ -40,7 +40,7 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>sitemesh</filter-name>
+        <filter-name>sitemeframework.web.context.ContextLoaderListenersh</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
     <filter-mapping>
@@ -48,10 +48,10 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
-    <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>org.apache.struts2.spring.ClassReloadingXMLWebApplicationContext</param-value>
-    </context-param>
+<!--     <context-param> -->
+<!--         <param-name>contextClass</param-name> -->
+<!--         <param-value>org.apache.struts2.spring.ClassReloadingXMLWebApplicationContext</param-value> -->
+<!--     </context-param> -->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

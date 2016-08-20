@@ -5,13 +5,13 @@
 
 <struts>
     <package name="orbit-regular-yaoceparams" namespace="/regular/yaoceparams" extends="orbit-default">
-    	<action name="index" class="yaoceParamsActions" method="pageIndex">
+    	<action name="index" class="com.orbit.actions.YaoceParamsActions" method="pageIndex">
 			<result>/views/regular/yaoceparams.jsp</result>
 		</action>
     </package>
 
     <package name="orbit-json-regular-yaoceparams" namespace="/json/regular/yaoceparams" extends="json-default">
-        <action name="getListByPager" class="yaoceParamsActions" method="jsonGetListByPager">
+        <action name="getListByPager" class="com.orbit.actions.YaoceParamsActions" method="jsonGetListByPager">
             <result type="json"></result>
         </action>
     </package>

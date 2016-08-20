@@ -5,16 +5,16 @@
 
 <struts>
     <package name="orbit-taskdist" namespace="/taskdist" extends="orbit-default">
-    	<action name="indexlist" class="taskDistActions" method="pageIndexList">
+    	<action name="indexlist" class="com.orbit.actions.TaskDistActions" method="pageIndexList">
 			<result>/views/taskdist/taskdistlist.jsp</result>
 		</action>
-		<action name="indexgraph" class="taskDistActions" method="pageIndexGraph">
+		<action name="indexgraph" class="com.orbit.actions.TaskDistActions" method="pageIndexGraph">
 			<result>/views/taskdist/taskdistgraph.jsp</result>
 		</action>
     </package>
     
     <package name="orbit-json-taskdist" namespace="/json/taskdist" extends="json-default">
-        <action name="getModelTasks" class="taskDistActions" method="jsonGetModelTasks">
+        <action name="getModelTasks" class="com.orbit.actions.TaskDistActions" method="jsonGetModelTasks">
             <result type="json"></result>
         </action>
     </package>

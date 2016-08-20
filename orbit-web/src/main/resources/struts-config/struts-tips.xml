@@ -5,7 +5,7 @@
 
 <struts>
     <package name="orbit-json-tips" namespace="/json/tips" extends="json-default">
-    	<action name="getSummary" class="tipsActions" method="jsonGetSummary">
+    	<action name="getSummary" class="com.orbit.actions.TipsActions" method="jsonGetSummary">
 			<result type="json"></result>
 		</action>
     </package>

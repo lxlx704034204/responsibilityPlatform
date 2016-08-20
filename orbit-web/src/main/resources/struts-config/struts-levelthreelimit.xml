@@ -3,16 +3,16 @@
 
 <struts>
     <package name="orbit-regular-levelthree" namespace="/regular/levelthree" extends="orbit-default">
-        <action name="index" class="levelThreeLimitActions" method="pageIndex">
+        <action name="index" class="com.orbit.actions.LevelThreeLimitActions" method="pageIndex">
             <result>/views/regular/level3rdlimit.jsp</result>
         </action>
     </package>
 
     <package name="orbit-json-regular-levelthree" namespace="/json/regular/levelthree" extends="json-default">
-        <action name="getListByPager" class="levelThreeLimitActions" method="jsonGetListByPager">
+        <action name="getListByPager" class="com.orbit.actions.LevelThreeLimitActions" method="jsonGetListByPager">
             <result type="json"></result>
         </action>
-        <action name="batchUpdate" class="levelThreeLimitActions" method="jsonBatchUpdate">
+        <action name="batchUpdate" class="com.orbit.actions.LevelThreeLimitActions" method="jsonBatchUpdate">
             <result type="json"></result>
         </action>
     </package>

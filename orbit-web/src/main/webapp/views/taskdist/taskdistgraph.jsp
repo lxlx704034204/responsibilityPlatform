@@ -21,6 +21,7 @@
                     </div>
                 </td>
                 <td>
+                	<div id="wrapper_launch"></div>
                     <div class="container-fluid task-info">
                         <div class="row">
                             <div class="col-lg-12">
@@ -91,12 +92,10 @@
             </tr>
             <tr class="stage">
                 <td class="flowtitlearea">
-                    <div class="flowtitlecontainer">
-                        <div class="title">交付前</div>
-                        <div class="daterange">(2016-03-31)</div>
-                    </div>
+                    <div class="flowtitlecontai
                 </td>
                 <td>
+                	<div id="wrapper_predeliver"></div>
                     <div class="container-fluid task-info">
                         <div class="row">
                             <div class="col-lg-12">
@@ -176,6 +175,7 @@
                     </div>
                 </td>
                 <td>
+                	<div id="wrapper_postdeliver"></div>
                     <div class="container-fluid task-info">
                         <div class="row">
                             <div class="col-lg-12">
@@ -258,6 +258,7 @@
                     <div class="whiteholder"></div>
                 </td>
                 <td>
+                	<div id="wrapper_endoflife"></div>
                     <div class="container-fluid task-info">
                         <div class="row">
                             <div class="col-lg-12">
@@ -337,10 +338,11 @@
                 </div>
             </div>
         </div>
+        <iframe id="iframe_upload" style="display:none;"></iframe>
 <script type="text/javascript">
 var getModelTask = function(){
 	var params = {
-		modelid: 0	
+		modelid: 0
 	};
 	return jsless.ajax({
         url: "<s:url namespace='/json/taskdist' action='getModelTasks'></s:url>",
@@ -348,7 +350,19 @@ var getModelTask = function(){
         success: function (rep) {
             if (rep.statusCode == 200) {
                 var tasks = rep.content;
-                
+                for(var i = 0; i < tasks.length; i++){
+                    var task = tasks[i];
+                    var taskwrapper = createTaskInfoWrapper(task);
+                    if(task.stage == "Launch"){
+                        $("#wrapper_launch").append(taskwrapper);
+                    } else if(task.stage == "PreDeliver"){
+                        $("#wrapper_predeliver").append(taskwrapper)
+                    } else if(task.stage == "PostDeliver"){
+                        $("#wrapper_postdeliver").append(taskwrapper);
+                    } else if(task.stage == "EndOfLife") {
+                        $("#wrapper_endoflife").append(taskwrapper);
+                    }
+                }
             } else {
                 // error
             }
@@ -356,50 +370,75 @@ var getModelTask = function(){
     });
 };
 
+var createAttachmentWrapper = function(taskid, attachmentId, attachmentFileName){
+    var attachmentWrapper = $("<div></div>");
+    var attachmentLink = $("<a></a>").text(attachmentFileName);
+    var delBtn = $("<a><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>");
+    attachmentWrapper.append(attachmentLink).append(delBtn);
+    return attachmentWrapper;
+};
+
+window.appendAttachmentInfoToWrapper = function(taskid, attachmentId, attachmentFileName){
+    var attachmentsUploadedWrapper = $("wrapper_uploaded_taskid_" + taskid);
+    attachmentsUploadedWrapper.append(createAttachmentWrapper(taskid, attachmentId, attachmentFileName));
+};
+
 var createTaskInfoWrapper = function(taskdata){
 	var wrapper = $("<div class='container-fluid task-info'></div>");
-	
+
 	var taskNameRow = $("<div class='row'></div>");
 	var taskNameCol = $("<div class='col-lg-12'></div>");
 	var taskNameLink = $("<a href='#'></a>").text(taskdata.name);
 	taskNameRow.append(taskNameCol.append(taskNameLink));
-	
+
 	var taskInfoRow = $("<div class='row'>");
 	var responsibleUserCol = $("<div class='col-lg-3'>");
 	var responsibleUserName = $("<div></div>").html("责任人：" + taskdata.userResponsibleName);
-	var deadlineTime = $("<div></div>").html("截止时间：" + taskdata.deadlineTime); 
+	var deadlineTime = $("<div></div>").html("截止时间：" + taskdata.deadlineTime);
 	responsibleUserCol.append(responsibleUserName).append(deadlineTime);
 	taskInfoRow.append(responsibleUserCol);
-	
-	var attachmentsCol = $("<div class='col-lg-3'>");
+
+	var attachmentsCol = $("<div class='col-lg-6'>");
+    var attachmentsUploaded = $("<div class='wrapper-uploaded'></div>").attr("id","wrapper_uploaded_taskid_" + taskdata.id);
+    var attachmentToUpload = $("<div class='wrapper-toupload'></div>");
 	if(taskdata.attachments.length > 0){
 		for(var i = 0; i < taskdata.attachments.length; i++){
 			var attachment = taskdata.attachments[i];
-			var attachmentWrapper = $("<div></div>");
-			var linkTitle = "由 " + attachment.uploadByUserName + " 于 " + attachment.uploadTime + " 上传";
-			var attachmentLink = $("<a></a>").text(attachment.fileName).attr("title", linkTitle);
-			attachmentWrapper.append(attachmentLink);
-			attachmentsCol.append(attachmentWrapper);
+			var attachmentWrapper =createAttachmentWrapper(taskdata.id, attachment.id, attachment.fileName);
+			attachmentsUploaded.append(attachmentWrapper);
 		}
 	}
+    attachmentsCol.append(attachmentsUploaded);
+    var uploadForm = $("<form class='form-inline'></form>").attr("target", "iframe_upload").attr("enctype","multipart/form-data")
+        .attr("method","post").attr("action","");// TODO:
+    var fileInput = $("<input />").attr("type","file").attr("name","选择文件");
+    var uploadBtn = $("<button type='submit' class='btn btn-default btn-sm' >提交</button>")
+    uploadForm.append(fileInput).append(uploadBtn);
+    attachmentToUpload.append(uploadForm);
+    attachmentsCol.append(attachmentsUploaded).append(attachmentToUpload);
 	taskInfoRow.append(attachmentsCol);
-	
-	var changeBtnCol = $("<div class='col-lg-3'>");
-	var changeBtn = $("<button type='button' class='btn btn-default btn-sm'>修改</button>");
-	changeBtnCol.append(changeBtn);
-	
+
+	// var changeBtnCol = $("<div class='col-lg-3'>");
+	// var changeBtn = $("<button type='button' class='btn btn-default btn-sm'>修改</button>");
+	// changeBtnCol.append(changeBtn);
+
 	var confirmCol = $("<div class='col-lg-3'>");
 	if(taskdata.confirmUser && taskdata.confirmUser != ""){
-		
+        var confirmTime = $("<span></span>").text(taskdata.confirmTime);
+        confirmCol.append(confirmTime);
 	} else {
-		
+        var confirmBtn = $("<button type='button' class='btn btn-default btn-sm'>确认</button>");
+        var rejectBtn = $("<button type='button' class='btn btn-default btn-sm'>退回</button>");
+        confirmCol.append(confirmBtn).append(rejectBtn);
 	}
-	
-	
+    taskInfoRow.append(confirmCol);
+
+    wrapper.append(taskNameRow).append(taskInfoRow);
+    return wrapper;
 };
 
 $(function(){
-	getModelTask();
+	//getModelTask();
 });
 </script>
     </body>

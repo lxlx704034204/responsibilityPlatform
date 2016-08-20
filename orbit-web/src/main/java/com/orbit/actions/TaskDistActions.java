@@ -109,7 +109,7 @@ public class TaskDistActions extends AppAction {
 					for(Attachment attachment : attachments){
 						JSONObject attachmentJSON = new JSONObject();
 						attachmentJSON.put("id", attachment.getId());
-						attachmentJSON.put("fileName", "");//TODO:
+						attachmentJSON.put("fileName", attachment.getFileName());
 						attachmentJSON.put("uploadByUserName", attachment.getUploadBy() != null ? attachment.getUploadBy().getFullName() : null);
 						attachmentJSON.put("uploadTime", attachment.getUploadTime() != null ? DateTimeUtils.formatToISODate(attachment.getUploadTime()) : null);
 						attachmentArr.add(attachmentJSON);
