@@ -8,6 +8,8 @@
         <groupId>com.orbit</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
+
     <groupId>com.orbit</groupId>
     <artifactId>orbit-web</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -23,6 +25,22 @@
     </properties>
 
     <dependencies>
+        <!--以下2个是spring boot依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!--内部module依赖-->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -42,7 +60,6 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-
 
         <!-- Struts  -->
         <dependency>
@@ -87,18 +104,10 @@
             <version>${struts2.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j2.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.5</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -107,7 +116,6 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
-
 
 
         <dependency>
@@ -138,22 +146,22 @@
             <groupId>log4j</groupId>
             <version>1.2.17</version>
         </dependency>
-        
+
         <dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context</artifactId>
-		    <version>${spring.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-core</artifactId>
-		    <version>${spring.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-beans</artifactId>
-		    <version>${spring.version}</version>
-		</dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
     </dependencies>
 
