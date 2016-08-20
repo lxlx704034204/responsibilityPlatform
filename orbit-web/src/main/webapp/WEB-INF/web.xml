@@ -5,9 +5,18 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>ORBIT</display-name>
 
-<!--     <listener> -->
-<!--         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
-<!--     </listener> -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.orbit.OrbitWebConfig</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
 	<error-page>
   		<error-code>404</error-code>
@@ -40,7 +49,7 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>sitemeframework.web.context.ContextLoaderListenersh</filter-name>
+        <filter-name>sitemesh</filter-name>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
     <filter-mapping>
