@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 测控事件的repository测试
+ * 备忘录的repository测试
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
