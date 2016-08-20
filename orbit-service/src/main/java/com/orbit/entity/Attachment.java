@@ -19,9 +19,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 public class Attachment extends BaseEntity {
-  /**
-   * 附件名称
-   */
   @Column(name = "FILE_NAME")
   private String fileName;
 
@@ -41,7 +38,7 @@ public class Attachment extends BaseEntity {
   }
 
   public Attachment(String fileName) {
-    this.fileName = fileName;
+    this.setFileName(fileName);
   }
 
   /**
@@ -73,8 +70,19 @@ public class Attachment extends BaseEntity {
 
   @Override
   public String toString() {
-    return String.format(
+    return String.format(s
             "Attachment[fileName=%d, uploadBy='%s',uploadTime=%s]",
-            getId(), this.fileName, this.uploadBy == null ? "" : uploadBy.getLoginName(), uploadTime == null ? "" : dateFormat.format(uploadTime));
+            getId(), this.getFileName(), this.uploadBy == null ? "" : uploadBy.getLoginName(), uploadTime == null ? "" : dateFormat.format(uploadTime));
+  }
+
+  /**
+   * 附件名称
+   */
+  public String getFileName() {
+    return fileName;
+  }
+
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
   }
 }
