@@ -70,7 +70,7 @@ public class Attachment extends BaseEntity {
 
   @Override
   public String toString() {
-    return String.format(s
+    return String.format(
             "Attachment[fileName=%d, uploadBy='%s',uploadTime=%s]",
             getId(), this.getFileName(), this.uploadBy == null ? "" : uploadBy.getLoginName(), uploadTime == null ? "" : dateFormat.format(uploadTime));
   }
