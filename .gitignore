@@ -11,3 +11,4 @@ bootstrap-table-examples-master
 .settings
 .vagrant
 vagrant/MySQL-*.rpm
+**/uploads/files
