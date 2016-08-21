@@ -87,4 +87,5 @@
     <include file="struts-config/struts-cekongevents.xml"></include>
     <include file="struts-config/struts-tips.xml"></include>
     <include file="struts-config/struts-models.xml"></include>
+    <include file="struts-config/struts-upload.xml"></include>
 </struts>

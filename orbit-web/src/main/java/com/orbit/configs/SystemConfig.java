@@ -47,7 +47,7 @@ public class SystemConfig {
 		return Integer.valueOf(getProperty("stage.common.list.pageSize"));
 	}
 
-	public static String getSharedfilesDir(){
-		return getProperty("sharedfiles.dir");
+	public static String getUploadDir(){
+		return getProperty("upload.dir");
 	}
 }

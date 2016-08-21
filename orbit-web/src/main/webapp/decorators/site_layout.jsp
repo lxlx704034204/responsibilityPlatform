@@ -119,7 +119,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">二代平台报警分析<span class="badge">120/200</span>
+                                <a href="javascript:void(0)">二代平台报警分析<span class="badge">120/200</span>
                                 </a>
                             </li>
                             <li>
@@ -127,7 +127,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">备忘录<span class="badge">120/200</span>
+                            <a href="javascript:void(0)">备忘录<span class="badge">120/200</span>
                             </a>
                         </li>
                         <li>
