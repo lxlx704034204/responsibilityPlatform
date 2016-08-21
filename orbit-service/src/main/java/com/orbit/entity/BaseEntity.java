@@ -23,10 +23,10 @@ public abstract class BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "ID", nullable = false)
+  @Column(nullable = false)
   private Long id;
 
-  @Column(name = "ORIGIN_ID")
+  @Column
   private Long originId;
 
   /**
@@ -48,7 +48,7 @@ public abstract class BaseEntity {
   }
 
   /**
-   * 由于涉及到ETL,本系统中保存原有系统中model的id,便于在数据不一致的时候比较数据一致性
+   * 由于涉及到ETL,本系统中保存原有系统中model的id,便于在数据不一致的时候比较哪些数据缺失,建议本系统在ETL时,遵循如下规范:如果源表的id字段在本系统中需要使用,则ETL过程中,所有的源表id字段都叫originid
    */
   public Long getOriginId() {
     return originId;
