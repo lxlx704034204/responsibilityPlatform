@@ -26,7 +26,7 @@ public interface ThresholdAlertRepository extends JpaRepository<ThresholdAlert, 
    * @param pageable     分页查询参数
    * @return 属于这些型号的三级报警列表
    */
-  Page<ThresholdAlert> findBySatelliteIdAndStartTimeBetween(Collection<Long> satelliteIds, Date startTime, Date endTime, Pageable pageable);
+  Page<ThresholdAlert> findBySatelliteIdInAndStartTimeBetween(Collection<Long> satelliteIds, Date startTime, Date endTime, Pageable pageable);
 
   /**
    * 批量更新"事件类别"和"情况说明"
