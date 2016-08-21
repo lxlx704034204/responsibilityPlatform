@@ -78,12 +78,11 @@ public class LifeTimeTask extends BaseEntity {
   @Column(name = "CONFIRM_TIME", nullable = false)
   private Date confirmTime;
 
-  @ManyToMany
+  @OneToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "LIFETIME_TASK_USER", joinColumns = @JoinColumn(name = "LIFETIME_TASK_ID"), foreignKey = @ForeignKey(name = "FK_LIFETIME_TASK_2_USER"), inverseJoinColumns = @JoinColumn(name = "USER_ID"), inverseForeignKey = @ForeignKey(name = "FK_USER_2_LIFETIME_TASK"))
   private List<User> involvedUsers;
 
-  @Basic(fetch = FetchType.EAGER)
-  @OneToMany
+  @OneToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "LIFETIME_TASK_ATTACHMENT",
           joinColumns = @JoinColumn(name = "LIFETIME_TASK_ID"))
