@@ -75,7 +75,7 @@ public class LifeTimeTask extends BaseEntity {
   private User confirmUser;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CONFIRM_TIME", nullable = false)
+  @Column(name = "CONFIRM_TIME")
   private Date confirmTime;
 
   @OneToMany(fetch = FetchType.EAGER)
