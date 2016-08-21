@@ -25,28 +25,24 @@ import java.util.ArrayList;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class ModelsActions extends AppAction {
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+  private static Log log = LogFactory.getLog(ModelsActions.class);
 
-	private static Log log = LogFactory.getLog(ModelsActions.class);
+  @Autowired
+  SatelliteRepository slRepo;
 
-	@Autowired
-    SatelliteRepository slRepo;
+  @Autowired
+  UserRepository userRepo;
 
-	@Autowired
-    UserRepository userRepo;
+  public void jsonGetAdminModels() {
+    JsonResult jsonResult = null;
+    try {
+      // cancel comment in production environment.
+      String userName = "adminuser";//this.getAuthenticatedUser().getName();
+      List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginNameOrderByNameAsc(userName);
 
-	public void jsonGetAdminModels(){
-		JsonResult jsonResult = null;
-		try {
-			// cancel comment in production environment.
-			String userName = "adminuser";//this.getAuthenticatedUser().getName();
-			List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
-
-			// mock data.
+      // mock data.
 //			List<Satellite> satellitesAdmins = new ArrayList<Satellite>();
 //			Satellite sl1 = new Satellite("型号1");
 //			sl1.setCode("sl1");
@@ -61,58 +57,58 @@ public class ModelsActions extends AppAction {
 //			satellitesAdmins.add(sl2);
 //			satellitesAdmins.add(sl3);
 
-			this.setAdminModels(satellitesAdmins);
+      this.setAdminModels(satellitesAdmins);
 
-            JSONArray list = new JSONArray();
-			if(satellitesAdmins != null && satellitesAdmins.size() > 0){
-				for(Satellite sl : satellitesAdmins){
-					JSONObject item = new JSONObject();
-					item.put("id", sl.getId());
-					item.put("name", sl.getName());
-	        		item.put("code", sl.getCode());
-					item.put("selected", true);
-					list.add(item);
-				}
-			}
+      JSONArray list = new JSONArray();
+      if (satellitesAdmins != null && satellitesAdmins.size() > 0) {
+        for (Satellite sl : satellitesAdmins) {
+          JSONObject item = new JSONObject();
+          item.put("id", sl.getId());
+          item.put("name", sl.getName());
+          item.put("code", sl.getCode());
+          item.put("selected", true);
+          list.add(item);
+        }
+      }
 
-			jsonResult = new JsonResultSuccess(list);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			jsonResult = new JsonResultError(e.getMessage());
-		} finally {
-			this.sendToClient(jsonResult);
-		}
-	}
-
-    public void jsonUpdateSelectedModels(){
-        JsonResult jsonResult = null;
-		try {
-            JSONObject json = this.getRequestJsonObject();
-			JSONArray selectedModelIds = json.getJSONArray("selectedmodels");
-            this.setSelectedModelIds(JSONArray.toList(selectedModelIds, Long.class));
-
-			jsonResult = new JsonResultSuccess();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			log.error(e.getMessage(), e);
-			jsonResult = new JsonResultError(e.getMessage());
-		} finally {
-			this.sendToClient(jsonResult);
-		}
+      jsonResult = new JsonResultSuccess(list);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      jsonResult = new JsonResultError(e.getMessage());
+    } finally {
+      this.sendToClient(jsonResult);
     }
+  }
 
-    public void jsonGetSelectedModels(){
-        JsonResult jsonResult = null;
-		try {
-            List<Long> modelIds = this.getSelectedModelIds();
-			jsonResult = new JsonResultSuccess(modelIds);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			log.error(e.getMessage(), e);
-			jsonResult = new JsonResultError(e.getMessage());
-		} finally {
-			this.sendToClient(jsonResult);
-		}
+  public void jsonUpdateSelectedModels() {
+    JsonResult jsonResult = null;
+    try {
+      JSONObject json = this.getRequestJsonObject();
+      JSONArray selectedModelIds = json.getJSONArray("selectedmodels");
+      this.setSelectedModelIds(JSONArray.toList(selectedModelIds, Long.class));
+
+      jsonResult = new JsonResultSuccess();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      log.error(e.getMessage(), e);
+      jsonResult = new JsonResultError(e.getMessage());
+    } finally {
+      this.sendToClient(jsonResult);
     }
+  }
+
+  public void jsonGetSelectedModels() {
+    JsonResult jsonResult = null;
+    try {
+      List<Long> modelIds = this.getSelectedModelIds();
+      jsonResult = new JsonResultSuccess(modelIds);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      log.error(e.getMessage(), e);
+      jsonResult = new JsonResultError(e.getMessage());
+    } finally {
+      this.sendToClient(jsonResult);
+    }
+  }
 
 }

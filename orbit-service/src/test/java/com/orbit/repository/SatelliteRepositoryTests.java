@@ -39,7 +39,7 @@ public class SatelliteRepositoryTests {
 
         s1 = repository.save(s1);
 
-        List<Satellite> satellitesAdmins = repository.findAllByAdminUserLoginName("张三");
+        List<Satellite> satellitesAdmins = repository.findAllByAdminUserLoginNameOrderByNameAsc("张三");
         Assert.assertTrue(satellitesAdmins.size() >= 1);
 
         repository.delete(s1);
