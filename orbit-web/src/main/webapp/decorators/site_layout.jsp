@@ -138,16 +138,7 @@
             </dd>
             <dt>在轨管理工作</dt>
             <dd>
-                <ul class="nav nav-sidebar">
-                    <li>
-                        <a href="">型号1<span class="badge">120/200</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">型号2<span class="badge">120/200</span>
-                        </a>
-                    </li>
-                </ul>
+                <ul id="list_selectedmodels_in_sidebar" class="nav nav-sidebar"></ul>
             </dd>
             <dt>
                 工作成果
@@ -235,6 +226,21 @@ var updateBtnMainModelSelector = function(){
     $("#ddm_main_selectmodels").find(".btn-text").text(selectedModelNames.join(','));
 };
 
+var updateModelsInSidebar = function(){
+	$("#list_selectedmodels_in_sidebar").empty();
+    $("#main_modelselector").find("input:checkbox:checked").each(function(){
+        var modelName = $(this).attr("modelname");
+        var modelId = $(this).val();
+        var li = $("<li></li>");
+        var href="<s:url namespace='/taskdist' action='indexgraph'></s:url>" + "?id=" + modelId;
+        var link = $("<a></a>").text(modelName).attr("href", href);
+        var badge = $("<span class='badge'>120/200</span>");
+        link.append(badge);
+        li.append(link);
+        $("#list_selectedmodels_in_sidebar").append(li);
+    });
+};
+
 /**
  *build the model selector(the pop window)
  **/
@@ -259,6 +265,7 @@ var buildModelSelector = function(){
                         $("#main_modelselector").append(li.append(div.append(label.append(checkbox).append(span))));
                     }
                     updateBtnMainModelSelector();
+                    updateModelsInSidebar();
                 }
             } else {
                 // error
@@ -284,6 +291,7 @@ var bindChangeEventToModelSelector = function(){
             success: function(rep){
                 if(rep.statusCode == 200){
                     updateBtnMainModelSelector();
+                    updateModelsInSidebar();
                 } else {
                     // error:
                 }

@@ -345,7 +345,7 @@
 <script type="text/javascript">
 var getModelTask = function(){
 	var params = {
-		modelid: 0
+		modelid: ${ modelid }
 	};
 	return jsless.ajax({
         url: "<s:url namespace='/json/taskdist' action='getModelTasks'></s:url>",
@@ -441,7 +441,7 @@ var createTaskInfoWrapper = function(taskdata){
 };
 
 $(function(){
-	//getModelTask();
+	getModelTask();
 });
 </script>
     </body>
