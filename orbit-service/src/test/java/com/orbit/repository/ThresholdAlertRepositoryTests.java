@@ -129,7 +129,7 @@ public class ThresholdAlertRepositoryTests {
    */
   @Test
   public void testBatchAddSituationComment() {
-    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.MAJOR, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
+    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.重度异常, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
     Assert.assertEquals(5, affectedSize);
   }
 

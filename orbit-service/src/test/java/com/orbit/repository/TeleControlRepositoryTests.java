@@ -1,10 +1,8 @@
 package com.orbit.repository;
 
 import com.orbit.OrbitServiceApplication;
-import com.orbit.entity.Platform2Alert;
 import com.orbit.entity.Satellite;
 import com.orbit.entity.TeleControl;
-import com.orbit.entity.ThresholdAlert;
 import com.orbit.entity.permission.User;
 import com.orbit.repository.permission.UserRepository;
 

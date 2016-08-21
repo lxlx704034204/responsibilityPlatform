@@ -27,11 +27,11 @@ public class Attachment extends BaseEntity {
   private byte[] content;
 
   @OneToOne
-  @JoinColumn(name = "UPLOAD_USER_ID")
+  @JoinColumn(name = "uploaduser")
   private User uploadBy;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "UPLOAD_TIME")
+  @Column(name = "uploadTime")
   private Date uploadTime;
 
   protected Attachment() {

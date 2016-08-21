@@ -27,7 +27,7 @@ import javax.persistence.Transient;
  * 测控事件
  */
 @Entity
-@Table(name = "TELE_CONTROL")
+@Table(name = "telecontrol")
 public class TeleControl extends BaseEntity {
 
   protected TeleControl() {
@@ -37,9 +37,9 @@ public class TeleControl extends BaseEntity {
     this.satellite = satellite;
   }
 
-  public TeleControl(Satellite satellite, String message) {
+  public TeleControl(Satellite satellite, String eventDescription) {
     this.satellite = satellite;
-    this.message = message;
+    this.eventDescription = eventDescription;
     Date now = new Date();
     this.startTime = now;
     this.confirmTime = now;
@@ -79,17 +79,6 @@ public class TeleControl extends BaseEntity {
   }
 
   /**
-   * 报警信息
-   */
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  /**
    * 确认人id
    */
   public User getConfirmUser() {
@@ -111,14 +100,6 @@ public class TeleControl extends BaseEntity {
     this.confirmTime = confirmTime;
   }
 
-  public EventType getEventType() {
-    return eventType;
-  }
-
-  public void setEventType(EventType eventType) {
-    this.eventType = eventType;
-  }
-
   /**
    * 附件
    */
@@ -130,18 +111,8 @@ public class TeleControl extends BaseEntity {
     this.attachment = attachment;
   }
 
-  /**
-   * 测控事件类型
-   */
-  public enum EventType {
-    PositionMaitain,
-    SlopChange,//倾角调整
-    JamProtection,//干扰保护
-    ChangeTrack//变轨
-  }
-
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "EVENT_TYPE", columnDefinition = "SMALLINT")
+  @ManyToOne
+  @JoinColumn(name = "eventtype", referencedColumnName = "ID")
   private EventType eventType;
 
   @ManyToOne
@@ -153,9 +124,6 @@ public class TeleControl extends BaseEntity {
 
   @Column(name = "END_TIME")
   private Date endTime;
-
-  @Column(nullable = false, length = 1000)
-  private String message;
 
   @ManyToOne
   @JoinColumn(name = "CONFIRM_USER_ID", referencedColumnName = "ID")
@@ -169,10 +137,18 @@ public class TeleControl extends BaseEntity {
   @Column(name = "CONFIRM_TIME")
   private Date confirmTime;
 
-  @Basic(fetch = FetchType.LAZY)
-  @OneToOne (cascade= CascadeType.ALL)
-  @JoinColumn(name="ATTACHMENT_ID")
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name = "ATTACHMENT_ID")
   private Attachment attachment;
+
+  @Column(name = "eventDescription", length = 1024)
+  private String eventDescription;
+
+  /**
+   * 情况说明
+   */
+  @Column(length = 1024)
+  private String situation;
 
   /**
    * 是否被确认,如果确认时间和确认人都存在,则认为已经被确认
@@ -187,7 +163,40 @@ public class TeleControl extends BaseEntity {
   @Override
   public String toString() {
     return String.format(
-            "TeleControl[id=%d, 型号名称='%s',报警信息=%s,开始时间=%s]",
-            getId(), satellite == null ? "" : satellite.getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+            "TeleControl[id=%d, 型号名称='%s',事件描述=%s,开始时间=%s]",
+            getId(), satellite == null ? "" : satellite.getName(), eventDescription == null ? "" : eventDescription, startTime == null ? "" : dateFormat.format(this.startTime));
+  }
+
+  /**
+   * 情况说明
+   */
+  public String getSituation() {
+    return situation;
+  }
+
+  public void setSituation(String situation) {
+    this.situation = situation;
+  }
+
+  /**
+   * 测控事件种类
+   */
+  public EventType getEventType() {
+    return eventType;
+  }
+
+  public void setEventType(EventType eventType) {
+    this.eventType = eventType;
+  }
+
+  /**
+   * 事件描述
+   */
+  public String getEventDescription() {
+    return eventDescription;
+  }
+
+  public void setEventDescription(String eventDescription) {
+    this.eventDescription = eventDescription;
   }
 }

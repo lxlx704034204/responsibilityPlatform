@@ -15,25 +15,25 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * 2代平台
+ * 2代平台报警,RealAlarm2,以后如果有1代,RealAlarm1
  */
 @Entity
-@Table(name="PLATFORM2_ALERT")
-public class Platform2Alert extends BaseEntity {
+@Table(name = "realalarm2")
+public class RealAlarm2 extends BaseEntity {
 
-  protected Platform2Alert() {
+  protected RealAlarm2() {
   }
 
   /**
    * 构造函数
    *
-   * @param name    型号代号
-   * @param message 报警信息
+   * @param satelliteCode 型号代号
+   * @param message       报警信息
    */
-  public Platform2Alert(String name, String message) {
-    this.name = name;
+  public RealAlarm2(String satelliteCode, String message) {
+    this.satelliteCode = satelliteCode;
     this.message = message;
-    this.severityLevel = ThresholdAlert.SeverityLevel.MINOR;
+    this.severityLevel = ThresholdAlert.SeverityLevel.轻度异常;
     Date now = new Date();
     this.startTime = now;
     this.confirmTime = now;
@@ -73,7 +73,7 @@ public class Platform2Alert extends BaseEntity {
   }
 
   /**
-   * TODO: 事件类别(严重程度)?
+   * 件类别(严重程度)
    */
   public ThresholdAlert.SeverityLevel getSeverityLevel() {
     return severityLevel;
@@ -105,9 +105,6 @@ public class Platform2Alert extends BaseEntity {
     this.confirmTime = confirmTime;
   }
 
-  @Column(nullable = false, length = 100)
-  private String name;
-
   @Column(name = "START_TIME", nullable = false)
   private Date startTime;
 
@@ -118,32 +115,79 @@ public class Platform2Alert extends BaseEntity {
   private String message;
 
   @Enumerated(EnumType.ORDINAL)
-  @Column(name = "SEVERITY_LEVEL", nullable = false)
+  @Column(name = "severityLevel", nullable = false)
   private ThresholdAlert.SeverityLevel severityLevel;
 
   @ManyToOne
-  @JoinColumn(name = "CONFIRM_USER_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "confirmUser", referencedColumnName = "ID")
   private User confirmUser;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CONFIRM_TIME", nullable = false)
+  @Column(name = "confirmTime", nullable = false)
   private Date confirmTime;
+
+  @Column(name = "satcode")
+  private String satelliteCode;
+
+  @Column(name = "alarmExplain", length = 2048)
+  private String alarmExplain;
+
+  @Column(length = 1024)
+  private String situation;
+
+  @Enumerated(EnumType.ORDINAL)
+  @Column(name = "confirmCategroy", nullable = false, columnDefinition = "SMALLINT")
+  private ThresholdAlert.ConfirmCategroy confirmCategroy;
 
   @Override
   public String toString() {
     return String.format(
-            "Platform2Alert[id=%d, 型号代号='%s',报警信息=%s,开始时间=%s]",
-            getId(), getName() == null ? "" : getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+            "RealAlarm2[id=%d, 型号代号='%s',报警信息=%s,开始时间=%s]",
+            getId(), getSatelliteCode() == null ? "" : getSatelliteCode(),
+            message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
   }
 
   /**
-   * 型号代号
+   * 关联的型号代号,这里没有做对象关联
    */
-  public String getName() {
-    return name;
+  public String getSatelliteCode() {
+    return satelliteCode;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setSatelliteCode(String satelliteCode) {
+    this.satelliteCode = satelliteCode;
+  }
+
+  /**
+   * 情况说明
+   */
+  public String getSituation() {
+    return situation;
+  }
+
+  public void setSituation(String situation) {
+    this.situation = situation;
+  }
+
+  /**
+   * 报警解释信息
+   */
+  public String getAlarmExplain() {
+    return alarmExplain;
+  }
+
+  public void setAlarmExplain(String alarmExplain) {
+    this.alarmExplain = alarmExplain;
+  }
+
+  /**
+   * 确认类别
+   */
+  public ThresholdAlert.ConfirmCategroy getConfirmCategroy() {
+    return confirmCategroy;
+  }
+
+  public void setConfirmCategroy(ThresholdAlert.ConfirmCategroy confirmCategroy) {
+    this.confirmCategroy = confirmCategroy;
   }
 }

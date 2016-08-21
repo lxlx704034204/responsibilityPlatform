@@ -30,66 +30,62 @@ import com.orbit.utils.StrUtils;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class CekongEventsActions extends AppAction {
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+  private static Log log = LogFactory.getLog(CekongEventsActions.class);
 
-	private static Log log = LogFactory.getLog(CekongEventsActions.class);
-	
-	@Autowired
-    SatelliteRepository slRepo;
+  @Autowired
+  SatelliteRepository slRepo;
 
-	@Autowired
-    UserRepository userRepo;
+  @Autowired
+  UserRepository userRepo;
 
-	@Autowired
-    ThresholdAlertRepository thRepo;
-	
-	@Autowired
-	TeleControlRepository tcRepo;
+  @Autowired
+  ThresholdAlertRepository thRepo;
 
-	public String pageIndex(){
-		return SUCCESS;
-	}
+  @Autowired
+  TeleControlRepository tcRepo;
 
-	public void jsonGetListByPager(){
-		JsonResult jsonResult = null;
-		try {
-			JSONObject json = this.getRequestJsonObject();
-			JSONObject searcherJson = json.getJSONObject("searcher");
-			JSONObject pagerJson = json.getJSONObject("pager");
+  public String pageIndex() {
+    return SUCCESS;
+  }
 
-			String searchKey = searcherJson.getString("keyword");
-			JSONArray models = searcherJson.getJSONArray("models");
-			String starttime = searcherJson.getString("starttime");
-			String endtime = searcherJson.getString("endtime");
-			starttime = StrUtils.isNullOrEmpty(starttime) ? null : starttime + ":00";
-			endtime = StrUtils.isNullOrEmpty(endtime) ? null : endtime + ":00";
+  public void jsonGetListByPager() {
+    JsonResult jsonResult = null;
+    try {
+      JSONObject json = this.getRequestJsonObject();
+      JSONObject searcherJson = json.getJSONObject("searcher");
+      JSONObject pagerJson = json.getJSONObject("pager");
 
-			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
-			Date startDate = DateTimeUtils.parseISODatetime(starttime);
-			Date endDate = DateTimeUtils.parseISODatetime(endtime);
-			
-			// TODO:for test
-			if(startDate == null && endDate == null){
-				Calendar yesterday = Calendar.getInstance();
-				yesterday.add(Calendar.DAY_OF_MONTH, -1);
-				startDate = yesterday.getTime();
-				Calendar tomorrow = Calendar.getInstance();
-				tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-				endDate = tomorrow.getTime();
-			}
-			
-			Integer pageIndex = pagerJson.getInt("pageIndex");
-			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
-			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
-			
-			Page<TeleControl> pageResult = tcRepo.findBySatelliteIdInAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
-			List<TeleControl> ctrls = pageResult.getContent();
-			Long recordCount = pageResult.getTotalElements();
-			
+      String searchKey = searcherJson.getString("keyword");
+      JSONArray models = searcherJson.getJSONArray("models");
+      String starttime = searcherJson.getString("starttime");
+      String endtime = searcherJson.getString("endtime");
+      starttime = StrUtils.isNullOrEmpty(starttime) ? null : starttime + ":00";
+      endtime = StrUtils.isNullOrEmpty(endtime) ? null : endtime + ":00";
+
+      List<Long> selectedModelIds = JSONArray.toList(models, Long.class);
+      Date startDate = DateTimeUtils.parseISODatetime(starttime);
+      Date endDate = DateTimeUtils.parseISODatetime(endtime);
+
+      // TODO:for test
+      if (startDate == null && endDate == null) {
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DAY_OF_MONTH, -1);
+        startDate = yesterday.getTime();
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+        endDate = tomorrow.getTime();
+      }
+
+      Integer pageIndex = pagerJson.getInt("pageIndex");
+      Integer pageSize = SystemConfig.getSystemCommonListPageSize();
+      PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+
+      Page<TeleControl> pageResult = tcRepo.findBySatelliteIdInAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+      List<TeleControl> ctrls = pageResult.getContent();
+      Long recordCount = pageResult.getTotalElements();
+
 //			Long recordCount = 88l;
 //			List<TeleControl> ctrls = new ArrayList<TeleControl>();
 //			Satellite sl = new Satellite("型号1");
@@ -103,41 +99,41 @@ public class CekongEventsActions extends AppAction {
 //				ctrls.add(ctrl);
 //			}
 //			
-			
-			JSONArray list = new JSONArray();
-			for (TeleControl ctrl : ctrls) {
-				JSONObject item = new JSONObject();
-				item.put("serialno", 0);
-				item.put("id", ctrl.getId());
-				item.put("modecode", ctrl.getSatellite() != null ? ctrl.getSatellite().getCode() : null);
-				item.put("subsystemcode", "");
-				item.put("startdt", DateTimeUtils.formatToISODatetime(ctrl.getStartTime()));
-				item.put("enddt", DateTimeUtils.formatToISODatetime(ctrl.getEndTime()));
-				item.put("alertmsg", ctrl.getMessage());
-				item.put("eventtype", ctrl.getEventType() != null ? ctrl.getEventType().name() : null);
-				item.put("desc", "");
-				item.put("conformperson", ctrl.getConfirmUser() != null ?  ctrl.getConfirmUser().getFullName() : null);
-				item.put("conformdt", DateTimeUtils.formatToISODatetime(ctrl.getConfirmTime()));
-				item.put("locationdesc", "");
-				list.add(item);
-		    }
 
-			PageInfo pageInfo = new PageInfo();
-			pageInfo.setPageIndex(pageIndex);
-			pageInfo.setPageSize(pageSize);
-			pageInfo.setRecordCount(recordCount);
+      JSONArray list = new JSONArray();
+      for (TeleControl ctrl : ctrls) {
+        JSONObject item = new JSONObject();
+        item.put("serialno", 0);
+        item.put("id", ctrl.getId());
+        item.put("modecode", ctrl.getSatellite() != null ? ctrl.getSatellite().getCode() : null);
+        item.put("subsystemcode", "");
+        item.put("startdt", DateTimeUtils.formatToISODatetime(ctrl.getStartTime()));
+        item.put("enddt", DateTimeUtils.formatToISODatetime(ctrl.getEndTime()));
+        item.put("alertmsg", ctrl.getEventDescription());
+        item.put("eventtype", ctrl.getEventType() != null ? ctrl.getEventType().getName() : null);
+        item.put("desc", "");
+        item.put("conformperson", ctrl.getConfirmUser() != null ? ctrl.getConfirmUser().getFullName() : null);
+        item.put("conformdt", DateTimeUtils.formatToISODatetime(ctrl.getConfirmTime()));
+        item.put("locationdesc", "");
+        list.add(item);
+      }
 
-			JSONObject listingData = new JSONObject();
-			listingData.put("records", list);
-			listingData.put("pageInfo", pageInfo);
+      PageInfo pageInfo = new PageInfo();
+      pageInfo.setPageIndex(pageIndex);
+      pageInfo.setPageSize(pageSize);
+      pageInfo.setRecordCount(recordCount);
 
-			jsonResult = new JsonResultSuccess(listingData);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			jsonResult = new JsonResultError(e.getMessage());
-		} finally {
-			this.sendToClient(jsonResult);
-		}
-	}
+      JSONObject listingData = new JSONObject();
+      listingData.put("records", list);
+      listingData.put("pageInfo", pageInfo);
+
+      jsonResult = new JsonResultSuccess(listingData);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      jsonResult = new JsonResultError(e.getMessage());
+    } finally {
+      this.sendToClient(jsonResult);
+    }
+  }
 
 }
