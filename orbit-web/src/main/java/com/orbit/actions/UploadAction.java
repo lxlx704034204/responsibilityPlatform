@@ -6,21 +6,35 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpRequest;
 
+import com.orbit.OrbitServiceApplication;
 import com.orbit.configs.SystemConfig;
+import com.orbit.entity.Attachment;
+import com.orbit.entity.LifeTimeTask;
+import com.orbit.repository.LifeTimeTaskRepository;
+import com.orbit.repository.permission.UserRepository;
 
-
+@SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class UploadAction extends ActionBase {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4117614733192689618L;
+	
+	@Autowired
+	LifeTimeTaskRepository lttRepo;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	private File file;
 	private String fileFileName;
@@ -53,7 +67,7 @@ public class UploadAction extends ActionBase {
 
 	public String execute() throws Exception{
 		HttpServletRequest request = this.getRequest();
-		String savedir = SystemConfig.getUploadDir();
+		String savedir = ServletActionContext.getServletContext().getRealPath(SystemConfig.getUploadDir());
 		InputStream is = new FileInputStream(this.getFile());
 		OutputStream os = new FileOutputStream(new File(savedir, this.getFileFileName()));
 		byte[] buffer = new byte[1024000];
@@ -70,7 +84,7 @@ public class UploadAction extends ActionBase {
 			String taskid_str = request.getParameter("taskid");
 			
 			Long taskid = Long.parseLong(taskid_str);
-			this.saveAttachment(taskid, this.getFile());
+			this.saveAttachment(taskid, this.getFile(), this.getFileFileName());
 			
 			request.setAttribute("type", type);
 			request.setAttribute("callback", callback);
@@ -83,8 +97,16 @@ public class UploadAction extends ActionBase {
 		return SUCCESS;
 	}
 	
-	private Integer saveAttachment(Long taskid, File file) throws Exception{
+	private Integer saveAttachment(Long taskid, File file, String fileName) throws Exception{
 		byte[] bytes = this.getFileByteArray(file);
+		Attachment attachment = new Attachment(fileName);
+		attachment.setContent(bytes);
+		//User user = userRepository.
+		attachment.setUploadBy(null);
+		attachment.setUploadTime(new Date());
+		LifeTimeTask task = lttRepo.getOne(taskid);
+		task.addAttachment(attachment);
+		lttRepo.save(task);
 		return 1;
 	}
 	
