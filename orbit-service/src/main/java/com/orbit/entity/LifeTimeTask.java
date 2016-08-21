@@ -1,9 +1,6 @@
 package com.orbit.entity;
 
 
-import com.orbit.entity.Attachment;
-import com.orbit.entity.BaseEntity;
-import com.orbit.entity.Satellite;
 import com.orbit.entity.permission.User;
 
 import java.util.Date;
