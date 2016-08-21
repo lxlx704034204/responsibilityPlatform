@@ -54,6 +54,8 @@ public class TaskDistActions extends AppAction {
 	}
 
 	public String pageIndexGraph(){
+		String modelid = this.getRequest().getParameter("id");
+		this.getRequest().setAttribute("modelid", modelid);
 		return SUCCESS;
 	}
 	
@@ -63,29 +65,29 @@ public class TaskDistActions extends AppAction {
 			JSONObject json = this.getRequestJsonObject();
 			Long modelid = json.getLong("modelid");
 			
-			//List<LifeTimeTask> tasks = lttRepo.findAllBySatelliteIdOrderByStageAscDeadLineTimeAsc(modelid);		
+			List<LifeTimeTask> tasks = lttRepo.findAllBySatelliteIdOrderByStageAscDeadLineTimeAsc(modelid);		
 			
-			Long recordCount = 70l;
-			List<LifeTimeTask> tasks = new ArrayList<LifeTimeTask>();
-			Satellite sl = new Satellite("型号1");
-			sl.setCode("sl1");
-			for(int i = 0; i<16; i++){
-				LifeTimeTask task = new LifeTimeTask(sl);
-				task.setDeadLineTime(new Date());
-				task.setDetail("详细" + i);
-				task.setId(Long.valueOf(i+""));
-				task.setName("任务" + i);
-				if(i < 4){
-					task.setStage(Stage.Launch);
-				} else if(4 <= i && i < 8){
-					task.setStage(Stage.PreDeliver);
-				} else if(8 <= i && i < 12){
-					task.setStage(Stage.PostDeliver);
-				} else if(12 <= i && i < 16){
-					task.setStage(Stage.EndOfLife);
-				}
-				tasks.add(task);
-			}
+//			Long recordCount = 70l;
+//			List<LifeTimeTask> tasks = new ArrayList<LifeTimeTask>();
+//			Satellite sl = new Satellite("型号1");
+//			sl.setCode("sl1");
+//			for(int i = 0; i<16; i++){
+//				LifeTimeTask task = new LifeTimeTask(sl);
+//				task.setDeadLineTime(new Date());
+//				task.setDetail("详细" + i);
+//				task.setId(Long.valueOf(i+""));
+//				task.setName("任务" + i);
+//				if(i < 4){
+//					task.setStage(Stage.Launch);
+//				} else if(4 <= i && i < 8){
+//					task.setStage(Stage.PreDeliver);
+//				} else if(8 <= i && i < 12){
+//					task.setStage(Stage.PostDeliver);
+//				} else if(12 <= i && i < 16){
+//					task.setStage(Stage.EndOfLife);
+//				}
+//				tasks.add(task);
+//			}
 			
 			
 			JSONArray list = new JSONArray();

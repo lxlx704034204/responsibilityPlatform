@@ -147,13 +147,13 @@ public class LevelThreeLimitActions extends AppAction {
       for (int i = 0; i < selectedIds.size(); i++) {
         arr[i] = selectedIds.get(i);
       }
-      // 联调代码：start
-      //Integer count = thRepo.batchAddSituationComment(level, eventdesc, arr);
-      // 联调代码：end
+  
+      Integer count = thRepo.batchAddSituationComment(level, eventdesc, arr);
 
-      // 测试代码：start
-      Integer count = 1;
-      // 测试代码：end
+
+
+      //Integer count = 1;
+      
       jsonResult = new JsonResultSuccess(count);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
