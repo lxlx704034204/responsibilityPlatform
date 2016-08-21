@@ -37,19 +37,14 @@ public class User extends BaseEntity implements UserDetails {
   @Column(name = "username", nullable = false)
   private String userName;
 
-  /**
-   * 邮箱
-   */
-  private String email;
-
   private boolean isAdmin = false;
 
   private boolean isActive = true;
 
-  @Column(length = 50)
+  @Column(name = "telePhoneNum", length = 50)
   private String telePhoneNum;
 
-  @Column(length = 50)
+  @Column(name = "workPhoneNum", length = 50)
   private String workPhoneNum;
 
   @Column(length = 512)
@@ -129,17 +124,6 @@ public class User extends BaseEntity implements UserDetails {
   }
 
   /**
-   * email
-   */
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  /**
    * 获取该责任者所负责的型号列表
    */
   public List<Satellite> getSatellites() {
@@ -183,8 +167,8 @@ public class User extends BaseEntity implements UserDetails {
   @Override
   public String toString() {
     return String.format(
-            "User[userName=%d, email='%s',fullName=%s]",
-            getId(), this.userName, this.email == null ? "" : email, fullName == null ? "" : fullName);
+            "User[userName=%d,fullName=%s]",
+            getId(), this.userName, fullName == null ? "" : fullName);
   }
 
   /**

@@ -26,14 +26,14 @@ public abstract class BaseEntity {
   @Column(nullable = false)
   private Long id;
 
-  @Column
+  @Column(name = "originid")
   private Long originId;
 
   /**
    * 上次修改时间
    */
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "LAST_MODIFIED_TIME", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  @Column(name = "lastModifedTime", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   private Date lastModifedTime = new Date();
 
   /**
