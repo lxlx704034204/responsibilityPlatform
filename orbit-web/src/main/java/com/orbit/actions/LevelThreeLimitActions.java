@@ -26,6 +26,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class LevelThreeLimitActions extends AppAction {
@@ -64,28 +65,38 @@ public class LevelThreeLimitActions extends AppAction {
       List<Long> selectedModelIds = JSONArray.toList(models, Long.class);
       Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
       Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
+      
+      // TODO:for test
+      if(startDate == null && endDate == null){
+    	  Calendar yesterday = Calendar.getInstance();
+          yesterday.add(Calendar.DAY_OF_MONTH, -1);
+          startDate = yesterday.getTime();
+          Calendar tomorrow = Calendar.getInstance();
+          tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+          endDate = tomorrow.getTime();
+      }
 
       Integer pageIndex = pagerJson.getInt("pageIndex");
       Integer pageSize = SystemConfig.getSystemCommonListPageSize();
       PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 
-      Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
-      List<ThresholdAlert> alerts = pageResult.getContent();
-      Long recordCount = pageResult.getTotalElements();
+//      Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+//      List<ThresholdAlert> alerts = pageResult.getContent();
+//      Long recordCount = pageResult.getTotalElements();
 
-//      Long recordCount = 70l;
-//      List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
-//      Satellite sl = new Satellite("型号1");
-//      sl.setCode("sl1");
-//      for (int i = (pageSize * pageIndex); i < (pageSize * (pageIndex + 1)); i++) {
-//        System.out.println("i: " + i);
-//        ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
-//        alert.setId((long) i);
-//        if (i > recordCount) {
-//          break;
-//        }
-//        alerts.add(alert);
-//      }
+      Long recordCount = 70l;
+      List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
+      Satellite sl = new Satellite("型号1");
+      sl.setCode("sl1");
+      for (int i = (pageSize * pageIndex); i < (pageSize * (pageIndex + 1)); i++) {
+        System.out.println("i: " + i);
+        ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
+        alert.setId((long) i);
+        if (i > recordCount) {
+          break;
+        }
+        alerts.add(alert);
+      }
 
 
       JSONArray list = new JSONArray();

@@ -23,20 +23,7 @@
                         <span class="btn-text">型号1,型号2</span>
                         <span class="caret"></span>
                     </button>
-                    <ul id="child_modelselector" class="dropdown-menu" aria-labelledby="ddm_child_selectmodels">
-                        <li>
-                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号1</label></div>
-                        </li>
-                        <li>
-                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号2</label></div>
-                        </li>
-                        <li>
-                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号3</label></div>
-                        </li>
-                        <li>
-                            <div class="dropdown-menuitem"><label><input type="checkbox" value="型号1" />型号4</label></div>
-                        </li>
-                    </ul>
+                    <ul id="child_modelselector" class="dropdown-menu" aria-labelledby="ddm_child_selectmodels"></ul>
                 </div>
 
             </div>
@@ -76,7 +63,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">情况说明：</label>
-                                <input type="text" class="form-control" id="txt_batch_eventdesc" placeholder="说明"/>
+                                <textarea type="text" class="form-control" id="txt_batch_eventdesc" placeholder="说明" rows="4"></textarea>
                             </div>
                         </form>
                     </div>
@@ -300,7 +287,7 @@ var bindBtnBatchUpdateClick = function(){
 			selectedIds.push(parseInt($(this).find(".itemcheck:first").val()));
 		});
         if(selectedIds.length == 0){
-            alert("请选择要处理的项!");
+            alert("请选择要处理的报警!");
             return;
         }
 		var eventtype = $("#slt_batch_eventtype").val();
