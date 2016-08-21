@@ -37,8 +37,10 @@ public class User extends BaseEntity implements UserDetails {
   @Column(name = "username", nullable = false)
   private String userName;
 
+  @Column(name = "isadmin", nullable = false)
   private boolean isAdmin = false;
 
+  @Column(name = "isactive", nullable = false)
   private boolean isActive = true;
 
   @Column(name = "telePhoneNum", length = 50)

@@ -32,7 +32,7 @@ public class ThresholdAlert extends BaseEntity {
   public ThresholdAlert(Satellite satellite, String message) {
     this.satellite = satellite;
     this.message = message;
-    this.severityLevel = SeverityLevel.MINOR;
+    this.severityLevel = SeverityLevel.轻度异常;
     Date now = new Date();
     this.startTime = now;
     this.confirmTime = now;
@@ -115,6 +115,9 @@ public class ThresholdAlert extends BaseEntity {
     this.confirmTime = confirmTime;
   }
 
+  /**
+   * 情况说明
+   */
   public String getSituation() {
     return situation;
   }
@@ -124,13 +127,39 @@ public class ThresholdAlert extends BaseEntity {
   }
 
   /**
+   * 确认类别
+   */
+  public ConfirmCategroy getConfirmCategroy() {
+    return confirmCategroy;
+  }
+
+  public void setConfirmCategroy(ConfirmCategroy confirmCategroy) {
+    this.confirmCategroy = confirmCategroy;
+  }
+
+  /**
    * 报警严重等级
    */
   public enum SeverityLevel {
-    MINOR,
-    MAJOR,
-    SERVE,
-    FATAL
+    中间变量,
+    状态跳变,
+    提示信息,
+    轻度异常,
+    中度异常,
+    重度异常
+  }
+
+  /**
+   * 确认类别,一二代定义在一起
+   */
+  public enum ConfirmCategroy {
+    星上异常报警,
+    地面异常报警,
+    测控事件,
+    误码和野值,
+    门限设置不当,
+    知识错误,
+    其他
   }
 
   @ManyToOne
@@ -147,8 +176,12 @@ public class ThresholdAlert extends BaseEntity {
   private String message;
 
   @Enumerated(EnumType.ORDINAL)
-  @Column(name = "SEVERITY_LEVEL", nullable = false, columnDefinition = "SMALLINT")
+  @Column(name = "severityLevel", nullable = false, columnDefinition = "SMALLINT")
   private SeverityLevel severityLevel;
+
+  @Enumerated(EnumType.ORDINAL)
+  @Column(name = "confirmCategroy", columnDefinition = "SMALLINT")
+  private ConfirmCategroy confirmCategroy;
 
   @ManyToOne
   @JoinColumn(name = "CONFIRM_USER_ID", referencedColumnName = "ID")
@@ -161,7 +194,7 @@ public class ThresholdAlert extends BaseEntity {
   /**
    * 情况说明
    */
-  @Column( length = 1000)
+  @Column(length = 1000)
   private String situation;
 
   @Override

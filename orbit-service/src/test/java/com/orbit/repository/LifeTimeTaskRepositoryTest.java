@@ -47,61 +47,61 @@ public class LifeTimeTaskRepositoryTest {
     task1 = new LifeTimeTask(s1, "发射保障策划_LifeTimeTaskRepositoryTest");
     task1.setConfirmUser(confirmUser);
     task1.setConfirmTime(new Date());
-    task1.setStage(LifeTimeTask.Stage.Launch);
+    task1.setStage(LifeTimeTask.Stage.发生及保障阶段);
     repository.save(task1);
 
     task2 = new LifeTimeTask(s1, "发射保障软硬件配置_LifeTimeTaskRepositoryTest");
     task2.setConfirmUser(confirmUser);
     task2.setConfirmTime(new Date());
-    task2.setStage(LifeTimeTask.Stage.Launch);
+    task2.setStage(LifeTimeTask.Stage.发生及保障阶段);
     repository.save(task2);
 
     task3 = new LifeTimeTask(s1, "在轨管理工作要点_LifeTimeTaskRepositoryTest");
     task3.setConfirmUser(confirmUser);
     task3.setConfirmTime(new Date());
-    task3.setStage(LifeTimeTask.Stage.PreDeliver);
+    task3.setStage(LifeTimeTask.Stage.交付前);
     repository.save(task3);
 
     task4 = new LifeTimeTask(s1, "建立履历书_LifeTimeTaskRepositoryTest");
     task4.setConfirmUser(confirmUser);
     task4.setConfirmTime(new Date());
-    task4.setStage(LifeTimeTask.Stage.PreDeliver);
+    task4.setStage(LifeTimeTask.Stage.交付前);
     repository.save(task4);
 
     task5 = new LifeTimeTask(s1, "设置报警门限_LifeTimeTaskRepositoryTest");
     task5.setConfirmUser(confirmUser);
     task5.setConfirmTime(new Date());
-    task5.setStage(LifeTimeTask.Stage.PreDeliver);
+    task5.setStage(LifeTimeTask.Stage.交付前);
     repository.save(task5);
 
     task6 = new LifeTimeTask(s1, "在轨管理手册_LifeTimeTaskRepositoryTest");
     task6.setConfirmUser(confirmUser);
     task6.setConfirmTime(new Date());
-    task6.setStage(LifeTimeTask.Stage.PostDeliver);
+    task6.setStage(LifeTimeTask.Stage.交付后);
     repository.save(task6);
 
     task7 = new LifeTimeTask(s1, "门限设置文件提交_LifeTimeTaskRepositoryTest");
     task7.setConfirmUser(confirmUser);
     task7.setConfirmTime(new Date());
-    task7.setStage(LifeTimeTask.Stage.PostDeliver);
+    task7.setStage(LifeTimeTask.Stage.交付后);
     repository.save(task7);
 
     task8 = new LifeTimeTask(s1, "更新履历书信息_LifeTimeTaskRepositoryTest");
     task8.setConfirmUser(confirmUser);
     task8.setConfirmTime(new Date());
-    task8.setStage(LifeTimeTask.Stage.PostDeliver);
+    task8.setStage(LifeTimeTask.Stage.交付后);
     repository.save(task8);
 
     task9 = new LifeTimeTask(s1, "航天器在轨全寿命运行情况总结报告_LifeTimeTaskRepositoryTest");
     task9.setConfirmUser(confirmUser);
     task9.setConfirmTime(new Date());
-    task9.setStage(LifeTimeTask.Stage.EndOfLife);
+    task9.setStage(LifeTimeTask.Stage.寿命终结);
     repository.save(task9);
 
     task10 = new LifeTimeTask(s1, "航天器在轨运行履历书_LifeTimeTaskRepositoryTest");
     task10.setConfirmUser(confirmUser);
     task10.setConfirmTime(new Date());
-    task10.setStage(LifeTimeTask.Stage.EndOfLife);
+    task10.setStage(LifeTimeTask.Stage.寿命终结);
     repository.save(task10);
 
   }
@@ -135,13 +135,13 @@ public class LifeTimeTaskRepositoryTest {
     int postCount = 0;
     int eofCount = 0;
     for (LifeTimeTask task : tasks) {
-      if (task.getStage() == LifeTimeTask.Stage.Launch) {
+      if (task.getStage() == LifeTimeTask.Stage.发生及保障阶段) {
         launchCount++;
-      } else if (task.getStage() == LifeTimeTask.Stage.PreDeliver) {
+      } else if (task.getStage() == LifeTimeTask.Stage.交付前) {
         preCount++;
-      } else if (task.getStage() == LifeTimeTask.Stage.PostDeliver) {
+      } else if (task.getStage() == LifeTimeTask.Stage.交付后) {
         postCount++;
-      } else if (task.getStage() == LifeTimeTask.Stage.EndOfLife) {
+      } else if (task.getStage() == LifeTimeTask.Stage.寿命终结) {
         eofCount++;
       } else {
         throw new Exception("不应该出现");

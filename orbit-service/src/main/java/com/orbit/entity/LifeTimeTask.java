@@ -3,6 +3,7 @@ package com.orbit.entity;
 
 import com.orbit.entity.permission.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,11 +37,11 @@ public class LifeTimeTask extends BaseEntity {
   public LifeTimeTask(Satellite satellite, String name) {
     this.setSatellite(satellite);
     this.setName(name);
-    this.stage = Stage.PostDeliver;//默认是"交付后",因为交付后的任务最多
+    this.stage = Stage.交付后;//默认是"交付后",因为交付后的任务最多
   }
 
   @ManyToOne
-  @JoinColumn(name = "SATELLITE_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "SATELLITEID", referencedColumnName = "ID")
   private Satellite satellite;
 
   @Enumerated(EnumType.ORDINAL)
@@ -73,7 +74,7 @@ public class LifeTimeTask extends BaseEntity {
   private User confirmUser;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CONFIRM_TIME")
+  @Column(name = "confirmTime")
   private Date confirmTime;
 
   @OneToMany(fetch = FetchType.EAGER)
@@ -199,6 +200,22 @@ public class LifeTimeTask extends BaseEntity {
   }
 
   /**
+   * 添加一个附件
+   *
+   * @param attachment 待添加的附件
+   * @return 所有附件列表
+   */
+  public List<Attachment> addAttachment(Attachment attachment) {
+    if (this.attachments == null) {
+      this.attachments = new ArrayList<>();
+    }
+    this.attachments.add(attachment);
+
+    return this.attachments;
+
+  }
+
+  /**
    * 其他相关人员
    */
   public List<User> getInvolvedUsers() {
@@ -213,9 +230,9 @@ public class LifeTimeTask extends BaseEntity {
    * 生命周期阶段
    */
   public enum Stage {
-    Launch,//发生及保障阶段
-    PreDeliver,//交付前
-    PostDeliver,//交付后
-    EndOfLife//寿命终结
+    发生及保障阶段,//Launch
+    交付前,//PreDeliver
+    交付后,//PostDeliver
+    寿命终结// EndOfLife
   }
 }

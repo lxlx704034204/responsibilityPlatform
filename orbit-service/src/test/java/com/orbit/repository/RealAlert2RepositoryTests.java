@@ -1,8 +1,7 @@
 package com.orbit.repository;
 
 import com.orbit.OrbitServiceApplication;
-import com.orbit.entity.Platform2Alert;
-import com.orbit.entity.Satellite;
+import com.orbit.entity.RealAlarm2;
 import com.orbit.entity.ThresholdAlert;
 import com.orbit.entity.permission.User;
 import com.orbit.repository.permission.UserRepository;
@@ -25,50 +24,51 @@ import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
-public class Platform2AlertRepositoryTests {
+public class RealAlert2RepositoryTests {
 
   @Autowired
-  Platform2Repository repository;
+  RealAlarm2Repository repository;
 
   @Autowired
   UserRepository userRepository;
 
-  Platform2Alert alert1, alert2, alert3, alert4, alert5, alert6;
+  RealAlarm2 alert1, alert2, alert3, alert4, alert5, alert6;
   User confirmUser;
+  String code1, code2;
 
   @Before
   public void setUp() {
     confirmUser = new User("责任人1");
     userRepository.save(confirmUser);
 
-    String name1 = "代号1";
-    String name2 = "代号2";
-    alert1 = new Platform2Alert(name1, "测试异常现象描述1");
+    code1 = "代号1";
+    code2 = "代号2";
+    alert1 = new RealAlarm2(code1, "测试异常现象描述1");
     alert1.setConfirmUser(confirmUser);
     alert1.setConfirmTime(new Date());
     repository.save(alert1);
 
-    alert2 = new Platform2Alert(name1, "测试异常现象描述2");
+    alert2 = new RealAlarm2(code1, "测试异常现象描述2");
     alert2.setConfirmUser(confirmUser);
     alert2.setConfirmTime(new Date());
     repository.save(alert2);
 
-    alert3 = new Platform2Alert(name1, "测试异常现象描述3");
+    alert3 = new RealAlarm2(code1, "测试异常现象描述3");
     alert3.setConfirmUser(confirmUser);
     alert3.setConfirmTime(new Date());
     repository.save(alert3);
 
-    alert4 = new Platform2Alert(name1, "测试异常现象描述4");
+    alert4 = new RealAlarm2(code1, "测试异常现象描述4");
     alert4.setConfirmUser(confirmUser);
     alert4.setConfirmTime(new Date());
     repository.save(alert4);
 
-    alert5 = new Platform2Alert(name2, "测试异常现象描述5");
+    alert5 = new RealAlarm2(code2, "测试异常现象描述5");
     alert5.setConfirmUser(confirmUser);
     alert5.setConfirmTime(new Date());
     repository.save(alert5);
 
-    alert6 = new Platform2Alert(name2, "测试异常现象描述6");
+    alert6 = new RealAlarm2(code2, "测试异常现象描述6");
     alert6.setConfirmUser(confirmUser);
     alert6.setConfirmTime(new Date());
     repository.save(alert6);
@@ -89,7 +89,7 @@ public class Platform2AlertRepositoryTests {
   }
 
   @Test
-  public void testFindByStartTimeBetween() {
+  public void testFindBySatelliteCodeInAndStartTimeBetween() {
     //这里可以作为前台UI调用的demo,分页查询如何向后台传递参数,页码从0开始
     PageRequest pageRequest = new PageRequest(0, 5, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
     Calendar yesterday = Calendar.getInstance();
@@ -98,7 +98,7 @@ public class Platform2AlertRepositoryTests {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<Platform2Alert> pageResult = repository.findByStartTimeBetween(yesterday.getTime(), tomorrow.getTime()
+    Page<RealAlarm2> pageResult = repository.findBySatelliteCodeInAndStartTimeBetween(Arrays.asList(code1, code2), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());
@@ -109,7 +109,7 @@ public class Platform2AlertRepositoryTests {
 
     System.out.println("2代平台报警信息如下:");
     //如下查看排序效果
-    for (Platform2Alert alert :
+    for (RealAlarm2 alert :
             pageResult.getContent()) {
       System.out.println(alert);
     }
@@ -120,7 +120,7 @@ public class Platform2AlertRepositoryTests {
    */
   @Test
   public void testBatchAddSituationComment() {
-    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.MAJOR, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
+    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.中度异常, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
     Assert.assertEquals(5, affectedSize);
   }
 

@@ -1,6 +1,6 @@
 package com.orbit.repository;
 
-import com.orbit.entity.Platform2Alert;
+import com.orbit.entity.RealAlarm2;
 import com.orbit.entity.ThresholdAlert;
 
 import org.springframework.data.domain.Page;
@@ -16,30 +16,31 @@ import java.util.Date;
 /**
  * 2代平台报警repository
  */
-public interface Platform2Repository extends JpaRepository<Platform2Alert, Long> {
+public interface RealAlarm2Repository extends JpaRepository<RealAlarm2, Long> {
 
   /**
-   * 根据型号列表,分页查询2代平台报警异常列表,报警开始时间在指定的区间范围之内
+   * 根据型号代号列表和开始时间范围查询二代平台报警列表
    *
-   * @param startTime    报警开始时间范围起始位置
-   * @param endTime      报警开始时间范围终止位置
-   * @param pageable     分页查询参数
-   * @return 属于这些型号的三级报警列表
+   * @param satelliteCodes 型号代号列表
+   * @param startTime      开始报警时间
+   * @param endTime        结束报警时间
+   * @param pageable       分页和排序条件
+   * @return 满足条件的二代平台报警信息一页数据
    */
-  Page<Platform2Alert> findByStartTimeBetween(Date startTime, Date endTime, Pageable pageable);
+  Page<RealAlarm2> findBySatelliteCodeInAndStartTimeBetween(Collection<String> satelliteCodes, Date startTime, Date endTime, Pageable pageable);
 
   /**
    * 批量更新"事件类别"和"情况说明"
    *
    * @param severityLevel 严重程度
-   * @param message       情况说明
+   * @param situation     情况说明
    * @param ids           id列表
    * @return 被更新的行数
    */
   @Modifying
   @Transactional
-  @Query("update #{#entityName} a set a.severityLevel=?1 , a.message=?2 where a.id in (?3)")
-  Integer batchAddSituationComment(ThresholdAlert.SeverityLevel severityLevel, String message, Long... ids);
+  @Query("update #{#entityName} a set a.severityLevel=?1 , a.situation=?2 where a.id in (?3)")
+  Integer batchAddSituationComment(ThresholdAlert.SeverityLevel severityLevel, String situation, Long... ids);
 
 
   /**
