@@ -43,7 +43,7 @@ sudo /bin/sh /usr/bin/mysqld_safe --datadir=/var/lib/mysql --user=mysql --ndbclu
  注意:启动各节点之前,需要将该节点上的mysql服务停掉,/etc/init.d/mysql stop
   
   
-启动完成之后,可以在ndb_mgmd节点上,通过ndb_mgmd进入到cluster的管理客户端,输入 show 命令查看集群当前的状态,如果各个节点之前没有出现not connected,则表示集群正常启动了。
+启动完成之后,可以在ndb_mgmd节点上,通过ndb_mgm进入到cluster的管理客户端,输入 show 命令查看集群当前的状态,如果各个节点之前没有出现not connected,则表示集群正常启动了。
 
 # Cluster Configuration
 ndbd(NDB) |              2 node(s) 
