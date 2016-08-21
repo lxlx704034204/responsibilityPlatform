@@ -245,7 +245,7 @@ var updateModelsInSidebar = function(){
  *build the model selector(the pop window)
  **/
 var buildModelSelector = function(){
-    jsless.ajax({
+    return jsless.ajax({
         url: "<s:url namespace='/json/models' action='getAdminModels'></s:url>",
         data: {},
         success: function (rep) {
@@ -301,7 +301,9 @@ var bindChangeEventToModelSelector = function(){
 }
 
 $(function () {
-    buildModelSelector();
+    $.when(buildModelSelector()).done(function(){
+    	
+    });
     bindChangeEventToModelSelector();
     updateTips();
     //window.setInterval(updateTips, 3000);

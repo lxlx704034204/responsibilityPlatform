@@ -4,6 +4,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class CekongEventsActions extends AppAction {
 	@Autowired
     ThresholdAlertRepository thRepo;
 	
-//	@Autowired
-//	TeleControlRepository tcRepo;
+	@Autowired
+	TeleControlRepository tcRepo;
 
 	public String pageIndex(){
 		return SUCCESS;
@@ -71,27 +72,37 @@ public class CekongEventsActions extends AppAction {
 			Date startDate = DateTimeUtils.parseISODatetime(starttime);
 			Date endDate = DateTimeUtils.parseISODatetime(endtime);
 			
+			// TODO:for test
+			if(startDate == null && endDate == null){
+				Calendar yesterday = Calendar.getInstance();
+				yesterday.add(Calendar.DAY_OF_MONTH, -1);
+				startDate = yesterday.getTime();
+				Calendar tomorrow = Calendar.getInstance();
+				tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+				endDate = tomorrow.getTime();
+			}
+			
 			Integer pageIndex = pagerJson.getInt("pageIndex");
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 			
-//			Page<TeleControl> pageResult = tcRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
-//			List<TeleControl> alerts = pageResult.getContent();
-//			Long recordCount = pageResult.getTotalElements();
+			Page<TeleControl> pageResult = tcRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+			List<TeleControl> ctrls = pageResult.getContent();
+			Long recordCount = pageResult.getTotalElements();
 			
-			Long recordCount = 88l;
-			List<TeleControl> ctrls = new ArrayList<TeleControl>();
-			Satellite sl = new Satellite("型号1");
-			sl.setCode("sl1");
-			for(int i = (pageSize * pageIndex); i<(pageSize*(pageIndex+1)); i++){
-				TeleControl ctrl = new TeleControl(sl, "异常描述信息" + i);
-				ctrl.setId((long) i);
-				if(i > recordCount){
-					break;
-				}
-				ctrls.add(ctrl);
-			}
-			
+//			Long recordCount = 88l;
+//			List<TeleControl> ctrls = new ArrayList<TeleControl>();
+//			Satellite sl = new Satellite("型号1");
+//			sl.setCode("sl1");
+//			for(int i = (pageSize * pageIndex); i<(pageSize*(pageIndex+1)); i++){
+//				TeleControl ctrl = new TeleControl(sl, "异常描述信息" + i);
+//				ctrl.setId((long) i);
+//				if(i > recordCount){
+//					break;
+//				}
+//				ctrls.add(ctrl);
+//			}
+//			
 			
 			JSONArray list = new JSONArray();
 			for (TeleControl ctrl : ctrls) {

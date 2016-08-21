@@ -165,7 +165,10 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
 };
 
 $(function () {
-    doSearch(0);
+	$.when(buildModelSelector()).done(function(){
+		doSearch(0);
+    });
+    
 
     $("#btn-search").click(function(e){
         doSearch(0);
