@@ -4,6 +4,7 @@ package com.orbit.repository;
 import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.LifeTimeTask;
 import com.orbit.entity.Satellite;
+import com.orbit.entity.TeleControl;
 import com.orbit.entity.ThresholdAlert;
 import com.orbit.entity.permission.User;
 import com.orbit.repository.SatelliteRepository;
@@ -37,6 +38,7 @@ public class InitData {
 	Satellite sl1, sl2, sl3;
 	ThresholdAlert alert1, alert2, alert3, alert4, alert5, alert6;
 	LifeTimeTask task1, task2, task3, task4, task5, task6, task7, task8, task9, task10;
+	TeleControl tc1, tc2, tc3, tc4, tc5, tc6;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -49,9 +51,13 @@ public class InitData {
 	
 	@Autowired
 	LifeTimeTaskRepository lifeTimeTaskRepository;
+	
+	@Autowired
+	TeleControlRepository teleControlRepository;
 
 	@Test
 	public void initAll(){
+		teleControlRepository.deleteAll();
 		thresholdAlertRepository.deleteAll();
 		lifeTimeTaskRepository.deleteAll();
 		satelliteRepository.deleteAll();
@@ -174,6 +180,37 @@ public class InitData {
 	    task10.setConfirmTime(new Date());
 	    task10.setStage(LifeTimeTask.Stage.EndOfLife);
 	    lifeTimeTaskRepository.save(task10);
+ 
+	    // TeleControls
+	    tc1 = new TeleControl(sl1, "测试异常现象描述1");
+	    tc1.setConfirmUser(confirmUser);
+	    tc1.setConfirmTime(new Date());
+	    teleControlRepository.save(tc1);
+
+	    tc2 = new TeleControl(sl1, "测试异常现象描述2");
+	    tc2.setConfirmUser(confirmUser);
+	    tc2.setConfirmTime(new Date());
+	    teleControlRepository.save(tc2);
+
+	    tc3 = new TeleControl(sl1, "测试异常现象描述3");
+	    tc3.setConfirmUser(confirmUser);
+	    tc3.setConfirmTime(new Date());
+	    teleControlRepository.save(tc3);
+
+	    tc4 = new TeleControl(sl1, "测试异常现象描述4");
+	    tc4.setConfirmUser(confirmUser);
+	    tc4.setConfirmTime(new Date());
+	    teleControlRepository.save(tc4);
+
+	    tc5 = new TeleControl(sl2, "型号2_测试异常现象描述1");
+	    tc5.setConfirmUser(confirmUser);
+	    tc5.setConfirmTime(new Date());
+	    teleControlRepository.save(tc5);
+
+	    tc6 = new TeleControl(sl2, "型号2_测试异常现象描述2");
+	    tc6.setConfirmUser(confirmUser);
+	    tc6.setConfirmTime(new Date());
+	    teleControlRepository.save(tc6);
 	}
 
 }
