@@ -115,6 +115,14 @@ public class ThresholdAlert extends BaseEntity {
     this.confirmTime = confirmTime;
   }
 
+  public String getSituation() {
+    return situation;
+  }
+
+  public void setSituation(String situation) {
+    this.situation = situation;
+  }
+
   /**
    * 报警严重等级
    */
@@ -149,6 +157,12 @@ public class ThresholdAlert extends BaseEntity {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "CONFIRM_TIME", nullable = false)
   private Date confirmTime;
+
+  /**
+   * 情况说明
+   */
+  @Column( length = 1000)
+  private String situation;
 
   @Override
   public String toString() {

@@ -32,14 +32,14 @@ public interface ThresholdAlertRepository extends JpaRepository<ThresholdAlert, 
    * 批量更新"事件类别"和"情况说明"
    *
    * @param severityLevel 严重程度
-   * @param message       情况说明
+   * @param situation       情况说明
    * @param ids           id列表
    * @return 被更新的行数
    */
   @Modifying
   @Transactional
-  @Query("update #{#entityName} a set a.severityLevel=?1 , a.message=?2 where a.id in (?3)")
-  Integer batchAddSituationComment(ThresholdAlert.SeverityLevel severityLevel, String message, Long... ids);
+  @Query("update #{#entityName} a set a.severityLevel=?1 , a.situation=?2 where a.id in (?3)")
+  Integer batchAddSituationComment(ThresholdAlert.SeverityLevel severityLevel, String situation, Long... ids);
 
 
   /**
