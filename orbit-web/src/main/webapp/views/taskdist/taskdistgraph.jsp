@@ -107,10 +107,10 @@ var getModelTask = function(){
 };
 
 var createAttachmentWrapper = function(taskid, attachmentId, attachmentFileName){
-    var attachmentWrapper = $("<div></div>");
+    var attachmentWrapper = $("<div class='attachment-wrapper'></div>");
     var attachmentLink = $("<a></a>").text(attachmentFileName);
     var delBtn = $("<a><span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>");
-    attachmentWrapper.append(attachmentLink).append(delBtn);
+    attachmentWrapper.append(attachmentLink);//.append(delBtn);
     return attachmentWrapper;
 };
 
@@ -126,7 +126,7 @@ var createTaskInfoWrapper = function(taskdata){
 	var wrapper = $("<div class='container-fluid task-info'></div>");
 
 	var taskNameRow = $("<div class='row'></div>");
-	var taskNameCol = $("<div class='col-lg-12'></div>");
+	var taskNameCol = $("<div class='col-lg-12 taskname-wrapper'></div>");
 	var taskNameLink = $("<a href='#'></a>").text(taskdata.name);
 	taskNameRow.append(taskNameCol.append(taskNameLink));
 
