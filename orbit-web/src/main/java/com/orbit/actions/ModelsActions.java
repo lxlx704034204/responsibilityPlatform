@@ -6,22 +6,15 @@ import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.orbit.configs.SystemConfig;
-import com.orbit.AppContext;
 import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.Satellite;
-import com.orbit.entity.permission.User;
 import com.orbit.repository.SatelliteRepository;
 import com.orbit.repository.permission.UserRepository;
-import com.orbit.repository.ThresholdAlertRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class ModelsActions extends AppAction {
@@ -40,7 +33,7 @@ public class ModelsActions extends AppAction {
     try {
       // cancel comment in production environment.
       String userName = "adminuser";//this.getAuthenticatedUser().getName();
-      List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginNameOrderByNameAsc(userName);
+      List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserUserNameOrderByNameAsc(userName);
 
       // mock data.
 //			List<Satellite> satellitesAdmins = new ArrayList<Satellite>();

@@ -14,19 +14,19 @@ import java.util.List;
 public interface SatelliteRepository extends JpaRepository<Satellite, Long> {
 
   /**
-   * 根据"负责人"查询该负责人所有负责的型号列表,按照名字升序
+   * 根据"负责人"查询该负责人所有负责的型号列表,按照名字
    *
-   * @param loginName 负责人的登录用户名
+   * @param userName 负责人的登录用户名
    * @return 型号列表
    */
-  List<Satellite> findAllByAdminUserLoginNameOrderByNameAsc(String loginName);
+  List<Satellite> findAllByAdminUserUserNameOrderByNameAsc(String userName);
 
 
   /**
    * 分页查询"负责人"负责的型号列表
-   * @param loginName
-   * @param pageable
-   * @return
+   *
+   * @param userName 负责人的登录用户名
+   * @param pageable 分页查询条件,包括排序条件
    */
-  Page<Satellite> findByAdminUserLoginName(String loginName, Pageable pageable);
+  Page<Satellite> findByAdminUserUserName(String userName, Pageable pageable);
 }

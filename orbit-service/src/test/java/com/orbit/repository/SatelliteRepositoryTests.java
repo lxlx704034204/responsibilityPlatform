@@ -39,7 +39,7 @@ public class SatelliteRepositoryTests {
 
         s1 = repository.save(s1);
 
-        List<Satellite> satellitesAdmins = repository.findAllByAdminUserLoginNameOrderByNameAsc("张三");
+        List<Satellite> satellitesAdmins = repository.findAllByAdminUserUserNameOrderByNameAsc("张三");
         Assert.assertTrue(satellitesAdmins.size() >= 1);
 
         repository.delete(s1);
@@ -49,7 +49,7 @@ public class SatelliteRepositoryTests {
      * 测试根据登录的账号的名字来分页查询该人所负责的型号列表
      */
     @Test
-    public void testfindByAdminUserLoginName() {
+    public void testfindByAdminUserUserName() {
         User user1 = new User("张三");
         userRepository.save(user1);
 
@@ -67,7 +67,7 @@ public class SatelliteRepositoryTests {
         s3 = repository.save(s3);
         s4 = repository.save(s4);
 
-        Page<Satellite> satellitesAdmins = repository.findByAdminUserLoginName("张三", new PageRequest(0, 3));
+        Page<Satellite> satellitesAdmins = repository.findByAdminUserUserName("张三", new PageRequest(0, 3));
         Assert.assertTrue(satellitesAdmins.getTotalElements() == 4);
 
         repository.delete(s1);
