@@ -6,12 +6,18 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -114,6 +120,17 @@ public class TeleControl extends BaseEntity {
   }
 
   /**
+   * 附件
+   */
+  public Attachment getAttachment() {
+    return attachment;
+  }
+
+  public void setAttachment(Attachment attachment) {
+    this.attachment = attachment;
+  }
+
+  /**
    * 测控事件类型
    */
   public enum EventType {
@@ -151,6 +168,11 @@ public class TeleControl extends BaseEntity {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "CONFIRM_TIME")
   private Date confirmTime;
+
+  @Basic(fetch = FetchType.LAZY)
+  @OneToOne (cascade= CascadeType.ALL)
+  @JoinColumn(name="ATTACHMENT_ID")
+  private Attachment attachment;
 
   /**
    * 是否被确认,如果确认时间和确认人都存在,则认为已经被确认
