@@ -72,7 +72,7 @@ public class Attachment extends BaseEntity {
   public String toString() {
     return String.format(
             "Attachment[fileName=%d, uploadBy='%s',uploadTime=%s]",
-            getId(), this.getFileName(), this.uploadBy == null ? "" : uploadBy.getLoginName(), uploadTime == null ? "" : dateFormat.format(uploadTime));
+            getId(), this.getFileName(), this.uploadBy == null ? "" : uploadBy.getUserName(), uploadTime == null ? "" : dateFormat.format(uploadTime));
   }
 
   /**

@@ -28,19 +28,33 @@ public class User extends BaseEntity implements UserDetails {
   /**
    * 用户姓名
    */
-  @Column(name = "FULL_NAME")
+  @Column(name = "fullname")
   private String fullName;
 
   /**
    * 登录系统的账号
    */
-  @Column(name = "LOGIN_NAME", nullable = false)
-  private String loginName;
+  @Column(name = "username", nullable = false)
+  private String userName;
 
   /**
    * 邮箱
    */
   private String email;
+
+  private boolean isAdmin = false;
+
+  private boolean isActive = true;
+
+  @Column(length = 50)
+  private String telePhoneNum;
+
+  @Column(length = 50)
+  private String workPhoneNum;
+
+  @Column(length = 512)
+  private String remark;
+
 
   /**
    * 密码,使用PasswordConverter解决透明加解密问题
@@ -58,8 +72,8 @@ public class User extends BaseEntity implements UserDetails {
   protected User() {
   }
 
-  public User(String loginName) {
-    this.loginName = loginName;
+  public User(String userName) {
+    this.userName = userName;
   }
 
   //以下是UserDetails接口中规定的方法
@@ -75,7 +89,7 @@ public class User extends BaseEntity implements UserDetails {
 
   @Override
   public String getUsername() {
-    return loginName;
+    return userName;
   }
 
   @Override
@@ -106,12 +120,12 @@ public class User extends BaseEntity implements UserDetails {
     this.fullName = fullName;
   }
 
-  public String getLoginName() {
-    return loginName;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setLoginName(String loginName) {
-    this.loginName = loginName;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   /**
@@ -169,7 +183,62 @@ public class User extends BaseEntity implements UserDetails {
   @Override
   public String toString() {
     return String.format(
-            "User[loginName=%d, email='%s',fullName=%s]",
-            getId(), this.loginName, this.email == null ? "" : email, fullName == null ? "" : fullName);
+            "User[userName=%d, email='%s',fullName=%s]",
+            getId(), this.userName, this.email == null ? "" : email, fullName == null ? "" : fullName);
+  }
+
+  /**
+   * 是否是管理员
+   */
+  public boolean isAdmin() {
+    return isAdmin;
+  }
+
+  public void setAdmin(boolean admin) {
+    isAdmin = admin;
+  }
+
+  /**
+   * 是否活跃,已离职的为false
+   */
+  public boolean isActive() {
+    return isActive;
+  }
+
+  public void setActive(boolean active) {
+    isActive = active;
+  }
+
+  /**
+   * 手机
+   */
+  public String getTelePhoneNum() {
+    return telePhoneNum;
+  }
+
+  public void setTelePhoneNum(String telePhoneNum) {
+    this.telePhoneNum = telePhoneNum;
+  }
+
+  /**
+   * 工作电话
+   */
+  public String getWorkPhoneNum() {
+    return workPhoneNum;
+  }
+
+  public void setWorkPhoneNum(String workPhoneNum) {
+    this.workPhoneNum = workPhoneNum;
+  }
+
+  /**
+   * 备注,紧急电话等
+   */
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 }
