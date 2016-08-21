@@ -247,7 +247,11 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
                 title: '报警信息'
             }, {
                 field: 'eventtype',
-                title: '事件类别'
+                title: '事件类别',
+                bodyFormatter: function(row, rowdata){
+                	var select  =$("<select><option ></option></select>");
+                	
+                }
             }, {
                 field: 'desc',
                 title: '情况说明'
