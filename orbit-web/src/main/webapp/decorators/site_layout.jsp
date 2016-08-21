@@ -306,7 +306,7 @@ $(function () {
     });
     bindChangeEventToModelSelector();
     updateTips();
-    //window.setInterval(updateTips, 3000);
+    window.setInterval(updateTips, 3000);
     $(".dropdown-menu").delegate(".dropdown-menuitem", "click", function(e){
         e.stopPropagation();
     });
