@@ -5,6 +5,7 @@ import com.orbit.OrbitServiceApplication;
 import com.orbit.entity.LifeTimeTask;
 import com.orbit.entity.Satellite;
 import com.orbit.entity.TeleControl;
+import com.orbit.entity.TeleControl.EventType;
 import com.orbit.entity.ThresholdAlert;
 import com.orbit.entity.permission.User;
 import com.orbit.repository.SatelliteRepository;
@@ -185,31 +186,37 @@ public class InitData {
 	    tc1 = new TeleControl(sl1, "测试异常现象描述1");
 	    tc1.setConfirmUser(confirmUser);
 	    tc1.setConfirmTime(new Date());
+	    tc1.setEventType(EventType.ChangeTrack);
 	    teleControlRepository.save(tc1);
 
 	    tc2 = new TeleControl(sl1, "测试异常现象描述2");
 	    tc2.setConfirmUser(confirmUser);
 	    tc2.setConfirmTime(new Date());
+	    tc2.setEventType(EventType.SlopChange);
 	    teleControlRepository.save(tc2);
 
 	    tc3 = new TeleControl(sl1, "测试异常现象描述3");
 	    tc3.setConfirmUser(confirmUser);
 	    tc3.setConfirmTime(new Date());
+	    tc3.setEventType(EventType.PositionMaitain);
 	    teleControlRepository.save(tc3);
 
 	    tc4 = new TeleControl(sl1, "测试异常现象描述4");
 	    tc4.setConfirmUser(confirmUser);
 	    tc4.setConfirmTime(new Date());
+	    tc4.setEventType(EventType.SlopChange);
 	    teleControlRepository.save(tc4);
 
 	    tc5 = new TeleControl(sl2, "型号2_测试异常现象描述1");
 	    tc5.setConfirmUser(confirmUser);
 	    tc5.setConfirmTime(new Date());
+	    tc5.setEventType(EventType.JamProtection);
 	    teleControlRepository.save(tc5);
 
 	    tc6 = new TeleControl(sl2, "型号2_测试异常现象描述2");
 	    tc6.setConfirmUser(confirmUser);
 	    tc6.setConfirmTime(new Date());
+	    tc6.setEventType(EventType.JamProtection);
 	    teleControlRepository.save(tc6);
 	}
 

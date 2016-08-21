@@ -86,7 +86,7 @@ public class CekongEventsActions extends AppAction {
 			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
 			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 			
-			Page<TeleControl> pageResult = tcRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+			Page<TeleControl> pageResult = tcRepo.findBySatelliteIdInAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
 			List<TeleControl> ctrls = pageResult.getContent();
 			Long recordCount = pageResult.getTotalElements();
 			
