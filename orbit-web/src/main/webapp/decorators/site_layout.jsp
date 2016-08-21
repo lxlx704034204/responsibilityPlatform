@@ -70,28 +70,7 @@
                         <span class="btn-text">型号1,型号2</span>
                         <span class="caret"></span>
                     </button>
-                    <ul id="main_modelselector" class="dropdown-menu" aria-labelledby="ddm_main_selectmodels">
-                        <li>
-                            <div class="dropdown-menuitem">
-                                <label><input type="checkbox" value="型号1"/>型号1</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="dropdown-menuitem">
-                                <label><input type="checkbox" value="型号1"/>型号2</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="dropdown-menuitem">
-                                <label><input type="checkbox" value="型号1"/>型号3</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="dropdown-menuitem">
-                                <label><input type="checkbox" value="型号1"/>型号4</label>
-                            </div>
-                        </li>
-                    </ul>
+                    <ul id="main_modelselector" class="dropdown-menu" aria-labelledby="ddm_main_selectmodels"></ul>
                 </div>
             </div>
             <%-- <button type="submit" class="btn btn-default">型号选择</button> --%>
@@ -317,7 +296,7 @@ $(function () {
     buildModelSelector();
     bindChangeEventToModelSelector();
     updateTips();
-    window.setInterval(updateTips, 3000);
+    //window.setInterval(updateTips, 3000);
     $(".dropdown-menu").delegate(".dropdown-menuitem", "click", function(e){
         e.stopPropagation();
     });

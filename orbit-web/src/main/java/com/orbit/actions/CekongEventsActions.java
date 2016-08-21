@@ -25,6 +25,7 @@ import com.orbit.repository.TeleControlRepository;
 import com.orbit.repository.ThresholdAlertRepository;
 import com.orbit.repository.permission.UserRepository;
 import com.orbit.utils.DateTimeUtils;
+import com.orbit.utils.StrUtils;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class CekongEventsActions extends AppAction {
@@ -63,6 +64,8 @@ public class CekongEventsActions extends AppAction {
 			JSONArray models = searcherJson.getJSONArray("models");
 			String starttime = searcherJson.getString("starttime");
 			String endtime = searcherJson.getString("endtime");
+			starttime = StrUtils.isNullOrEmpty(starttime) ? null : starttime + ":00";
+			endtime = StrUtils.isNullOrEmpty(endtime) ? null : endtime + ":00";
 
 			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
 			Date startDate = DateTimeUtils.parseISODatetime(starttime);
@@ -81,7 +84,6 @@ public class CekongEventsActions extends AppAction {
 			Satellite sl = new Satellite("型号1");
 			sl.setCode("sl1");
 			for(int i = (pageSize * pageIndex); i<(pageSize*(pageIndex+1)); i++){
-				System.out.println("i: " + i);
 				TeleControl ctrl = new TeleControl(sl, "异常描述信息" + i);
 				ctrl.setId((long) i);
 				if(i > recordCount){

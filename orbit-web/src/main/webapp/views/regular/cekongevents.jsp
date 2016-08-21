@@ -43,8 +43,8 @@ var getPagerData = function (pageIndex, callback) {
         searcher: {
             keyword: '',
             models: selectedModelIds,
-            starttime: $("#txt_starttime").val() + ":00",
-            endtime: $("#txt_endtime").val() + ":00"
+            starttime: $("#txt_starttime").val(),
+            endtime: $("#txt_endtime").val()
         },
         pager: {
             pageIndex: pageIndex

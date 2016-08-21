@@ -171,8 +171,8 @@ var getPagerData = function (pageIndex, callback) {
         searcher: {
             keyword: '',
             models: selectedModelIds,
-            alertstarttime: $("#txt_alertstarttime").val() + ":00",
-            alertendtime: $("#txt_alertendtime").val() + ":00"
+            alertstarttime: $("#txt_alertstarttime").val(),
+            alertendtime: $("#txt_alertendtime").val()
         },
         pager: {
             pageIndex: pageIndex

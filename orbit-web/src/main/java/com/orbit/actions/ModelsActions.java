@@ -42,10 +42,11 @@ public class ModelsActions extends AppAction {
 	public void jsonGetAdminModels(){
 		JsonResult jsonResult = null;
 		try {
-			//String userName = this.getAuthenticatedUser().getName();
+			// cancel comment in production environment.
+			//String userName = "adminuser";//this.getAuthenticatedUser().getName();
 			//List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
 
-			// test
+			// mock data.
 			List<Satellite> satellitesAdmins = new ArrayList<Satellite>();
 			Satellite sl1 = new Satellite("型号1");
 			sl1.setCode("sl1");

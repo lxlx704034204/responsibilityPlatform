@@ -16,6 +16,7 @@ import com.orbit.repository.SatelliteRepository;
 import com.orbit.repository.permission.UserRepository;
 import com.orbit.repository.ThresholdAlertRepository;
 import com.orbit.utils.DateTimeUtils;
+import com.orbit.utils.StrUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -57,7 +58,9 @@ public class LevelThreeLimitActions extends AppAction {
       JSONArray models = searcherJson.getJSONArray("models");
       String alertstarttime = searcherJson.getString("alertstarttime");
       String alertendtime = searcherJson.getString("alertendtime");
-
+      alertstarttime = StrUtils.isNullOrEmpty(alertstarttime) ? null : alertstarttime + ":00";
+      alertendtime = StrUtils.isNullOrEmpty(alertendtime) ? null : alertendtime + ":00";
+      
       List<Long> selectedModelIds = JSONArray.toList(models, Long.class);
       Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
       Date endDate = DateTimeUtils.parseISODatetime(alertendtime);

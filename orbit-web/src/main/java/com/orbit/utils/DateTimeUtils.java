@@ -43,6 +43,9 @@ public class DateTimeUtils {
 	 * @throws ParseException
 	 * */
 	public static Date parseISODate(String datestr) {
+		if(StrUtils.isNullOrEmpty(datestr)){
+			return null;
+		}
 		Date d = null;
 		try{
 			d = dateFormat.parse(datestr);
@@ -53,6 +56,9 @@ public class DateTimeUtils {
 	}
 
 	public static Date parseISODatetime(String datetimestr) throws ParseException{
+		if(StrUtils.isNullOrEmpty(datetimestr)){
+			return null;
+		}
 		Date d = null;
 		try{
 			d = datetimeFormat.parse(datetimestr);
