@@ -92,7 +92,10 @@
             </tr>
             <tr class="stage">
                 <td class="flowtitlearea">
-                    <div class="flowtitlecontai
+                    <div class="flowtitlecontainer">
+                        <div class="title">交付前</div>
+                        <div class="daterange">(2016-02-11)</div>
+                    </div>
                 </td>
                 <td>
                 	<div id="wrapper_predeliver"></div>

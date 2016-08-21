@@ -21,7 +21,7 @@
         <spring.version>4.2.5.RELEASE</spring.version>
         <log4j2.version>2.5</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tomcat7-maven-plugin-version>2.1</tomcat7-maven-plugin-version>
+        <tomcat-maven-plugin-version>2.2</tomcat-maven-plugin-version>
     </properties>
 
     <dependencies>
@@ -53,12 +53,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-jci-fam</artifactId>
             <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
         </dependency>
 
         <!-- Struts  -->
@@ -117,11 +111,25 @@
             <scope>provided</scope>
         </dependency>
 
+		<dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -191,7 +199,7 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>${tomcat7-maven-plugin-version}</version>
+                <version>${tomcat-maven-plugin-version}</version>
             </plugin>
         </plugins>
     </build>
