@@ -38,7 +38,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">平台</a>
+        <a class="navbar-brand" href="#">在轨责任人平台</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <%-- <button type="submit" class="btn btn-default">型号选择</button> --%>
-            <a href="<s:url namespace="/taskdist" action="indexgraph"></s:url>" class="btn btn-primary" role="button">任务分发</a>
+            <a href="javascript:void(0)" class="btn btn-primary" role="button" id="btn_gototaskdist">任务分发</a>
         <div class="form-group">
             目前未处理报警信息数：
             <label>XX</label>
@@ -309,6 +309,20 @@ $(function () {
     //window.setInterval(updateTips, 3000);
     $(".dropdown-menu").delegate(".dropdown-menuitem", "click", function(e){
         e.stopPropagation();
+    });
+    
+    $("#btn_gototaskdist").click(function(e){
+    	var action = "<s:url namespace='/taskdist' action='indexgraph'></s:url>";
+    	var found = $("#main_modelselector").find("input:checkbox:checked");
+    	if(found.size() == 1){
+    		var id = found.first().val();
+    		console.log(action + "?id=" + id);
+    		window.location.href= action + "?id=" + id;
+    		//e.stopPropagation();
+    	} else {
+    		
+    	}
+    	
     });
 });
 </script>

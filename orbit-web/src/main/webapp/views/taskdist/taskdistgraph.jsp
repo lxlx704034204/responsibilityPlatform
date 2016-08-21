@@ -70,7 +70,7 @@
         <div class="container-fluid" style="margin-top:30px;">
             <div class="row">
                 <div class="col-sm-12 " style="text-align:center;">
-                    <a href="<s:url namespace='/taskdist' action='indexlist'></s:url>" class="btn btn-primary text-center" style="margin:0 auto;">全部任务节点信息</a>
+                    <a href="<s:url namespace='/taskdist' action='indexlist'></s:url>?id=${ modelid }" class="btn btn-primary text-center" style="margin:0 auto;">全部任务节点信息</a>
                 </div>
             </div>
         </div>
@@ -89,13 +89,13 @@ var getModelTask = function(){
                 for(var i = 0; i < tasks.length; i++){
                     var task = tasks[i];
                     var taskwrapper = createTaskInfoWrapper(task);
-                    if(task.stage == "Launch"){
+                    if(task.stage == "发生及保障阶段"){
                         $("#wrapper_launch").append(taskwrapper);
-                    } else if(task.stage == "PreDeliver"){
+                    } else if(task.stage == "交付前"){
                         $("#wrapper_predeliver").append(taskwrapper)
-                    } else if(task.stage == "PostDeliver"){
+                    } else if(task.stage == "交付后"){
                         $("#wrapper_postdeliver").append(taskwrapper);
-                    } else if(task.stage == "EndOfLife") {
+                    } else if(task.stage == "寿命终结") {
                         $("#wrapper_endoflife").append(taskwrapper);
                     }
                 }

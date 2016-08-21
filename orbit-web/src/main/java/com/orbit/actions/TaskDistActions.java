@@ -50,6 +50,8 @@ public class TaskDistActions extends AppAction {
 	LifeTimeTaskRepository lttRepo;
 
 	public String pageIndexList(){
+		String modelid = this.getRequest().getParameter("id");
+		this.getRequest().setAttribute("modelid", modelid);
 		return SUCCESS;
 	}
 

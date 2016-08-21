@@ -121,9 +121,6 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
                 field: 'modecode',
                 title: '型号代号'
             }, {
-            	field: 'subsystemcode',
-            	title: '分系统'
-            }, {
                 field: 'eventtype',
                 title: '事件类型'
             },{

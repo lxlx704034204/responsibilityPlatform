@@ -54,11 +54,12 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">事件类别：</label>
                                 <select class="form-control" id="slt_batch_eventtype">
-                                    <option value="MINOR">MINOR</option>
-                                    <option value="MAJOR">MAJOR</option>
-                                    <option value="SERVE">SERVE</option>
-                                    <option value="FATAL">FATAL</option>
-
+                                    <option value="中间变量">中间变量</option>
+                                    <option value="状态跳变">状态跳变</option>
+                                    <option value="提示信息">提示信息</option>
+                                    <option value="轻度异常">轻度异常</option>
+									<option value="中度异常">中度异常</option>
+									<option value="重度异常">重度异常</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -70,6 +71,30 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-primary" id="btn_batchupdate">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="modal_updatesingledesc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">情况说明</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" id="txt_batch_eventdesc" placeholder="说明" rows="4"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="btn_savesingledesc">保存</button>
                     </div>
                 </div>
             </div>
@@ -249,12 +274,28 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
                 field: 'eventtype',
                 title: '事件类别',
                 bodyFormatter: function(row, rowdata){
-                	var select  =$("<select><option ></option></select>");
+                	var select  =$("<select></select>");
+                	select.append($("<option value='中间变量'>中间变量</option>"));
+                	select.append($("<option value='状态跳变'>状态跳变</option>"));
+                	select.append($("<option value='提示信息'>提示信息</option>"));
+                	select.append($("<option value='轻度异常'>轻度异常</option>"));
+                	select.append($("<option value='中度异常'>中度异常</option>"));
+                	select.append($("<option value='重度异常'>重度异常</option>"));
+                	
+                	return select;
                 	
                 }
             }, {
                 field: 'desc',
-                title: '情况说明'
+                title: '情况说明',
+                bodyFormatter: function(row, rowdata){
+                	var link = $("<a title=点击以进行编辑 href='javascript:void(0)' data-toggle='tooltip' data-placement='top'>说明</a>");
+                	link.click(function(){
+                		$("#modal_updatesingledesc").modal("show");
+                	});
+                	link.tooltip();
+                	return link;
+                }
             }, {
                 field: 'conformperson',
                 title: '确认人'
@@ -275,7 +316,8 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
                     var pageInfo = result.pageInfo;
                     table.reload(pageIndex, records);
                 }
-            );
+            );var txt = $("<textarea></textarea>");
+        	return txt;
         }
 	});
 

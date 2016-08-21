@@ -70,7 +70,7 @@
       				</form>
       			</div>
       			<div class="col-md-12">
-      				 <iframe id="iframe_viewer" style="width:100%;height:400px;margin-top:10px;" src="http://www.highcharts.com/demo/line-basic"></iframe>
+      				 <iframe id="iframe_viewer" style="width:100%;height:400px;margin-top:10px;" src=""></iframe>
       			</div>
       		</div>
       	</div>
