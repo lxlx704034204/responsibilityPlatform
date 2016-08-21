@@ -235,4 +235,11 @@ public class LifeTimeTask extends BaseEntity {
     交付后,//PostDeliver
     寿命终结// EndOfLife
   }
+
+  @Override
+  public String toString() {
+    return String.format(
+            "LifeTimeTask[id=%d, 型号名称='%s',阶段=%s]",
+            getId(), satellite == null ? "" : satellite.getName(), stage == null ? "" : stage.name());
+  }
 }

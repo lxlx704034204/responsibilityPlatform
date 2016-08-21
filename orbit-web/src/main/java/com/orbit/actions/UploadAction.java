@@ -19,15 +19,13 @@ import com.orbit.OrbitServiceApplication;
 import com.orbit.configs.SystemConfig;
 import com.orbit.entity.Attachment;
 import com.orbit.entity.LifeTimeTask;
+import com.orbit.repository.AttachmentRepository;
 import com.orbit.repository.LifeTimeTaskRepository;
 import com.orbit.repository.permission.UserRepository;
 
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class UploadAction extends ActionBase {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4117614733192689618L;
 	
 	@Autowired
@@ -35,6 +33,9 @@ public class UploadAction extends ActionBase {
 	
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	AttachmentRepository attachmentRepository;
 	
 	private File file;
 	private String fileFileName;
@@ -104,7 +105,9 @@ public class UploadAction extends ActionBase {
 		//User user = userRepository.
 		attachment.setUploadBy(null);
 		attachment.setUploadTime(new Date());
-		LifeTimeTask task = lttRepo.getOne(taskid);
+		attachmentRepository.save(attachment);
+
+		LifeTimeTask task = lttRepo.findOne(taskid);
 		task.addAttachment(attachment);
 		lttRepo.save(task);
 		return 1;
