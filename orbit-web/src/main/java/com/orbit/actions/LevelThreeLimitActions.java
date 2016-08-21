@@ -81,6 +81,9 @@ public class LevelThreeLimitActions extends AppAction {
       PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 
       Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+
+      //Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdInAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+
       List<ThresholdAlert> alerts = pageResult.getContent();
       Long recordCount = pageResult.getTotalElements();
 

@@ -84,22 +84,21 @@ public class ThresholdAlertRepositoryTests {
 
   @After
   public void destroy() {
-//    repository.delete(alert1.getId());
-//    repository.delete(alert2.getId());
-//    repository.delete(alert3.getId());
-//    repository.delete(alert4.getId());
-//    repository.delete(alert5.getId());
-//    repository.delete(alert6.getId());
-//
-//    satelliteRepository.delete(s1);
-//    satelliteRepository.delete(s2);
-//
-//    userRepository.delete(confirmUser);
+    repository.delete(alert1.getId());
+    repository.delete(alert2.getId());
+    repository.delete(alert3.getId());
+    repository.delete(alert4.getId());
+    repository.delete(alert5.getId());
+    repository.delete(alert6.getId());
 
+    satelliteRepository.delete(s1);
+    satelliteRepository.delete(s2);
+
+    userRepository.delete(confirmUser);
   }
 
   @Test
-  public void testFindBySatelliteNameInIgnoreCaseAndStartTimeBetween() {
+  public void testFindBySatelliteIdsInAndStartTimeBetween() {
     //这里可以作为前台UI调用的demo,分页查询如何向后台传递参数,页码从0开始
     PageRequest pageRequest = new PageRequest(0, 5, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
     Calendar yesterday = Calendar.getInstance();
@@ -108,7 +107,7 @@ public class ThresholdAlertRepositoryTests {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdAndStartTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
+    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdInAndStartTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());

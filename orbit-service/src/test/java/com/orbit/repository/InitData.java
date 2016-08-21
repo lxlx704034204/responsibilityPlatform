@@ -31,6 +31,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class InitData {
+
 	
 	User adminUser, confirmUser;
 	Satellite sl1, sl2, sl3;
@@ -51,9 +52,6 @@ public class InitData {
 
 	@Test
 	public void initAll(){
-		
-		
-		
 		thresholdAlertRepository.deleteAll();
 		lifeTimeTaskRepository.deleteAll();
 		satelliteRepository.deleteAll();
