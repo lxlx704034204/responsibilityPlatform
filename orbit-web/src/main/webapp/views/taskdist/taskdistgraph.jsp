@@ -114,9 +114,12 @@ var createAttachmentWrapper = function(taskid, attachmentId, attachmentFileName)
     return attachmentWrapper;
 };
 
+// upload callback
 window.appendAttachmentInfoToWrapper = function(taskid, attachmentId, attachmentFileName){
-    var attachmentsUploadedWrapper = $("wrapper_uploaded_taskid_" + taskid);
-    attachmentsUploadedWrapper.append(createAttachmentWrapper(taskid, attachmentId, attachmentFileName));
+    var attachmentsUploadedWrapper = $("#wrapper_uploaded_taskid_" + taskid);
+    var attachmentWrapper = createAttachmentWrapper(taskid, attachmentId, attachmentFileName);
+    console.log(attachmentWrapper);
+    attachmentsUploadedWrapper.append(attachmentWrapper);
 };
 
 var createTaskInfoWrapper = function(taskdata){
@@ -145,11 +148,12 @@ var createTaskInfoWrapper = function(taskdata){
 		}
 	}
     attachmentsCol.append(attachmentsUploaded);
-    var uploadAction = "<s:url namespace='/upload' action='upload'></s:url>";
+    var uploadAction = "<s:url namespace='/upload' action='upload'></s:url>" 
+    	+ "?type=uploadTaskAttachment&callback=appendAttachmentInfoToWrapper&taskid=" + taskdata.id;
     var uploadForm = $("<form class='form-inline'></form>").attr("target", "iframe_upload").attr("enctype","multipart/form-data")
         .attr("method","post").attr("action",uploadAction);
     var fileInput = $("<input type='file' name='file' style='display:inline-block;' />");
-    var uploadBtn = $("<button type='submit' class='btn btn-default btn-sm' >提交</button>")
+    var uploadBtn = $("<button type='submit' class='btn btn-default btn-sm' >提交</button>");
     uploadForm.append(fileInput).append(uploadBtn);
     attachmentToUpload.append(uploadForm);
     attachmentsCol.append(attachmentsUploaded).append(attachmentToUpload);
