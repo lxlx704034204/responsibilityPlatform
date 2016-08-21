@@ -28,7 +28,7 @@ public interface TeleControlRepository extends JpaRepository<TeleControl, Long> 
    * @param pageable     分页查询参数
    * @return 属于这些型号的测控事件列表
    */
-  Page<TeleControl> findBySatelliteIdAndStartTimeBetween(Collection<Long> satelliteIds, Date startTime, Date endTime, Pageable pageable);
+  Page<TeleControl> findBySatelliteIdInAndStartTimeBetween(Collection<Long> satelliteIds, Date startTime, Date endTime, Pageable pageable);
 
   /**
    * 批量确认
