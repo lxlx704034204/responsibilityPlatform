@@ -43,23 +43,23 @@ public class ModelsActions extends AppAction {
 		JsonResult jsonResult = null;
 		try {
 			// cancel comment in production environment.
-			//String userName = "adminuser";//this.getAuthenticatedUser().getName();
-			//List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
+			String userName = "adminuser";//this.getAuthenticatedUser().getName();
+			List<Satellite> satellitesAdmins = slRepo.findAllByAdminUserLoginName(userName);
 
 			// mock data.
-			List<Satellite> satellitesAdmins = new ArrayList<Satellite>();
-			Satellite sl1 = new Satellite("型号1");
-			sl1.setCode("sl1");
-			sl1.setId(1l);
-			Satellite sl2 = new Satellite("型号2");
-			sl2.setCode("sl2");
-			sl2.setId(2l);
-			Satellite sl3 = new Satellite("型号3");
-			sl3.setCode("sl3");
-			sl3.setId(3l);
-			satellitesAdmins.add(sl1);
-			satellitesAdmins.add(sl2);
-			satellitesAdmins.add(sl3);
+//			List<Satellite> satellitesAdmins = new ArrayList<Satellite>();
+//			Satellite sl1 = new Satellite("型号1");
+//			sl1.setCode("sl1");
+//			sl1.setId(1l);
+//			Satellite sl2 = new Satellite("型号2");
+//			sl2.setCode("sl2");
+//			sl2.setId(2l);
+//			Satellite sl3 = new Satellite("型号3");
+//			sl3.setCode("sl3");
+//			sl3.setId(3l);
+//			satellitesAdmins.add(sl1);
+//			satellitesAdmins.add(sl2);
+//			satellitesAdmins.add(sl3);
 
 			this.setAdminModels(satellitesAdmins);
 

@@ -69,23 +69,23 @@ public class LevelThreeLimitActions extends AppAction {
       Integer pageSize = SystemConfig.getSystemCommonListPageSize();
       PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 
-//      Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
-//      List<ThresholdAlert> alerts = pageResult.getContent();
-//      Long recordCount = pageResult.getTotalElements();
+      Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+      List<ThresholdAlert> alerts = pageResult.getContent();
+      Long recordCount = pageResult.getTotalElements();
 
-      Long recordCount = 70l;
-      List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
-      Satellite sl = new Satellite("型号1");
-      sl.setCode("sl1");
-      for (int i = (pageSize * pageIndex); i < (pageSize * (pageIndex + 1)); i++) {
-        System.out.println("i: " + i);
-        ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
-        alert.setId((long) i);
-        if (i > recordCount) {
-          break;
-        }
-        alerts.add(alert);
-      }
+//      Long recordCount = 70l;
+//      List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
+//      Satellite sl = new Satellite("型号1");
+//      sl.setCode("sl1");
+//      for (int i = (pageSize * pageIndex); i < (pageSize * (pageIndex + 1)); i++) {
+//        System.out.println("i: " + i);
+//        ThresholdAlert alert = new ThresholdAlert(sl, "异常描述信息" + i);
+//        alert.setId((long) i);
+//        if (i > recordCount) {
+//          break;
+//        }
+//        alerts.add(alert);
+//      }
 
 
       JSONArray list = new JSONArray();

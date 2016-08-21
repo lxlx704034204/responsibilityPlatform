@@ -84,17 +84,17 @@ public class ThresholdAlertRepositoryTests {
 
   @After
   public void destroy() {
-    repository.delete(alert1.getId());
-    repository.delete(alert2.getId());
-    repository.delete(alert3.getId());
-    repository.delete(alert4.getId());
-    repository.delete(alert5.getId());
-    repository.delete(alert6.getId());
-
-    satelliteRepository.delete(s1);
-    satelliteRepository.delete(s2);
-
-    userRepository.delete(confirmUser);
+//    repository.delete(alert1.getId());
+//    repository.delete(alert2.getId());
+//    repository.delete(alert3.getId());
+//    repository.delete(alert4.getId());
+//    repository.delete(alert5.getId());
+//    repository.delete(alert6.getId());
+//
+//    satelliteRepository.delete(s1);
+//    satelliteRepository.delete(s2);
+//
+//    userRepository.delete(confirmUser);
 
   }
 
