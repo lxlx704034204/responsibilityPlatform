@@ -89,7 +89,7 @@ public class RealAlert2RepositoryTests {
   }
 
   @Test
-  public void testFindBySatelliteCodeInAndStartTimeBetween() {
+  public void testFindBySatelliteCodeInAndBeginTimeBetween() {
     //这里可以作为前台UI调用的demo,分页查询如何向后台传递参数,页码从0开始
     PageRequest pageRequest = new PageRequest(0, 5, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
     Calendar yesterday = Calendar.getInstance();
@@ -98,7 +98,7 @@ public class RealAlert2RepositoryTests {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<RealAlarm2> pageResult = repository.findBySatelliteCodeInAndStartTimeBetween(Arrays.asList(code1, code2), yesterday.getTime(), tomorrow.getTime()
+    Page<RealAlarm2> pageResult = repository.findBySatelliteCodeInAndBeginTimeBetween(Arrays.asList(code1, code2), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());

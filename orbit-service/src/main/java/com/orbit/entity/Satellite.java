@@ -38,7 +38,7 @@ public class Satellite extends BaseEntity {
   private User adminUser;
 
   @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  @JoinColumn(name = "SATELLITE_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "satid", referencedColumnName = "ID")
   private List<ThresholdAlert> alerts;
 
   protected Satellite() {

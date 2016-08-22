@@ -35,19 +35,19 @@ public class RealAlarm2 extends BaseEntity {
     this.message = message;
     this.severityLevel = ThresholdAlert.SeverityLevel.轻度异常;
     Date now = new Date();
-    this.startTime = now;
+    this.beginTime = now;
     this.confirmTime = now;
   }
 
   /**
    * 报警开始时间
    */
-  public Date getStartTime() {
-    return startTime;
+  public Date getBeginTime() {
+    return beginTime;
   }
 
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
+  public void setBeginTime(Date beginTime) {
+    this.beginTime = beginTime;
   }
 
   /**
@@ -105,10 +105,10 @@ public class RealAlarm2 extends BaseEntity {
     this.confirmTime = confirmTime;
   }
 
-  @Column(name = "START_TIME", nullable = false)
-  private Date startTime;
+  @Column(name = "begintime", nullable = false)
+  private Date beginTime;
 
-  @Column(name = "END_TIME")
+  @Column(name = "endtime")
   private Date endTime;
 
   @Column(nullable = false, length = 1000)
@@ -135,8 +135,8 @@ public class RealAlarm2 extends BaseEntity {
   @Column(length = 1024)
   private String situation;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "confirmCategroy", nullable = false, columnDefinition = "SMALLINT")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "confirmCategroy", nullable = false)
   private ThresholdAlert.ConfirmCategroy confirmCategroy;
 
   @Override
@@ -144,7 +144,7 @@ public class RealAlarm2 extends BaseEntity {
     return String.format(
             "RealAlarm2[id=%d, 型号代号='%s',报警信息=%s,开始时间=%s]",
             getId(), getSatelliteCode() == null ? "" : getSatelliteCode(),
-            message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+            message == null ? "" : message, beginTime == null ? "" : dateFormat.format(this.beginTime));
   }
 
   /**

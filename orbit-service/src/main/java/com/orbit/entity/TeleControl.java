@@ -4,19 +4,12 @@ import com.orbit.entity.permission.User;
 
 import java.util.Date;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,7 +34,7 @@ public class TeleControl extends BaseEntity {
     this.satellite = satellite;
     this.eventDescription = eventDescription;
     Date now = new Date();
-    this.startTime = now;
+    this.beginTime = now;
     this.confirmTime = now;
   }
 
@@ -59,12 +52,12 @@ public class TeleControl extends BaseEntity {
   /**
    * 报警开始时间
    */
-  public Date getStartTime() {
-    return startTime;
+  public Date getBeginTime() {
+    return beginTime;
   }
 
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
+  public void setBeginTime(Date beginTime) {
+    this.beginTime = beginTime;
   }
 
   /**
@@ -116,13 +109,13 @@ public class TeleControl extends BaseEntity {
   private EventType eventType;
 
   @ManyToOne
-  @JoinColumn(name = "SATELLITE_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "satid", referencedColumnName = "ID")
   private Satellite satellite;
 
-  @Column(name = "START_TIME", nullable = false)
-  private Date startTime;
+  @Column(name = "begintime", nullable = false)
+  private Date beginTime;
 
-  @Column(name = "END_TIME")
+  @Column(name = "endtime")
   private Date endTime;
 
   @ManyToOne
@@ -164,7 +157,7 @@ public class TeleControl extends BaseEntity {
   public String toString() {
     return String.format(
             "TeleControl[id=%d, 型号名称='%s',事件描述=%s,开始时间=%s]",
-            getId(), satellite == null ? "" : satellite.getName(), eventDescription == null ? "" : eventDescription, startTime == null ? "" : dateFormat.format(this.startTime));
+            getId(), satellite == null ? "" : satellite.getName(), eventDescription == null ? "" : eventDescription, beginTime == null ? "" : dateFormat.format(this.beginTime));
   }
 
   /**

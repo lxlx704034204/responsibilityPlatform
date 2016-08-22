@@ -41,19 +41,19 @@ public class LifeTimeTask extends BaseEntity {
   }
 
   @ManyToOne
-  @JoinColumn(name = "SATELLITEID", referencedColumnName = "ID")
+  @JoinColumn(name = "satid", referencedColumnName = "ID")
   private Satellite satellite;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "stage", nullable = false, columnDefinition = "SMALLINT")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "stage", nullable = false)
   private Stage stage;
 
   @Column(nullable = false)
   private String name;
 
   @ManyToOne
-  @JoinColumn(name = "USER_RESPONSIBLE", referencedColumnName = "ID")
-  private User userResponsible;
+  @JoinColumn(name = "responseuserid", referencedColumnName = "ID")
+  private User responseUser;
 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "DEADLINE_TIME")
@@ -120,12 +120,12 @@ public class LifeTimeTask extends BaseEntity {
   /**
    * 责任人
    */
-  public User getUserResponsible() {
-    return userResponsible;
+  public User getResponseUser() {
+    return responseUser;
   }
 
-  public void setUserResponsible(User userResponsible) {
-    this.userResponsible = userResponsible;
+  public void setResponseUser(User responseUser) {
+    this.responseUser = responseUser;
   }
 
   /**
