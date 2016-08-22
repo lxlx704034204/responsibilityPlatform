@@ -217,7 +217,7 @@ public class ThresholdAlert extends BaseEntity {
   @Column(nullable = false, length = 1000)
   private String message;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   @Column(name = "severitylevel", nullable = false)
   private SeverityLevel severityLevel;
 
@@ -243,7 +243,7 @@ public class ThresholdAlert extends BaseEntity {
   @Column(name = "alarmvalue", length = 512)
   private String alarmValue;
 
-  @Column(name = "telementcode",length = 100)
+  @Column(name = "telementcode", length = 100)
   private String telementCode;
 
   /**
