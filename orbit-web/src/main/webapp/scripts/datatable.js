@@ -107,15 +107,53 @@
         	var render_pager = function(recordCount, pageSize, pageIndex){
         		var group = $("<div class='btn-group pager-buttons' role='group'></div>");
         		var pageCount = Math.ceil(recordCount / pageSize);
-        		for(var i = 0; i < pageCount; i++){
-        			var page_btn = $("<button type='button' class='btn pager-button'></button>").text(i + 1).val(i);
+                var lastPageIndex = pageCount - 1;
+                var startShowIndex = 0 < (pageIndex - 2) ? (pageIndex - 2) : 0;
+                var endShowIndex = (startShowIndex + 4) < lastPageIndex ?  (startShowIndex + 4) : lastPageIndex;
 
-        			if(i == pageIndex){
-        				page_btn.addClass("btn-primary").attr("disabled", "disabled");
-        			} else {
-        				page_btn.addClass("btn-default");
-        			}
-        			group.append(page_btn);
+        		for(var i = 0; i < pageCount; i++){
+                    var page_btn = null;
+                    // 总是添加第1页按钮
+                    if(i == 0){
+                        page_btn = $("<button type='button' class='btn pager-button'></button>").text(i + 1).val(i);
+                        group.append(page_btn);
+                    }
+
+                    if(i == 1 && startShowIndex > 1){
+                        page_btn = $("<button type='button' class='btn pager-ellipsis'></button>").text("...").val(i);
+                        group.append(page_btn);
+                    }
+
+                    if(i != 0 && i != lastPageIndex && i >= startShowIndex && i <= endShowIndex){
+                        page_btn = $("<button type='button' class='btn pager-button'></button>").text(i + 1).val(i);
+            			group.append(page_btn);
+                    }
+
+                    if(i == (lastPageIndex - 1) && (lastPageIndex - endShowIndex) > 1){
+                        page_btn = $("<button type='button' class='btn pager-ellipsis'></button>").text("...").val(i);
+                        group.append(page_btn);
+                    }
+
+                    // if(endShowIndex < (pageCount - 2) && i == (pageCount -2)){
+                    //     page_btn = $("<button type='button' class='btn pager-ellipsis'></button>").text("...").val(i);
+                    //     group.append(page_btn);
+                    // }
+
+                    // 总是添加最后一页按钮
+                    if(i != 0 && i == (pageCount -1)){
+                        page_btn = $("<button type='button' class='btn pager-button'></button>").text(i + 1).val(i);
+                        group.append(page_btn);
+                    }
+
+
+                    if(page_btn){
+                        if(i == pageIndex){
+                            page_btn.addClass("btn-primary").attr("disabled", "disabled");
+                        } else {
+                            page_btn.addClass("btn-default");
+                        }
+                    }
+
         		}
                 group.delegate(".btn", "click", function(){
                     var targetPageIndex = parseInt($(this).val());
