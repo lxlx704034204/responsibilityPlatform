@@ -73,7 +73,7 @@ public class YaoceParamsActions extends AppAction {
 //			List<ThresholdAlert> alerts = pageResult.getContent();
 //			Long recordCount = pageResult.getTotalElements();
 			
-			Long recordCount = 88l;
+			Long recordCount = 388l;
 //			List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
 //			Satellite sl = new Satellite("型号1");
 //			sl.setCode("sl1");
