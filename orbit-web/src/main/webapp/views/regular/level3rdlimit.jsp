@@ -289,12 +289,16 @@ var buildtable = function (pageIndex, pageSize, recordCount, listdata) {
                 field: 'desc',
                 title: '情况说明',
                 bodyFormatter: function(row, rowdata){
-                	var link = $("<a title=点击以进行编辑 href='javascript:void(0)' data-toggle='tooltip' data-placement='top'></a>").text(rowdata.desc);
-                	link.click(function(){
+                	var wrapper = $("<div style='height:100%;width:100%;'></div>").html("aaa");
+                	wrapper.dblclick(function(e){
                 		$("#modal_updatesingledesc").modal("show");
                 	});
-                	link.tooltip();
-                	return link;
+//                 	var link = $("<a title=点击以进行编辑 href='javascript:void(0)' data-toggle='tooltip' data-placement='top'></a>").text("aaa");
+//                 	link.click(function(){
+//                 		$("#modal_updatesingledesc").modal("show");
+//                 	});
+//                 	link.tooltip();
+                	return wrapper;
                 }
             }, {
                 field: 'conformperson',
