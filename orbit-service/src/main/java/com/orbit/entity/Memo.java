@@ -68,11 +68,11 @@ public class Memo extends BaseEntity {
   }
 
   @ManyToOne
-  @JoinColumn(name = "SATELLITE_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "satid", referencedColumnName = "ID")
   private Satellite satellite;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "EVENT_TIME", nullable = false)
+  @Column(name = "eventtime", nullable = false)
   private Date eventTime;
 
   @Column(nullable = false, length = 1000)
@@ -86,7 +86,7 @@ public class Memo extends BaseEntity {
    * 确认时间,可以为空,为空时表示为被确认
    */
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CONFIRM_TIME")
+  @Column(name = "confirmtime")
   private Date confirmTime;
 
   /**

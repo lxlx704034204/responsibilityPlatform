@@ -10,7 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,8 +33,7 @@ public class ThresholdAlert extends BaseEntity {
     this.message = message;
     this.severityLevel = SeverityLevel.轻度异常;
     Date now = new Date();
-    this.startTime = now;
-    this.confirmTime = now;
+    this.beginTime = now;
   }
 
   /**
@@ -52,12 +50,12 @@ public class ThresholdAlert extends BaseEntity {
   /**
    * 报警开始时间
    */
-  public Date getStartTime() {
-    return startTime;
+  public Date getBeginTime() {
+    return beginTime;
   }
 
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
+  public void setBeginTime(Date beginTime) {
+    this.beginTime = beginTime;
   }
 
   /**
@@ -83,7 +81,7 @@ public class ThresholdAlert extends BaseEntity {
   }
 
   /**
-   * TODO: 事件类别(严重程度)?
+   * 事件类别(严重程度)
    */
   public SeverityLevel getSeverityLevel() {
     return severityLevel;
@@ -138,6 +136,50 @@ public class ThresholdAlert extends BaseEntity {
   }
 
   /**
+   * 值班人确认时间
+   */
+  public Date getResponseTime() {
+    return responseTime;
+  }
+
+  public void setResponseTime(Date responseTime) {
+    this.responseTime = responseTime;
+  }
+
+  /**
+   * 值班人姓名
+   */
+  public String getResponseUserName() {
+    return responseUserName;
+  }
+
+  public void setResponseUserName(String responseUserName) {
+    this.responseUserName = responseUserName;
+  }
+
+  /**
+   * 报警值
+   */
+  public String getAlarmValue() {
+    return alarmValue;
+  }
+
+  public void setAlarmValue(String alarmValue) {
+    this.alarmValue = alarmValue;
+  }
+
+  /**
+   * 遥测参数代号,通过regex从alarmMessage中截取
+   */
+  public String getTelementCode() {
+    return telementCode;
+  }
+
+  public void setTelementCode(String telementCode) {
+    this.telementCode = telementCode;
+  }
+
+  /**
    * 报警严重等级
    */
   public enum SeverityLevel {
@@ -163,24 +205,24 @@ public class ThresholdAlert extends BaseEntity {
   }
 
   @ManyToOne
-  @JoinColumn(name = "SATELLITE_ID", referencedColumnName = "ID")
+  @JoinColumn(name = "satid", referencedColumnName = "ID", nullable = false)
   private Satellite satellite;
 
-  @Column(name = "START_TIME", nullable = false)
-  private Date startTime;
+  @Column(name = "begintime", nullable = false)
+  private Date beginTime;
 
-  @Column(name = "END_TIME")
+  @Column(name = "endtime")
   private Date endTime;
 
   @Column(nullable = false, length = 1000)
   private String message;
 
   @Enumerated(EnumType.ORDINAL)
-  @Column(name = "severityLevel", nullable = false, columnDefinition = "SMALLINT")
+  @Column(name = "severitylevel", nullable = false)
   private SeverityLevel severityLevel;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column(name = "confirmCategroy", columnDefinition = "SMALLINT")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "confirmcategroy")
   private ConfirmCategroy confirmCategroy;
 
   @ManyToOne
@@ -188,8 +230,21 @@ public class ThresholdAlert extends BaseEntity {
   private User confirmUser;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "CONFIRM_TIME", nullable = false)
+  @Column(name = "confirmtime")
   private Date confirmTime;
+
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "responsetime")
+  private Date responseTime;
+
+  @Column(name = "responseusername", length = 100)
+  private String responseUserName;
+
+  @Column(name = "alarmvalue", length = 512)
+  private String alarmValue;
+
+  @Column(name = "telementcode", length = 100)
+  private String telementCode;
 
   /**
    * 情况说明
@@ -201,6 +256,6 @@ public class ThresholdAlert extends BaseEntity {
   public String toString() {
     return String.format(
             "ThresholdAlert[id=%d, 型号名称='%s',报警信息=%s,开始时间=%s]",
-            getId(), satellite == null ? "" : satellite.getName(), message == null ? "" : message, startTime == null ? "" : dateFormat.format(this.startTime));
+            getId(), satellite == null ? "" : satellite.getName(), message == null ? "" : message, beginTime == null ? "" : dateFormat.format(this.beginTime));
   }
 }

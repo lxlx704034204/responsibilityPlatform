@@ -1,6 +1,6 @@
 .idea
 logs
-log
+**/*.log
 *.iml
 target
 **/bower_components
@@ -11,3 +11,4 @@ bootstrap-table-examples-master
 .settings
 .vagrant
 vagrant/MySQL-*.rpm
+**/uploads/files

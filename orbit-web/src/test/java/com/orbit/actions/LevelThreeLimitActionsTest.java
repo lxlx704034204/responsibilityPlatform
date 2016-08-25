@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class LevelThreeLimitActionsTest {
@@ -122,7 +120,7 @@ public class LevelThreeLimitActionsTest {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdInAndStartTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
+    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdInAndBeginTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());

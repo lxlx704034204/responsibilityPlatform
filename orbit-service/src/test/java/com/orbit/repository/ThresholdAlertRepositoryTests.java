@@ -107,7 +107,7 @@ public class ThresholdAlertRepositoryTests {
     Calendar tomorrow = Calendar.getInstance();
     tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
-    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdInAndStartTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
+    Page<ThresholdAlert> pageResult = repository.findBySatelliteIdInAndBeginTimeBetween(Arrays.asList(s1.getId()), yesterday.getTime(), tomorrow.getTime()
             , pageRequest);
     Assert.assertTrue(pageResult != null && pageResult.getNumberOfElements() >= 0);
     System.out.println("总行数=" + pageResult.getTotalElements());
@@ -129,7 +129,7 @@ public class ThresholdAlertRepositoryTests {
    */
   @Test
   public void testBatchAddSituationComment() {
-    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.SeverityLevel.重度异常, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
+    int affectedSize = repository.batchAddSituationComment(ThresholdAlert.ConfirmCategroy.测控事件, "测试情况说明测试情况说明", alert1.getId(), alert2.getId(), alert3.getId(), alert4.getId(), alert5.getId());
     Assert.assertEquals(5, affectedSize);
   }
 

@@ -7,11 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.orbit.configs.SystemConfig;
-import com.orbit.AppContext;
-import com.orbit.OrbitServiceApplication;
-import com.orbit.entity.Satellite;
 import com.orbit.entity.ThresholdAlert;
-import com.orbit.entity.permission.User;
 import com.orbit.repository.SatelliteRepository;
 import com.orbit.repository.permission.UserRepository;
 import com.orbit.repository.ThresholdAlertRepository;
@@ -19,13 +15,11 @@ import com.orbit.utils.DateTimeUtils;
 import com.orbit.utils.StrUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -61,19 +55,19 @@ public class LevelThreeLimitActions extends AppAction {
       String alertendtime = searcherJson.getString("alertendtime");
       alertstarttime = StrUtils.isNullOrEmpty(alertstarttime) ? null : alertstarttime + ":00";
       alertendtime = StrUtils.isNullOrEmpty(alertendtime) ? null : alertendtime + ":00";
-      
+
       List<Long> selectedModelIds = JSONArray.toList(models, Long.class);
       Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
       Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
-      
+
       // TODO:for test
-      if(startDate == null && endDate == null){
-    	  Calendar yesterday = Calendar.getInstance();
-          yesterday.add(Calendar.DAY_OF_MONTH, -1);
-          startDate = yesterday.getTime();
-          Calendar tomorrow = Calendar.getInstance();
-          tomorrow.add(Calendar.DAY_OF_MONTH, 1);
-          endDate = tomorrow.getTime();
+      if (startDate == null && endDate == null) {
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DAY_OF_MONTH, -1);
+        startDate = yesterday.getTime();
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+        endDate = tomorrow.getTime();
       }
 
       Integer pageIndex = pagerJson.getInt("pageIndex");
@@ -82,7 +76,7 @@ public class LevelThreeLimitActions extends AppAction {
 
       //Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
 
-      Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdInAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+      Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdInAndBeginTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
 
       List<ThresholdAlert> alerts = pageResult.getContent();
       Long recordCount = pageResult.getTotalElements();
@@ -108,7 +102,7 @@ public class LevelThreeLimitActions extends AppAction {
         item.put("serialno", 0);
         item.put("id", alert.getId());
         item.put("modecode", alert.getSatellite() != null ? alert.getSatellite().getCode() : null);
-        item.put("alertstartdt", DateTimeUtils.formatToISODatetime(alert.getStartTime()));
+        item.put("alertstartdt", DateTimeUtils.formatToISODatetime(alert.getBeginTime()));
         item.put("alertenddt", DateTimeUtils.formatToISODatetime(alert.getEndTime()));
         item.put("alertmsg", alert.getMessage());
         item.put("eventtype", alert.getSeverityLevel().name());
@@ -145,18 +139,13 @@ public class LevelThreeLimitActions extends AppAction {
       String eventdesc = json.getString("eventdesc");
       List<Long> selectedIds = JSONArray.toList(selectedIds_jsonarr, Long.class);
 
-      ThresholdAlert.SeverityLevel level = Enum.valueOf(ThresholdAlert.SeverityLevel.class, eventtype);
+      ThresholdAlert.ConfirmCategroy confirmCategroy = Enum.valueOf(ThresholdAlert.ConfirmCategroy.class, eventtype);
       Long[] arr = new Long[selectedIds.size()];
       for (int i = 0; i < selectedIds.size(); i++) {
         arr[i] = selectedIds.get(i);
       }
-  
-      Integer count = thRepo.batchAddSituationComment(level, eventdesc, arr);
 
-
-
-      //Integer count = 1;
-      
+      Integer count = thRepo.batchAddSituationComment(confirmCategroy, eventdesc, arr);
       jsonResult = new JsonResultSuccess(count);
     } catch (Exception e) {
       log.error(e.getMessage(), e);

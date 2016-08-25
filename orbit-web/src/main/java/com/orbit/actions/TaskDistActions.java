@@ -1,23 +1,15 @@
 package com.orbit.actions;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import com.orbit.OrbitServiceApplication;
-import com.orbit.configs.SystemConfig;
 import com.orbit.entity.Attachment;
 import com.orbit.entity.LifeTimeTask;
-import com.orbit.entity.LifeTimeTask.Stage;
-import com.orbit.entity.Satellite;
-import com.orbit.entity.ThresholdAlert;
 import com.orbit.repository.LifeTimeTaskRepository;
 import com.orbit.repository.SatelliteRepository;
 import com.orbit.repository.ThresholdAlertRepository;
@@ -99,7 +91,7 @@ public class TaskDistActions extends AppAction {
 				item.put("modecode", task.getSatellite() != null ? task.getSatellite().getCode() : null);
 				item.put("stage", task.getStage() != null ? task.getStage().name() : null);
 				item.put("name", task.getName());
-				item.put("userResponsibleName", task.getUserResponsible() != null ? task.getUserResponsible().getFullName() : null);
+				item.put("userResponsibleName", task.getResponseUser() != null ? task.getResponseUser().getFullName() : null);
 				item.put("deadlineTime", task.getDeadLineTime() != null ? DateTimeUtils.formatToISODate(task.getDeadLineTime()) : null);
 				item.put("submitTime", task.getSubmitTime() != null ? DateTimeUtils.formatToISODate(task.getSubmitTime()) : null);
 				item.put("taskResult", task.getTaskResult());

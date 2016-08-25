@@ -27,53 +27,51 @@ import com.orbit.utils.StrUtils;
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class YaoceParamsActions extends AppAction {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private static Log log = LogFactory.getLog(YaoceParamsActions.class);
-	
-	@Autowired
-    SatelliteRepository slRepo;
+  private static Log log = LogFactory.getLog(YaoceParamsActions.class);
 
-	@Autowired
-    UserRepository userRepo;
+  @Autowired
+  SatelliteRepository slRepo;
 
-	@Autowired
-    ThresholdAlertRepository thRepo;
+  @Autowired
+  UserRepository userRepo;
 
-	public String pageIndex(){
-		return SUCCESS;
-	}
+  @Autowired
+  ThresholdAlertRepository thRepo;
 
-	public void jsonGetListByPager(){
-		JsonResult jsonResult = null;
-		try {
-			JSONObject json = this.getRequestJsonObject();
-			JSONObject searcherJson = json.getJSONObject("searcher");
-			JSONObject pagerJson = json.getJSONObject("pager");
+  public String pageIndex() {
+    return SUCCESS;
+  }
 
-			String searchKey = searcherJson.getString("keyword");
-			JSONArray models = searcherJson.getJSONArray("models");
-			String alertstarttime = searcherJson.getString("alertstarttime");
-			String alertendtime = searcherJson.getString("alertendtime");
-			alertstarttime = StrUtils.isNullOrEmpty(alertstarttime) ? null : alertstarttime + ":00";
-			alertendtime = StrUtils.isNullOrEmpty(alertendtime) ? null : alertendtime + ":00";
+  public void jsonGetListByPager() {
+    JsonResult jsonResult = null;
+    try {
+      JSONObject json = this.getRequestJsonObject();
+      JSONObject searcherJson = json.getJSONObject("searcher");
+      JSONObject pagerJson = json.getJSONObject("pager");
 
-			List<Long> selectedModelIds =  JSONArray.toList(models, Long.class);
-			Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
-			Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
-			
-			Integer pageIndex = pagerJson.getInt("pageIndex");
-			Integer pageSize = SystemConfig.getSystemCommonListPageSize();
-			PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
-			
+      String searchKey = searcherJson.getString("keyword");
+      JSONArray models = searcherJson.getJSONArray("models");
+      String alertstarttime = searcherJson.getString("alertstarttime");
+      String alertendtime = searcherJson.getString("alertendtime");
+      alertstarttime = StrUtils.isNullOrEmpty(alertstarttime) ? null : alertstarttime + ":00";
+      alertendtime = StrUtils.isNullOrEmpty(alertendtime) ? null : alertendtime + ":00";
+
+      List<Long> selectedModelIds = JSONArray.toList(models, Long.class);
+      Date startDate = DateTimeUtils.parseISODatetime(alertstarttime);
+      Date endDate = DateTimeUtils.parseISODatetime(alertendtime);
+
+      Integer pageIndex = pagerJson.getInt("pageIndex");
+      Integer pageSize = SystemConfig.getSystemCommonListPageSize();
+      PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+
 //			Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
 //			List<ThresholdAlert> alerts = pageResult.getContent();
 //			Long recordCount = pageResult.getTotalElements();
 			
-			Long recordCount = 388l;
+      Long recordCount = 388l;
+
 //			List<ThresholdAlert> alerts = new ArrayList<ThresholdAlert>();
 //			Satellite sl = new Satellite("型号1");
 //			sl.setCode("sl1");
@@ -86,40 +84,40 @@ public class YaoceParamsActions extends AppAction {
 //				}
 //				alerts.add(alert);
 //			}
-			
-			
-			JSONArray list = new JSONArray();
+
+
+      JSONArray list = new JSONArray();
 //			for (ThresholdAlert alert : alerts) {
-			for(int i = 0; i < 30; i++){
-				JSONObject item = new JSONObject();
-				item.put("serialno", 0);
-				item.put("id", i);
-				item.put("modecode", "xxx");
-				item.put("paramid", "param-" + i);
-				item.put("paramname", "xyz");
-				item.put("result", "");
-				item.put("exceptiondesc", "def");
-				item.put("trendpic", "");
-				list.add(item);
-		    }
+      for (int i = 0; i < 30; i++) {
+        JSONObject item = new JSONObject();
+        item.put("serialno", 0);
+        item.put("id", i);
+        item.put("modecode", "xxx");
+        item.put("paramid", "param-" + i);
+        item.put("paramname", "xyz");
+        item.put("result", "");
+        item.put("exceptiondesc", "def");
+        item.put("trendpic", "");
+        list.add(item);
+      }
 
-			PageInfo pageInfo = new PageInfo();
-			pageInfo.setPageIndex(pageIndex);
-			pageInfo.setPageSize(pageSize);
-			pageInfo.setRecordCount(recordCount);
+      PageInfo pageInfo = new PageInfo();
+      pageInfo.setPageIndex(pageIndex);
+      pageInfo.setPageSize(pageSize);
+      pageInfo.setRecordCount(recordCount);
 
-			JSONObject listingData = new JSONObject();
-			listingData.put("records", list);
-			listingData.put("pageInfo", pageInfo);
+      JSONObject listingData = new JSONObject();
+      listingData.put("records", list);
+      listingData.put("pageInfo", pageInfo);
 
-			jsonResult = new JsonResultSuccess(listingData);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			log.error(e.getMessage(), e);
-			jsonResult = new JsonResultError(e.getMessage());
-		} finally {
-			this.sendToClient(jsonResult);
-		}
-	}
+      jsonResult = new JsonResultSuccess(listingData);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      log.error(e.getMessage(), e);
+      jsonResult = new JsonResultError(e.getMessage());
+    } finally {
+      this.sendToClient(jsonResult);
+    }
+  }
 
 }

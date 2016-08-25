@@ -18,6 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
 
+/**
+ * 该测试类用来造测试数据
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OrbitServiceApplication.class)
 public class InitData {
@@ -63,7 +66,7 @@ public class InitData {
     confirmUser = new User("confirmuser");
     confirmUser.setFullName("张三");
     userRepository.save(confirmUser);
-    
+
     responsibleUser = new User("responsibleUser");
     responsibleUser.setFullName("李四");
     userRepository.save(responsibleUser);
@@ -129,7 +132,7 @@ public class InitData {
     task1.setConfirmTime(new Date());
     task1.setStage(LifeTimeTask.Stage.发生及保障阶段);
     task1.setDeadLineTime(new Date());
-    task1.setUserResponsible(responsibleUser);
+    task1.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task1);
 
     task2 = new LifeTimeTask(sl1, "发射保障软硬件配置_LifeTimeTaskRepositoryTest");
@@ -137,7 +140,7 @@ public class InitData {
     task2.setConfirmTime(new Date());
     task2.setStage(LifeTimeTask.Stage.发生及保障阶段);
     task2.setDeadLineTime(new Date());
-    task2.setUserResponsible(responsibleUser);
+    task2.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task2);
 
     task3 = new LifeTimeTask(sl1, "在轨管理工作要点_LifeTimeTaskRepositoryTest");
@@ -145,7 +148,7 @@ public class InitData {
     task3.setConfirmTime(new Date());
     task3.setStage(LifeTimeTask.Stage.交付前);
     task3.setDeadLineTime(new Date());
-    task3.setUserResponsible(responsibleUser);
+    task3.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task3);
 
     task4 = new LifeTimeTask(sl1, "建立履历书_LifeTimeTaskRepositoryTest");
@@ -153,7 +156,7 @@ public class InitData {
     task4.setConfirmTime(new Date());
     task4.setStage(LifeTimeTask.Stage.交付前);
     task4.setDeadLineTime(new Date());
-    task4.setUserResponsible(responsibleUser);
+    task4.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task4);
 
     task5 = new LifeTimeTask(sl1, "设置报警门限_LifeTimeTaskRepositoryTest");
@@ -161,7 +164,7 @@ public class InitData {
     task5.setConfirmTime(new Date());
     task5.setStage(LifeTimeTask.Stage.交付前);
     task5.setDeadLineTime(new Date());
-    task5.setUserResponsible(responsibleUser);
+    task5.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task5);
 
     task6 = new LifeTimeTask(sl1, "在轨管理手册_LifeTimeTaskRepositoryTest");
@@ -169,7 +172,7 @@ public class InitData {
     task6.setConfirmTime(new Date());
     task6.setStage(LifeTimeTask.Stage.交付后);
     task6.setDeadLineTime(new Date());
-    task6.setUserResponsible(responsibleUser);
+    task6.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task6);
 
     task7 = new LifeTimeTask(sl1, "门限设置文件提交_LifeTimeTaskRepositoryTest");
@@ -177,7 +180,7 @@ public class InitData {
     task7.setConfirmTime(new Date());
     task7.setStage(LifeTimeTask.Stage.交付后);
     task7.setDeadLineTime(new Date());
-    task7.setUserResponsible(responsibleUser);
+    task7.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task7);
 
     task8 = new LifeTimeTask(sl1, "更新履历书信息_LifeTimeTaskRepositoryTest");
@@ -185,7 +188,7 @@ public class InitData {
     task8.setConfirmTime(new Date());
     task8.setStage(LifeTimeTask.Stage.交付后);
     task8.setDeadLineTime(new Date());
-    task8.setUserResponsible(responsibleUser);
+    task8.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task8);
 
     task9 = new LifeTimeTask(sl1, "航天器在轨全寿命运行情况总结报告_LifeTimeTaskRepositoryTest");
@@ -193,7 +196,7 @@ public class InitData {
     task9.setConfirmTime(new Date());
     task9.setStage(LifeTimeTask.Stage.寿命终结);
     task9.setDeadLineTime(new Date());
-    task9.setUserResponsible(responsibleUser);
+    task9.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task9);
 
     task10 = new LifeTimeTask(sl1, "航天器在轨运行履历书_LifeTimeTaskRepositoryTest");
@@ -201,7 +204,7 @@ public class InitData {
     task10.setConfirmTime(new Date());
     task10.setStage(LifeTimeTask.Stage.寿命终结);
     task10.setDeadLineTime(new Date());
-    task10.setUserResponsible(responsibleUser);
+    task10.setResponseUser(responsibleUser);
     lifeTimeTaskRepository.save(task10);
 
     // TeleControls

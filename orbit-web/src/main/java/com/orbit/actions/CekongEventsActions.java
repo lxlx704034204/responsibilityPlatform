@@ -3,7 +3,6 @@ package com.orbit.actions;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,9 +17,7 @@ import org.springframework.data.domain.Sort;
 
 import com.orbit.OrbitServiceApplication;
 import com.orbit.configs.SystemConfig;
-import com.orbit.entity.Satellite;
 import com.orbit.entity.TeleControl;
-import com.orbit.entity.ThresholdAlert;
 import com.orbit.repository.SatelliteRepository;
 import com.orbit.repository.TeleControlRepository;
 import com.orbit.repository.ThresholdAlertRepository;
@@ -82,7 +79,7 @@ public class CekongEventsActions extends AppAction {
       Integer pageSize = SystemConfig.getSystemCommonListPageSize();
       PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
 
-      Page<TeleControl> pageResult = tcRepo.findBySatelliteIdInAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
+      Page<TeleControl> pageResult = tcRepo.findBySatelliteIdInAndBeginTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
       List<TeleControl> ctrls = pageResult.getContent();
       Long recordCount = pageResult.getTotalElements();
 
@@ -107,7 +104,7 @@ public class CekongEventsActions extends AppAction {
         item.put("id", ctrl.getId());
         item.put("modecode", ctrl.getSatellite() != null ? ctrl.getSatellite().getCode() : null);
         item.put("subsystemcode", "");
-        item.put("startdt", DateTimeUtils.formatToISODatetime(ctrl.getStartTime()));
+        item.put("startdt", DateTimeUtils.formatToISODatetime(ctrl.getBeginTime()));
         item.put("enddt", DateTimeUtils.formatToISODatetime(ctrl.getEndTime()));
         item.put("alertmsg", ctrl.getEventDescription());
         item.put("eventtype", ctrl.getEventType() != null ? ctrl.getEventType().getName() : null);

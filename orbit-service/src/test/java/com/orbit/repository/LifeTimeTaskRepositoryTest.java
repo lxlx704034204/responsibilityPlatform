@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
@@ -122,6 +123,12 @@ public class LifeTimeTaskRepositoryTest {
     satelliteRepository.delete(s1);
     userRepository.delete(confirmUser);
 
+  }
+
+  @Test
+  public void testGetOne() {
+    LifeTimeTask lifeTimeTask = repository.getOne(3L);
+    System.out.println(lifeTimeTask);
   }
 
 

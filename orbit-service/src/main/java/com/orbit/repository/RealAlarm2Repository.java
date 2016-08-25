@@ -22,12 +22,12 @@ public interface RealAlarm2Repository extends JpaRepository<RealAlarm2, Long> {
    * 根据型号代号列表和开始时间范围查询二代平台报警列表
    *
    * @param satelliteCodes 型号代号列表
-   * @param startTime      开始报警时间
+   * @param beginTime      开始报警时间
    * @param endTime        结束报警时间
    * @param pageable       分页和排序条件
    * @return 满足条件的二代平台报警信息一页数据
    */
-  Page<RealAlarm2> findBySatelliteCodeInAndStartTimeBetween(Collection<String> satelliteCodes, Date startTime, Date endTime, Pageable pageable);
+  Page<RealAlarm2> findBySatelliteCodeInAndBeginTimeBetween(Collection<String> satelliteCodes, Date beginTime, Date endTime, Pageable pageable);
 
   /**
    * 批量更新"事件类别"和"情况说明"
