@@ -77,7 +77,7 @@ public class CekongEventsActions extends AppAction {
 
       Integer pageIndex = pagerJson.getInt("pageIndex");
       Integer pageSize = SystemConfig.getSystemCommonListPageSize();
-      PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+      PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "beginTime")));
 
       Page<TeleControl> pageResult = tcRepo.findBySatelliteIdInAndBeginTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
       List<TeleControl> ctrls = pageResult.getContent();

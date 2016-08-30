@@ -99,16 +99,19 @@ public class InitData {
     alert1 = new ThresholdAlert(sl1, "测试异常现象描述1");
     alert1.setConfirmUser(confirmUser);
     alert1.setConfirmTime(new Date());
+    alert1.setSituation("情况说明1");
     thresholdAlertRepository.save(alert1);
 
     alert2 = new ThresholdAlert(sl2, "测试异常现象描述2");
     alert2.setConfirmUser(confirmUser);
     alert2.setConfirmTime(new Date());
+    alert2.setSituation("情况说明2");
     thresholdAlertRepository.save(alert2);
 
     alert3 = new ThresholdAlert(sl1, "测试异常现象描述3");
     alert3.setConfirmUser(confirmUser);
     alert3.setConfirmTime(new Date());
+    alert3.setSituation("情况说明3");
     thresholdAlertRepository.save(alert3);
 
     alert4 = new ThresholdAlert(sl2, "测试异常现象描述4");

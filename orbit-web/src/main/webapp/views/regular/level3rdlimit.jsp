@@ -101,7 +101,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" id="txt_batch_eventdesc"
+                        <textarea type="text" class="form-control" id="txt_single_eventdesc"
                                   placeholder="说明" rows="4"></textarea>
                     </div>
                 </form>
@@ -300,7 +300,8 @@
                 field: 'eventtype',
                 title: '确认类别',
                 bodyFormatter: function (row, rowdata) {
-                    var select = $("<select></select>");
+                	var displaytext = rowdata.eventtype ? rowdata.eventtype : null;
+                	var select = $("<select></select>");
                     select.append($("<option value='星上异常报警'>星上异常报警</option>"));
                     select.append($("<option value='地面异常报警'>地面异常报警</option>"));
                     select.append($("<option value='测控事件'>测控事件</option>"));
@@ -308,21 +309,56 @@
                     select.append($("<option value='门限设置不当'>门限设置不当</option>"));
                     select.append($("<option value='知识错误'>知识错误</option>"));
                     select.append($("<option value='其他'>其他</option>"));
-
-                    return select;
-
+                    select.val(rowdata.eventtype);
+                    select.change(function(){
+                    	$(this).next().text($(this).val()).show();
+                    	$(this).hide();
+                    });
+                    select.hide();
+                    var span = $("<span></span>").text(rowdata.eventtype);
+                	var wrapper = $("<div title=双击以进行编辑 style='height:100%;min-height:30px;min-width:50px;line-height:30px;'></div>");
+                	wrapper.attr("eventtype", rowdata.eventtype);
+                	wrapper.append(select);
+                	wrapper.append(span);
+                	wrapper.dblclick(function(){
+                		$(this).find("select").show();
+                		$(this).find("span").hide();
+                	});
+                	wrapper.focusout(function(){
+                		$(this).find("select").hide();
+                		$(this).find("span").show();
+                	});
+                	wrapper.mouseover(function(){
+                		$(this).css("background-color","#ffffcc");
+                	});
+                	wrapper.mouseout(function(){
+                		$(this).css("background-color", "inherit")
+                	});
+                	return wrapper;
                 }
             }, {
                 field: 'desc',
                 title: '情况说明',
                 bodyFormatter: function (row, rowdata) {
-                    var link = $("<a title=点击以进行编辑 href='javascript:void(0)' data-toggle='tooltip' data-placement='top'></a>")
-                            .text(rowdata.desc);
-                    link.click(function () {
+                	var displaytext = null;
+                	if(rowdata.desc){
+                		displaytext = rowdata.desc.length > 50 ? rowdata.desc.substr(0, 50) + "..." : rowdata.desc;
+                	}
+                	var wrapper = $("<div title=双击以进行编辑 style='height:100%;min-height:30px;min-width:50px;line-height:30px;'></div>");
+                	wrapper.attr("desc", rowdata.desc);
+                	wrapper.html(displaytext);
+                	wrapper.dblclick(function(){
+                		var desc = $(this).attr("desc");
+                		$("#txt_single_eventdesc").val(desc);
                         $("#modal_updatesingledesc").modal("show");
-                    });
-                    link.tooltip();
-                    return link;
+                	});
+                	wrapper.mouseover(function(){
+                		$(this).css("background-color","#ffffcc");
+                	});
+                	wrapper.mouseout(function(){
+                		$(this).css("background-color", "inherit")
+                	});
+                	return wrapper;
                 }
             }, {
                 field: 'conformperson',

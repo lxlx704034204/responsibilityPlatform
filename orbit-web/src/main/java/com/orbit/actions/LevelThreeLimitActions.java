@@ -72,7 +72,7 @@ public class LevelThreeLimitActions extends AppAction {
 
       Integer pageIndex = pagerJson.getInt("pageIndex");
       Integer pageSize = SystemConfig.getSystemCommonListPageSize();
-      PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+      PageRequest pageRequest = new PageRequest(pageIndex, pageSize, new Sort(new Sort.Order(Sort.Direction.DESC, "beginTime")));
 
       //Page<ThresholdAlert> pageResult = thRepo.findBySatelliteIdAndStartTimeBetween(selectedModelIds, startDate, endDate, pageRequest);
 
@@ -105,8 +105,8 @@ public class LevelThreeLimitActions extends AppAction {
         item.put("alertstartdt", DateTimeUtils.formatToISODatetime(alert.getBeginTime()));
         item.put("alertenddt", DateTimeUtils.formatToISODatetime(alert.getEndTime()));
         item.put("alertmsg", alert.getMessage());
-        item.put("eventtype", alert.getSeverityLevel().name());
-        item.put("desc", "");
+        item.put("eventtype", alert.getConfirmCategroy() != null ? alert.getConfirmCategroy().name() : null);
+        item.put("desc", alert.getSituation());
         item.put("conformperson", alert.getConfirmUser() != null ? alert.getConfirmUser().getFullName() : null);
         item.put("conformdt", DateTimeUtils.formatToISODatetime(alert.getConfirmTime()));
         list.add(item);
