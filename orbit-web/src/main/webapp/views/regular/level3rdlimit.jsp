@@ -128,7 +128,15 @@
             var modelName = $(this).attr("modelname");
             selectedModelNames.push(modelName);
         });
-        $("#ddm_child_selectmodels").find(".btn-text").text(selectedModelNames.join(','));
+        var btntext = null;
+        if(selectedModelNames.length == 0){
+        	btntext = "请选择型号";
+        } else if(selectedModelNames.length > 2){
+        	btntext = "多个型号";
+        } else {
+        	btntext = selectedModelNames.join(',');
+        }
+        $("#ddm_child_selectmodels").find(".btn-text").text(btntext);
     };
 
     /**
